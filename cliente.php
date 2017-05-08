@@ -16,8 +16,7 @@ $result=mysql_query($consulta);
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
-
-	  <style>
+	
       <style>
  * {
  
@@ -52,7 +51,7 @@ $result=mysql_query($consulta);
 label {
   color:#515151;
 }
-
+ 
 
    </style>
 </head>
@@ -120,10 +119,10 @@ label {
 
 <div class="form-group" >
 <label for="">Nombre Empresa:</label>
-<input type="text" class="form-control" name="nombre" placeholder="Nombre Empresa"  required=""></div>
+<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Empresa"  required=""></div>
 <div class="form-group" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)"></div>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
 
 
 <div class="form-group" >
@@ -177,8 +176,9 @@ label {
 </select>
 </div>
   
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
   <button type="button" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  
 
 </div>
 </form>
@@ -186,7 +186,7 @@ label {
 
 <?php
 if
-  (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
+    (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
      isset($_POST['nombre']) && !empty($_POST['nombre']) &&
      isset($_POST['rut']) && !empty($_POST['rut']) &&
      isset($_POST['fono']) && !empty($_POST['fono']) &&
@@ -201,7 +201,7 @@ if
   {
 
       $Ciudad = $_POST['id_ciudad']; 
-    $Nombre = $_POST['nombre'];
+      $Nombre = $_POST['nombre'];
       $Rut = $_POST['rut'];
       $Fono = $_POST['fono'];
       $Correo = $_POST['correo'];
@@ -221,24 +221,56 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("cass_computacion",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
+
+// Comprobamos si el usuario esta registrado 
+
+$nuevo_usuario=mysql_query("SELECT nombre FROM cliente WHERE nombre='$Nombre'"); 
+if(mysql_num_rows($nuevo_usuario)>0) 
+{ 
+echo " 
+<p class='avisos'>El nombre de usuario ya esta registrado</p> 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+"; 
+} 
+// ------------ Si no esta registrado el usuario continua el script 
+else 
+{ 
+// ============================================== 
+// Comprobamos si el email esta registrado 
+
+$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
+if(mysql_num_rows($nuevo_rut)>0) 
+{ 
+echo " 
+<p class='avisos'>El RUT ya esta registrado</p> 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+"; 
+}else{
   
-
-
-  mysql_query("INSERT INTO cliente(id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')")or die(mysql_error());
+  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
+  echo " 
+    <p class='avisos'>Registro insertado con exito</p> 
+    <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+    "; 
 
 }
-
+}
+}
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
     <script src="validaremail.js"></script>
     <script src="validartelefono.js"></script>
+    
 </body>
 <footer> </footer>
 </html>

@@ -7,12 +7,13 @@
   <?php
 include("conexion.php");
 
-$consulta="SELECT * FROM ciudad, cliente";
+$consulta="SELECT * FROM  cliente";
 $result=mysql_query($consulta);
 
 
 ?>
 	<title>Cliente</title>
+  <script language="JavaScript" type="text/javascript" src="ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
@@ -63,7 +64,7 @@ label {
 
 </head>
  <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -120,7 +121,7 @@ label {
 
 <form class="form-group" action=""  method="POST">
 
-<div class="container">
+<div class="container" >
 
 <div class="form-group" id="datos">
 <h4><label for="caja_busqueda"><h1>Buscar Cliente</h1></label></h4>
@@ -130,17 +131,14 @@ label {
 </div>
 
 
-<div id="datos">
-
-</div>
-
-<table class="table table-striped" id="datos">
+<table  class="table table-striped" id="" name="" >
 <thead>
       <th colspan="1"><a href="cliente.php" class="btn btn-primary">Nuevo Cliente</a></th>
       <th colspan="11">Lista de Clientes</th>
     </thead>
     <tbody>
       <tr>
+        <td><h4>#</h4></td>
         <td><h4>Cliente</h4></td>
         <td><h4>Codigo Legal</h4></td>
         <td><h4>Giro</h4></td>
@@ -152,28 +150,7 @@ label {
       </tr>
 
 <?php
-/*(?php)
-      include("conexion.php");
-    
-      $consulta=mysql_query("SELECT * FROM cliente ciudad ")or die(mysql_error());
-      $registro=mysql_fetch_array($consulta);
-      while ( $row=mysql_fetch_array($consulta)) {
-      ?>
-       <tr>
-        <td><?php echo $row['nombre']; ?></td>
-        <td><?php echo $row['rut']; ?></td>
-        <td><?php echo $row['giro']; ?></td>
-        <td><?php echo $row['direccion']; ?></td>
-        <td><?php echo $row['correo']; ?></td>
-        <td><?php echo $row['fono']; ?></td>
-        <td><?php echo $row['nombre_contacto'];?></td>
-        <td class="btn_modificar"><a href="modificar.cliente.php?id=<?php echo $row['id_cliente']; ?>" target="" id="" class="btn btn-primary">Modificar</a>
-        </td>
-        <td class="btn_eliminar"><a href="eliminar.php?id=<?php echo $row['id']; ?>" target="" id="" class="btn btn-danger" >Eliminar</a></td>
-       </tr>
-      (<?php)
-        }
-    (?)*/ 
+
 $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
@@ -184,6 +161,7 @@ if($busca!=""){
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
+   echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_cliente'].'\")">'.$muestra['id_cliente'].'</a>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
    echo '<td>'.$muestra['rut'].'</td>';
    echo '<td>'.$muestra['giro'].'</td>';
@@ -192,13 +170,18 @@ if($busca!=""){
    echo '<td>'.$muestra['fono'].'</td>';
    echo '<td>'.$muestra['nombre_contacto'].'</td>';
    echo '<td>'.'<a href="modificar.cliente.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger">'.'Eliminar'.'</a>'.'</td>';   
+   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
+                         onclick="eliminarDato(\''.$muestra['id_cliente'].'\');">'.'Eliminar'.'</button> '.'</td>';   
 }
 ?>  
 
+
+ 
+         
   </ul>
       </tbody>
 </table>
+
 <?php
 // close connection; 
 mysql_close();

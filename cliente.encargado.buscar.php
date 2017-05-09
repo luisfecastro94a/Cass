@@ -104,6 +104,17 @@ label {
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
         <li><a  href="#">Orden de Trabajo</a></li>
+         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="ciudad.php">Ciudad</a></li>
+            <li><a href="#">Usuario</a></li>
+            <li><a href="#">Proveedor</a></li>
+            <li><a href="#">Uf</a></li>
+            <li><a href="#">Comisiones</a></li>
+            <li><a href="#">Periodo</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -158,7 +169,7 @@ $busca=isset($_POST['busca'])?$_POST['busca']: NULL;
 include("conexion.php");
 if($busca!=""){
  //  Consulta Mysql donde se aplica INNER JOIN
-        $dbhandle=mysql_query("SELECT cliente_encargado.id_cliente_encargado, cliente_encargado.nombreE, cliente_encargado.apellido, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE nombreE like '%".$busca."%' ");
+        $dbhandle=mysql_query("SELECT cliente_encargado.id_cliente_encargado, cliente_encargado.nombreE, cliente_encargado.apellido, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE nombreE like '%".$busca."%' ")or die(mysql_error());
        
 }
 

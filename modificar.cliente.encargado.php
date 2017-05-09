@@ -97,6 +97,17 @@ label {
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
         <li><a  href="#">Orden de Trabajo</a></li>
+         <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="ciudad.php">Ciudad</a></li>
+            <li><a href="usuario.php">Usuario</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
+            <li><a href="uf.php">Uf</a></li>
+            <li><a href="comision.php">Comisiones</a></li>
+            <li><a href="periodo.php">Periodo</a></li>
+          </ul>
+        </li>
       </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -129,6 +140,7 @@ label {
 <div class="form-group" >
 <label for="">Cliente a asociar</label>
 <select id="id_cliente" class="form-control" name="id_cliente"> 
+<option value="<?php echo $fila['id_cliente']?>">---Seleccionar Cliente---</option>
 <?php
       while($fila=mysql_fetch_array($result))
   {?>
@@ -187,17 +199,18 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 
 
 // seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("cass_computacion",$dbhandle) 
+$selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
   
 
 
-  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', apellido='$Apellido', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'");
-
-
+  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', apellido='$Apellido', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
 
 ?>
-
+<?php
+// close connection; 
+mysql_close();
+?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

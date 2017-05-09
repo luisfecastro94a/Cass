@@ -102,11 +102,11 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
-            <li><a href="#">Usuario</a></li>
-            <li><a href="#">Proveedor</a></li>
-            <li><a href="#">Uf</a></li>
-            <li><a href="#">Comisiones</a></li>
-            <li><a href="#">Periodo</a></li>
+            <li><a href="usuario.php">Usuario</a></li>
+            <li><a href="proveedor.php">Proveedor</a></li>
+            <li><a href="uf.php">Uf</a></li>
+            <li><a href="comision.php">Comisiones</a></li>
+            <li><a href="periodo.php">Periodo</a></li>
           </ul>
         </li>
       </ul>
@@ -250,7 +250,7 @@ else{
   
   $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
   echo " 
-    <p class='avisos'>Registro insertado con exito</p> 
+    <h1><p class='avisos'>Registro insertado con exito</p></h1>
     "; 
 }
 

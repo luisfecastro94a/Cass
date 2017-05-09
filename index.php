@@ -83,11 +83,11 @@ include("conexion.php");
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
-            <li><a href="#">Usuario</a></li>
-            <li><a href="#">Proveedor</a></li>
-            <li><a href="#">Uf</a></li>
-            <li><a href="#">Comisiones</a></li>
-            <li><a href="#">Periodo</a></li>
+            <li><a href="usuario.php">Usuario</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
+            <li><a href="uf.php">Uf</a></li>
+            <li><a href="comision.php">Comisiones</a></li>
+            <li><a href="periodo.php">Periodo</a></li>
           </ul>
         </li>
       </ul>

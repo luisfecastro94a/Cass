@@ -11,7 +11,7 @@ $dbhandle = mysql_connect($hostname, $username, $password)
  //echo "";
 
 // seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("cass_computacion",$dbhandle) 
+$selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
 

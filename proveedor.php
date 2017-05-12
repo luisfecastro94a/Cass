@@ -12,18 +12,37 @@ if (isset($_SESSION['correo'])) {?>
 <?php
 include("conexion.php");
 
-
 $consulta="SELECT * FROM ciudad";
 $result=mysql_query($consulta);
 
 
 ?>
-	<title>cliente</title>
+	<title>Proveedor</title>
    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/calendario.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
 
-	
+	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#fecha_creacion" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
       <style>
  * {
  
@@ -64,6 +83,13 @@ label {
     width: 60px;
     border: auto;
   }
+  .fecha{
+    margin: 3px 2px 5px 40px;
+  }
+  .fe {
+    margin: 3% 1% 3% 60%;/*superior, derecho, inferior, izquierdo*/
+    font-size: 17px;
+}
  
 
    </style>
@@ -134,45 +160,21 @@ label {
 	<div class="contenedor">
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="proveedor.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="proveedor.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cliente</h1>
+<h1>Crear Proveedor</h1>
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+<form class="form-group" action=""  method="POST" onSubmit="return validar()"> 
 
 <div class="container">
-
-
-<div class="form-group" >
-<label for="">Nombre Empresa:</label>
-<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Empresa"  required=""></div>
-<div class="form-group" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
-
-
-<div class="form-group" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required=""></div>
-
-
-<div class="form-group" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
-<div class="form-group" >
-<label for="">Giro:</label>
-<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="form-group" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
+<label class="fe" for="">Fecha Creación:<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion"></label><!--fecha con jquey-->
 
 <div class="form-group" >
 <label for="">Ciudad:</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
+<select id="id_ciudad" class="form-control" name="id_ciudad" autofocus="" > 
 <option value="" selected="">Seleccionar Ciudad</option>
  <?php
       while($fila=mysql_fetch_array($result))
@@ -181,6 +183,33 @@ label {
   <?php } ?>
 </select>
 </div>
+
+<div class="form-group" >
+<label for="">Rut Empresa</label>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
+
+<div class="form-group" >
+<label for="">Razon Social</label>
+<input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razon Social"  required=""></div>
+
+<div class="form-group" >
+<label for="">Direccion</label>
+<input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
+
+
+<div class="form-group" >
+<label for="">Fono/Fax Empresa</label>
+<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+  required=""></div>
+
+<div class="form-group" >
+<label for="">Giro</label>
+<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
+
+<div class="form-group" >
+<label for="">Correo</label>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
+
 <div class="form-group" >
 <label for="">Nombre Contacto:</label>
 <input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
@@ -193,20 +222,11 @@ label {
 <div class="form-group" >
 <label for="">Cargo Contacto:</label>
 <input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
-
-<div class="form-group">
-<label for="">Condición de Pago:</label>
-<select class="form-control" name="condicion_pago">
-<option value="" selected="">--Selecciona Condicion de Pago--</option>
-  <option value="EFECTIVO">EFECTIVO</option>
-  <option value="CREDITO 30 DÍAS">CREDITO 30 DÍAS</option>
-  <option value="CREDITO 60 DÍAS">CREDITO 60 DÍAS</option>
-  <option value="CREDITO 90 DÍAS">CREDITO 90 DÍAS</option>
-</select>
-</div>
+ 
   
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <input type="reset" class="btn btn-default btn-lg btn-block" value="Cancelar">
+
   
 
 </div>
@@ -216,31 +236,31 @@ label {
 <?php
 if
     (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
      isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']) &&
-     isset($_POST['giro']) && !empty($_POST['giro']) &&
+     isset($_POST['razon_social']) && !empty($_POST['razon_social']) &&
      isset($_POST['direccion']) && !empty($_POST['direccion']) &&
+     isset($_POST['fono']) && !empty($_POST['fono']) &&
+     isset($_POST['giro']) && !empty($_POST['giro']) &&
+     isset($_POST['correo']) && !empty($_POST['correo']) &&
      isset($_POST['nombre_contacto']) && !empty($_POST['nombre_contacto']) &&
      isset($_POST['fono_contacto']) && !empty($_POST['fono_contacto']) &&
      isset($_POST['correo_contacto']) && !empty($_POST['correo_contacto']) &&
      isset($_POST['cargo_contacto']) && !empty($_POST['cargo_contacto']) &&
-     isset($_POST['condicion_pago']) && !empty($_POST['condicion_pago']))
+     isset($_POST['fecha_creacion']) && !empty($_POST['fecha_creacion']))
   {
 
-      $Ciudad = $_POST['id_ciudad']; 
-      $Nombre = $_POST['nombre'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      $Giro = $_POST['giro'];
-      $Direccion = $_POST['direccion'];
-      $Nombre_contacto = $_POST['nombre_contacto'];
-      $Fono_contacto = $_POST['fono_contacto'];
-      $Correo_contacto = $_POST['correo_contacto'];
-      $Cargo_contacto = $_POST['cargo_contacto'];
-      $Condicion_pago = $_POST['condicion_pago'];
+      $ciudad = $_POST['id_ciudad']; 
+      $rut = $_POST['rut'];
+      $razon_social = $_POST['razon_social'];
+      $direccion = $_POST['direccion'];
+      $fono = $_POST['fono'];
+      $giro = $_POST['giro'];
+      $correo = $_POST['correo'];
+      $nombre_contacto = $_POST['nombre_contacto'];
+      $fono_contacto = $_POST['fono_contacto'];
+      $correo_contacto = $_POST['correo_contacto'];
+      $cargo_contacto = $_POST['cargo_contacto'];
+      $fecha_creacion = $_POST['fecha_creacion'];
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -255,18 +275,18 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
+$nuevo_rut=mysql_query("SELECT rut FROM proveedor WHERE rut='$rut'"); 
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
+echo '<script> alert("El Rut ya se encuentra registrado."); </script>';
 echo " 
-<p class='avisos'>El RUT ya esta registrado</p> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'><span class='glyphicon glyphicon-repeat' aria-hidden='true'></span>  Volver a Modificar</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
- echo '<script> alert("Cliente Creado con Exito."); </script>';
+  mysql_query("INSERT INTO proveedor (id_ciudad, rut, razon_social, direccion, fono, giro, correo, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto,fecha_creacion) VALUES ('$ciudad','$rut', '$razon_social','$direccion','$fono','$giro','$correo', '$nombre_contacto','$fono_contacto','$correo_contacto','$cargo_contacto', '$fecha_creacion')") or die(mysql_errno());
+ echo '<script> alert("Proveedor Creado con Exito."); </script>';
 
 }
 
@@ -282,7 +302,10 @@ else{
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
+    <script src="validanumeros.js"></script> 
+    <script src="js/jquery.js"></script>   
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/datepicker-es.js"></script>
 </body>
 <footer> </footer>
 </html>

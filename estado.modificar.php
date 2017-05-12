@@ -8,20 +8,13 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-  <?php
-include("conexion.php");
 
-$consulta="SELECT * FROM  cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cliente Encargado</title>
+	<title>Estado</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
 
-	  <style>
+      <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -30,7 +23,7 @@ $result=mysql_query($consulta);
 	body{
   background: #F2F2F2;
 }
-  nav ul ul.dropdown-menu li a:hover {
+   	 nav ul ul.dropdown-menu li a:hover {
 	background: #CCCCCC;
  	}
  	 nav ul li:hover {
@@ -42,24 +35,19 @@ $result=mysql_query($consulta);
     width: 50px;
     border: auto;
   }
-    h1{
-    margin: 10px 300px 20px 400px;
+  h1{
+    margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
-   
-  }
-   h4{
-    margin: 10px auto;
-    color: #555555;
     
   }
-    .contenedor {
+  .contenedor {
     width: 1300px;
     height: 100px;
-    margin:  auto;   
+    margin: auto;
 }
 label {
-  color:#555555;
+  color:#8E8E8E;
 }
  .cerrar{
     height: 40px;
@@ -68,9 +56,7 @@ label {
     border: auto;
   }
 
-
    </style>
-
 </head>
  <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -118,102 +104,77 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
-            <li><a href="#">Usuario</a></li>
-            <li><a href="#">Proveedor</a></li>
-            <li><a href="#">Uf</a></li>
-            <li><a href="#">Comisiones</a></li>
-            <li><a href="#">Periodo</a></li>
+            <li><a href="usuario.php">Usuario</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
+            <li><a href="uf.php">Uf</a></li>
+            <li><a href="comision.php">Comisiones</a></li>
+            <li><a href="periodo.php">Periodo</a></li>
           </ul>
         </li>
       </ul>
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
+
 <body>
- <div class="contenedor">
+	<div class="contenedor">
 
 
-
-<a href="cliente.encargado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.encargado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="estado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="estado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
 
+      
+      
+      $consulta=mysql_query("SELECT * FROM estado WHERE id_estado='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+<h1>Modificar Estado</h1>
+<!--Comienzo de Formulario-->
 <form class="form-group" action=""  method="POST">
 
 <div class="container">
 
-<div class="form-group" id="datos">
-<h4><label for="caja_busqueda"><h1>Buscar Cliente Encargado</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" placeholder="Buscar">
-    <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
-</div>
+<div class="form-group" >
+<label for="">Estado</label>
+<input type="text" class="form-control" name="estado" placeholder="Estado" autofocus="" required="" value="<?php echo $reg['estado'];?>"></div>
+  
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button>
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
 
-
-<div id="datos">
-
-</div>
-
-<table class="table table-striped" id="datos">
-<thead>
-      <th colspan="1"><a href="cliente.encargado.php" class="btn btn-primary">Nuevo Cliente</a></th>
-      <th colspan="11">Lista de Usuarios</th>
-    </thead>
-    <tbody>
-      <tr>
-        <td><h4>Cliente</h4></td>
-        <td><h4>Cliente Encargado</h4></td>
-        <td><h4>Apellido</h4></td>
-        <td><h4>Rut</h4></td>
-        <td><h4>Telefono</h4></td>
-        <td><h4>Correo</h4></td>
-        <td colspan="2"><h4>Operaciones</h4></td>
-      </tr>
-
-<?php
-
-
-$busca="";
-$busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
-include("conexion.php");
-if($busca!=""){
- //  Consulta Mysql donde se aplica INNER JOIN
-        $dbhandle=mysql_query("SELECT cliente_encargado.id_cliente_encargado, cliente_encargado.nombreE, cliente_encargado.apellido, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE nombreE like '%".$busca."%' ")or die(mysql_error());
-       
-}
-
-  while($fila=mysql_fetch_array($dbhandle)){
-   echo '<tr>';
-   echo '<td>'.$fila['nombre'].'</td>';
-   echo '<td>'.'<strong>'.$fila['nombreE'].'</strong>'.'</td>';
-   echo '<td>'.$fila['apellido'].'</td>';
-   echo '<td>'.$fila['rut'].'</td>';
-   echo '<td>'.$fila['fono'].'</td>';
-   echo '<td>'.$fila['correo'].'</td>';
-   echo '<td>'.'<a href="cliente.modificar.encargado.php?id='.$fila['id_cliente_encargado'].'" 
-   class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger">'.'Eliminar'.'</a>'.'</td>';   
-}
-?>  
-
-  </ul>
-      </tbody>
-</table>
-<?php
-// close connection; 
-mysql_close();
-?>
-<nav aria-label="">
-  <ul class="pagination">
-    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
-    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-</nav>
-</ul>
-</nav>
 </div>
 </form>
+</div>
+
+<?php
+include("conexion.php");
+ 
+
+
+$id=$_REQUEST['id'];  
+$estado = isset($_POST['estado']) ? $_POST['estado']: '';    
+     
+
+   // conexión a la base de datos de
+$dbhandle = mysql_connect($hostname, $username, $password) 
+ or die("No se pudo Contactar a Base de Datos MySQL");
+
+
+// seleccionar una base de datos para trabajar con
+$selected = mysql_select_db("bdcass",$dbhandle) 
+  or die("No se pudo seleccionar la base de datos CASS");
+
+  mysql_query("UPDATE  estado SET estado='$estado' WHERE id_estado='$id'");
+ 
+?>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -224,7 +185,8 @@ mysql_close();
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
-    <script src="validaremail.js"></script> 
+    <script src="validaremail.js"></script>
+    <!--<script src="relaciones.js"></script>-->
 </body>
 <footer> </footer>
 </html>

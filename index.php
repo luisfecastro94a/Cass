@@ -1,105 +1,151 @@
 <?php
 include("conexion.php");
+if (isset($_SESSION['correo'])){
+  echo '<script> window.location="inicio.php"; </script>';
+}
+
+?>
+<?php
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Index</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <meta charset="UTF-8">
+  <title>Iniciar Sesion</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="js/bootstrap.min.js">
 
+<style>
 
-	  <style>
-	    
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
 
 }
-	body{
-  background: #F2F2F2;
+body {
+  background-image: url("img/puerto_montt.png");
+  /* Nos aseguramos que la imagen de fondo este centrada vertical y
+
+  /*horizontalmente en todo momento */
+  background-position: center center;
+  /* La imagen de fondo no se repite */
+  background-repeat: no-repeat;
+  /* La imagen de fondo está fija en el viewport, de modo que no se mueva cuando
+     la altura del contenido supere la altura de la imagen. */
+  background-attachment: fixed;
+  /* La imagen de fondo se reescala cuando se cambia el ancho de ventana
+     del navegador */
+  background-size: cover;
+  /* Fijamos un color de fondo para que se muestre mientras se está
+    cargando la imagen de fondo o si hay problemas para cargarla  */
+  background-color: #464646;
+  background: url(img/puerto_montt.png) center center cover no-repeat fixed;
 }
-   	 nav ul ul.dropdown-menu li a:hover {
-	background: #CCCCCC;
- 	}
- 	 nav ul li:hover {
-	background: #CCCCCC;
- 	}
-	img.logo {
-		height: 50px;
-		margin: auto;
-		width: 50px;
-		border: auto;
-		
 
-	}
-	
-   </style>
-</head>
- <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-   <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-       <img class="logo" src="img/cass_logo.png" alt="">
-    </div>
-      
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-       <li><a  href="index.php">Inicio</a></li>
-        
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="cliente.php">Ingresar Cliente</a></li>
-            <li><a href="cliente.encargado.php">Ingresar Encargado</a></li>
-            <li><a href="#">Ingreso Garantia</a></li>
-            <li><a href="#">Presupuesto</a></li>
-            <li><a href="#">Cotización</a></li>
-            <li><a href="#">Repuesto</a></li>
-            <li><a href="#">Generar OT</a></li>
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.salida.php">Salida Equipo</a></li>
-          </ul>
-        </li>
-        <li><a  href="#">Contratos</a></li>
-        <li><a  href="#">Terreno</a></li>
-        <li><a  href="#">Soporte Instalaciones</a></li>
-        <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
-         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="ciudad.php">Ciudad</a></li>
-            <li><a href="usuario.php">Usuario</a></li>
-             <li><a href="proveedor.php">Proveedor</a></li>
-            <li><a href="uf.php">Uf</a></li>
-            <li><a href="comision.php">Comisiones</a></li>
-            <li><a href="periodo.php">Periodo</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-</nav>
-<body>
-	
+.wrapper {  
+  margin-top: 80px;
+  margin-bottom: 80px;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+.form-signin {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  margin: 0 auto;
+  margin-top: 10px; 
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1); 
+  background: rgba(0,0,0,0.3); 
+  border-radius: 15px;
+  }
+
+  .form-control {
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+    @include box-sizing(border-box);
+
+    &:focus {
+      z-index: 2;
+    }
+  }
+
+  input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  input[type="password"] {
+    margin-bottom: 20px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .form{
+    color: #fff;
+    text-align: center;
+    text
+  }
+  .lab {
+    color: white;
+  }  
+  @media (max-height: 480px) {
+    .wapper{
+      height: 100%;
+    }
+  }
+    img {
+    height: 60%;
+    margin: 5px 10px 5px 80px;
+    width: 40%;
+    border: auto;
+    
+  }
+}
+</style>
+
+<div class="wrapper">
+    <form class="form-signin" method="POST" action=""> 
+      <img src="img/cass_logo.png" alt="">
+      <h2 class="form">Iniciar Sesion</h2>
+
+      <label class="lab" for="">Usuario</label>
+      <input type="text" class="form-control" name="usuario" placeholder="Email" required="" autofocus="" />
+      <label  class="lab" for="">Contraseña</label>
+
+      <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required=""/>      
+        <br>
+      <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Ingresar</button>   
+    </form>
+</div>
+<?php
+include("conexion.php");
+if (isset($_POST['login'])){
+    $usuario = $_POST['usuario'];//entre [] va el name de mi input
+    $contraseña = $_POST['contraseña'];
+    $log = mysql_query("SELECT * FROM usuario WHERE correo='$usuario' AND clave='$contraseña' ");
+    if (mysql_num_rows($log)>0) {
+      /*esto me permite listar a los usuarios*/
+      $row = mysql_fetch_array($log);
+      $_SESSION["correo"]=$row['correo'];
+      echo 'Iniciando Sesion para'.$_SESSION['correo'].'<p>';//esta es una variable de session
+      echo '<script> window.location="inicio.php"; </script>';
+
+    }else{
+      echo '<script> alert("Usuario o Contraseña Incorrectos."); </script>';
+      echo '<script> window.location="index.php" </script>';//deberia ser index.php
+    }
+
+  }
+
+?>
 
 
 
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>

@@ -1,3 +1,7 @@
+<?php
+session_start();
+include("conexion.php");
+if (isset($_SESSION['correo'])) {?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +11,8 @@
 <?php
 include("conexion.php");
 
-
-
-
 ?>
-	<title>cliente</title>
+	<title>Ciudad</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
@@ -50,7 +51,12 @@ include("conexion.php");
 label {
   color:#515151;
 }
- 
+  .cerrar{
+    height: 40px;
+    margin: 5px auto;
+    width: 60px;
+    border: auto;
+  }
 
    </style>
 </head>
@@ -70,7 +76,7 @@ label {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <li><a  href="index.php">Inicio</a></li>
+       <li><a  href="inicio.php">Inicio</a></li>
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
@@ -108,6 +114,7 @@ label {
           </ul>
         </li>
       </ul>
+       <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
 
@@ -129,11 +136,11 @@ label {
 
 <div class="form-group" >
 <label for="">Nombre Ciudad</label>
-<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Nombre Ciudad"  required=""></div>
+<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Nombre Ciudad" autofocus="" required=""></div>
 
   
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="button" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   
 
 </div>
@@ -172,10 +179,7 @@ echo "
 }else{
   
   $consulta=mysql_query("INSERT INTO ciudad (nombrec) VALUES ('$Nombre')") or die(mysql_errno());
-   echo " 
-    <p class='avisos'>Registro insertado con exito</p> 
-    <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-    "; 
+   echo '<script> alert("Ciudad Creada con Exito."); </script>';
 }
 
 }
@@ -199,3 +203,9 @@ echo "
 </body>
 <footer> </footer>
 </html>
+<?php
+}else{
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
+}
+
+?>

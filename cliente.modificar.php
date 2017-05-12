@@ -2,7 +2,6 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,20 +9,20 @@ if (isset($_SESSION['correo'])) {?>
 
 	<meta charset="UTF-8">
 <?php
+
+
 include("conexion.php");
 
-
-$consulta="SELECT * FROM ciudad";
-$result=mysql_query($consulta);
+$consultam="SELECT * FROM ciudad";
+$regs=mysql_query($consultam);
 
 
 ?>
 	<title>cliente</title>
-   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
-	
+
       <style>
  * {
  
@@ -49,6 +48,7 @@ $result=mysql_query($consulta);
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    
   }
   .contenedor {
     width: 1300px;
@@ -56,7 +56,7 @@ $result=mysql_query($consulta);
     margin: auto;
 }
 label {
-  color:#515151;
+  color:#8E8E8E;
 }
  .cerrar{
     height: 40px;
@@ -64,7 +64,6 @@ label {
     width: 60px;
     border: auto;
   }
- 
 
    </style>
 </head>
@@ -115,14 +114,10 @@ label {
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
             <li><a href="usuario.php">Usuario</a></li>
-            <li><a href="proveedor.php">Proveedor</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
-            <li><a href="marca.php">Marca</a></li>
-            <li><a href="estado.php">Estado</a></li>
-            <li><a href="parametro.php">Parametro</a></li>
-            <li><a href="parametro.php">estadisticas</a></li>
           </ul>
         </li>
       </ul>
@@ -139,110 +134,101 @@ label {
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cliente</h1>
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+      
+      
+      $consulta=mysql_query("SELECT cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.giro, cliente.direccion, cliente.nombre_contacto,cliente.fono_contacto, cliente.correo_contacto, cliente.cargo_contacto,cliente.condicion_pago, ciudad.nombrec FROM cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad WHERE id_cliente='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+<h1>Modificar Cliente</h1>
+<!--Comienzo de Formulario-->
+<form class="form-group" action=""  method="POST">
 
 <div class="container">
 
 
 <div class="form-group" >
 <label for="">Nombre Empresa:</label>
-<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Empresa"  required=""></div>
+<input type="text" class="form-control" name="nombre" placeholder="Nombre Empresa"  required="" value="<?php echo $reg['nombre'];?>"></div>
 <div class="form-group" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
-
-
+<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
 <div class="form-group" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required=""></div>
-
-
+<label for="">Fono/Fax:</label>
+<input type="text" class="form-control" name="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>"></div>
 <div class="form-group" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>
 <div class="form-group" >
 <label for="">Giro:</label>
-<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
+<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['giro'];?>"></div>
 <div class="form-group" >
 <label for="">Direccion:</label>
-<input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
+<input type="text" class="form-control" name="direccion" placeholder="Direccion" required="" value="<?php echo $reg['direccion'];?>"></div>
 
 <div class="form-group" >
 <label for="">Ciudad:</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
-<option value="" selected="">Seleccionar Ciudad</option>
- <?php
-      while($fila=mysql_fetch_array($result))
+<select id="id_ciudad" class="form-control" name="id_ciudad"> 
+<?php
+      while($result=mysql_fetch_array($regs))
   {?>
-      <option value="<?php echo $fila['0']?>"><?php echo $fila['1'];?></option>
+      <option value="<?php echo $result['id_ciudad']?>"><?php echo $result['nombrec'];?></option>
   <?php } ?>
 </select>
 </div>
 <div class="form-group" >
 <label for="">Nombre Contacto:</label>
-<input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
+<input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['nombre_contacto'];?>"></div>
 <div class="form-group" >
 <label for="">Fono Contacto:</label>
-<input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required=""></div>
+<input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono_contacto'];?>"></div>
 <div class="form-group" >
 <label for="">Correo Contacto:</label>
-<input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required=""></div>
+<input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required="" value="<?php echo $reg['correo_contacto'];?>"></div>
 <div class="form-group" >
 <label for="">Cargo Contacto:</label>
-<input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
-
+<input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['cargo_contacto'];?>"></div>
 <div class="form-group">
 <label for="">Condición de Pago:</label>
 <select class="form-control" name="condicion_pago">
-<option value="" selected="">--Selecciona Condicion de Pago--</option>
+<option value="<?php echo $reg['condicion_pago'];?>" selected=""><?php echo $reg['condicion_pago'];?></option>
   <option value="EFECTIVO">EFECTIVO</option>
-  <option value="CREDITO 30 DÍAS">CREDITO 30 DÍAS</option>
-  <option value="CREDITO 60 DÍAS">CREDITO 60 DÍAS</option>
-  <option value="CREDITO 90 DÍAS">CREDITO 90 DÍAS</option>
+  <option value="CREDITO 30 DIAS">CREDITO 30 DIAS</option>
+  <option value="CREDITO 60 DIAS">CREDITO 60 DIAS</option>
+  <option value="CREDITO 90 DIAS">CREDITO 90 DIAS</option>
 </select>
 </div>
   
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  
 
 </div>
 </form>
 </div>
 
 <?php
-if
-    (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']) &&
-     isset($_POST['giro']) && !empty($_POST['giro']) &&
-     isset($_POST['direccion']) && !empty($_POST['direccion']) &&
-     isset($_POST['nombre_contacto']) && !empty($_POST['nombre_contacto']) &&
-     isset($_POST['fono_contacto']) && !empty($_POST['fono_contacto']) &&
-     isset($_POST['correo_contacto']) && !empty($_POST['correo_contacto']) &&
-     isset($_POST['cargo_contacto']) && !empty($_POST['cargo_contacto']) &&
-     isset($_POST['condicion_pago']) && !empty($_POST['condicion_pago']))
-  {
+include("conexion.php");
+ 
 
-      $Ciudad = $_POST['id_ciudad']; 
-      $Nombre = $_POST['nombre'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      $Giro = $_POST['giro'];
-      $Direccion = $_POST['direccion'];
-      $Nombre_contacto = $_POST['nombre_contacto'];
-      $Fono_contacto = $_POST['fono_contacto'];
-      $Correo_contacto = $_POST['correo_contacto'];
-      $Cargo_contacto = $_POST['cargo_contacto'];
-      $Condicion_pago = $_POST['condicion_pago'];
 
-    // conexión a la base de datos de
+      $id=$_REQUEST['id'];  
+      $Ciudad = isset($_POST['id_ciudad']) ? $_POST['id_ciudad']: '';    
+      $Nombre = isset($_POST['nombre']) ? $_POST['nombre']:'';
+      $Rut = isset($_POST['rut']) ? $_POST['rut']:'';
+      $Fono = isset($_POST['fono']) ? $_POST['fono']: '';
+      $Correo = isset($_POST['correo']) ? $_POST['correo']: '';
+      $Giro = isset($_POST['giro']) ? $_POST['giro']: '';
+      $Direccion = isset($_POST['direccion']) ? $_POST['direccion']: '';
+      $Nombre_contacto = isset($_POST['nombre_contacto']) ? $_POST['nombre_contacto']: '';
+      $Fono_contacto = isset($_POST['fono_contacto']) ? $_POST['fono_contacto']: '';
+      $Correo_contacto = isset($_POST['correo_contacto']) ? $_POST['correo_contacto']: '';
+      $Cargo_contacto = isset($_POST['cargo_contacto']) ? $_POST['cargo_contacto']: '';
+      $Condicion_pago = isset($_POST['condicion_pago']) ? $_POST['condicion_pago']: '';
+
+   // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 
@@ -251,44 +237,29 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
-{ 
-echo " 
-<p class='avisos'>El RUT ya esta registrado</p> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
-}
-else{
-  
-  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
- echo '<script> alert("Cliente Creado con Exito."); </script>';
-
-}
-
-}
+  mysql_query("UPDATE  cliente SET id_ciudad=$Ciudad, nombre='$Nombre', rut='$Rut' , fono='$Fono' , correo='$Correo' , giro='$Giro' , direccion='$Direccion' , nombre_contacto='$Nombre_contacto' , fono_contacto='$Fono_contacto' , correo_contacto='$Correo_contacto' , cargo_contacto='$Cargo_contacto' , condicion_pago='$Condicion_pago' WHERE id_cliente='$id'");
+ 
 ?>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
+    <script src="validanumeros.js"></script>
+    <script src="validaremail.js"></script>
+    <!--<script src="relaciones.js"></script>-->
 </body>
 <footer> </footer>
 </html>
 <?php
 }else{
-  echo '<script> window.location="index.php";</script>';
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
 }
 
 ?>

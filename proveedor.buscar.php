@@ -8,15 +8,9 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-  <?php
-include("conexion.php");
 
-$consulta="SELECT * FROM  cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cliente Encargado</title>
+	<title>Proveedor</title>
+  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
@@ -68,12 +62,11 @@ label {
     border: auto;
   }
 
-
    </style>
 
 </head>
  <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -118,11 +111,11 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
-            <li><a href="#">Usuario</a></li>
-            <li><a href="#">Proveedor</a></li>
-            <li><a href="#">Uf</a></li>
-            <li><a href="#">Comisiones</a></li>
-            <li><a href="#">Periodo</a></li>
+            <li><a href="usuario.php">Usuario</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
+            <li><a href="uf.php">Uf</a></li>
+            <li><a href="comision.php">Comisiones</a></li>
+            <li><a href="periodo.php">Periodo</a></li>
           </ul>
         </li>
       </ul>
@@ -134,73 +127,69 @@ label {
 
 
 
-<a href="cliente.encargado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.encargado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="estado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="estado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
 
 <form class="form-group" action=""  method="POST">
 
-<div class="container">
+<div class="container" >
 
 <div class="form-group" id="datos">
-<h4><label for="caja_busqueda"><h1>Buscar Cliente Encargado</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" placeholder="Buscar">
+<h4><label for="caja_busqueda"><h1>Buscar Proveedor</h1></label></h4>
+    <input type="text" name="busca" id="busqueda" class="form-control" placeholder="Buscar" autofocus="">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
 </div>
 
 
-<div id="datos">
-
-</div>
-
-<table class="table table-striped" id="datos">
+<table  class="table table-striped" id="" name="" >
 <thead>
-      <th colspan="1"><a href="cliente.encargado.php" class="btn btn-primary">Nuevo Cliente</a></th>
-      <th colspan="11">Lista de Usuarios</th>
+      <th colspan="1"><a href="proveedor.php" class="btn btn-primary">Nuevo Proveedor</a></th>
+      <th colspan="11">Lista de Proveedores</th>
     </thead>
     <tbody>
       <tr>
-        <td><h4>Cliente</h4></td>
-        <td><h4>Cliente Encargado</h4></td>
-        <td><h4>Apellido</h4></td>
+        <td><h4>#</h4></td>
         <td><h4>Rut</h4></td>
-        <td><h4>Telefono</h4></td>
-        <td><h4>Correo</h4></td>
+        <td><h4>Razon Social</h4></td>
+        <td><h4>Direccion</h4></td>
+        <td><h4>Nombre Contacto</h4></td>
+        <td><h4>Telefono Contacto</h4></td>
+        <td><h4>Cargo</h4></td>
         <td colspan="2"><h4>Operaciones</h4></td>
       </tr>
 
 <?php
 
-
 $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
- //  Consulta Mysql donde se aplica INNER JOIN
-        $dbhandle=mysql_query("SELECT cliente_encargado.id_cliente_encargado, cliente_encargado.nombreE, cliente_encargado.apellido, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE nombreE like '%".$busca."%' ")or die(mysql_error());
-       
+  $dbhandle=mysql_query("SELECT * FROM proveedor WHERE razon_social like '%".$busca."%' ");
 }
 
-  while($fila=mysql_fetch_array($dbhandle)){
+
+   while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
-   echo '<td>'.$fila['nombre'].'</td>';
-   echo '<td>'.'<strong>'.$fila['nombreE'].'</strong>'.'</td>';
-   echo '<td>'.$fila['apellido'].'</td>';
-   echo '<td>'.$fila['rut'].'</td>';
-   echo '<td>'.$fila['fono'].'</td>';
-   echo '<td>'.$fila['correo'].'</td>';
-   echo '<td>'.'<a href="cliente.modificar.encargado.php?id='.$fila['id_cliente_encargado'].'" 
-   class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger">'.'Eliminar'.'</a>'.'</td>';   
+   echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_proveedor'].'\")">'.$muestra['id_proveedor'].'</a>'.'</td>';
+   echo '<td>'.$muestra['rut'].'</td>';
+   echo '<td>'.'<strong>'.$muestra['razon_social'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['direccion'].'</td>';
+   echo '<td>'.$muestra['nombre_contacto'].'</td>';
+   echo '<td>'.$muestra['fono_contacto'].'</td>';
+   echo '<td>'.$muestra['cargo_contacto'].'</td>';
+   echo '<td>'.'<a href="proveedor.modificar.php?id='.$muestra['id_proveedor'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
+                         onclick="eliminarDato(\''.$muestra['id_proveedor'].'\');">'.'Eliminar'.'</button> '.'</td>';   
 }
-?>  
-
+?>          
   </ul>
       </tbody>
 </table>
+
 <?php
 // close connection; 
 mysql_close();

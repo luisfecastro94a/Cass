@@ -2,22 +2,16 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
-//var_dump($_POST); esto es para ver los datos que pasan, que datos estan pasando 
-$consulta="SELECT * FROM cargo";
-$result=mysql_query($consulta);
 
-
-?>
-	<title>Usuario</title>
-
+	<title>Estado</title>
+   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
@@ -62,7 +56,6 @@ label {
     width: 60px;
     border: auto;
   }
-  
  
 
    </style>
@@ -129,12 +122,12 @@ label {
 	<div class="contenedor">
 
 
-<a href="usuario.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="usuario.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="estado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="estado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Usuario</h1>
+<h1>Ingresar Estado</h1>
 
 <form class="form-group" action=""  method="POST" onSubmit="return validar()">
 
@@ -142,123 +135,58 @@ label {
 
 
 <div class="form-group" >
-<label for="">Nombre </label>
-<input type="text" class="form-control"  name="nombre" placeholder="Nombre" onKeyPress="return soloLetras(event)" autofocus=""  required=""></div>
+<label for="">Estado</label>
+<input type="text" class="form-control" id="estado" name="estado" placeholder="Ingresar Estado" autofocus="" onKeyPress="return soloLetras(event)" required=""></div>
 
-<div class="form-group" >
-<label for="">Apellido </label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellido" onKeyPress="return soloLetras(event)"  required=""></div>
+  
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  
 
-<div class="form-group" >
-<label for="">Domicilio</label>
-<input type="text" class="form-control"  name="domicilio" placeholder="Domicilio"  required=""></div>
-
-<div class="form-group" >
-<label for="">Fono </label>
-<input type="text" class="form-control"  name="fono" placeholder="Fono " onKeyPress="return SoloNumeros(event)" required=""></div>
-
-<div class="form-group" >
-<label for="">Rut</label>
-<input type="text" class="form-control"  name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
-
-
-<div class="form-group" >
-<label for="">Correo</label>
-<input type="email" class="form-control" name="correo"   placeholder="E-mail" required=""></div>
-
-<div class="form-group" >
-<label for="">Clave</label>
-<input type="password" class="form-control" name="clave"  placeholder="Contraseña" required=""></div>
-
-            <div class="form-group" >
-              <label for="">Cargo</label>
-              <select id="id_cargo" class="form-control" name="id_cargo" > 
-                <option value="" selected="">-------------Selecciona Cargo-------------</option>
-                 <?php
-                        while($fila=mysql_fetch_array($result))
-                 {?>
-                   <option value="<?php echo $fila['0']?>"> <?php echo $fila['1'];?></option>
-                 <?php } ?>
-              </select>
-            </div>
-            <?php
-            include("conexion.php");
-
-            $sol="SELECT * FROM nivelacceso";
-            $reg=mysql_query($sol);
-
-            ?>    
-            <div class="form-group" >
-              <label for="">Nivel de Acceso</label>
-              <select id="id_nivelacceso" class="form-control" name="id_nivelacceso" > 
-                <option value="" selected="">-------------Selecciona Cargo-------------</option>
-                 <?php
-                        while($fila1=mysql_fetch_array($reg))
-                 {?>
-                   <option value="<?php echo $fila1['0'];?>"> <?php echo $fila1['1'];?></option>
-                 <?php } ?>
-              </select>
-            </div>
-
-            <div class="form-group ">
-              <button type="submit"  class="btn btn-primary btn-lg btn-block">Registrar</button>
-            </div>
-            <div class="login-register">
-                    <a href="index.php" class="btn btn-danger">Login</a>
-            </div>
 </div>
 </form>
 </div>
-<?php
-include("conexion.php");
 
+<?php
 if
     (
-     isset($_POST['id_nivelacceso']) && !empty($_POST['id_nivelacceso']) &&
-     isset($_POST['id_cargo']) && !empty($_POST['id_cargo']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['apellido']) && !empty($_POST['apellido']) &&
-     isset($_POST['domicilio']) && !empty($_POST['domicilio']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['clave']) && !empty($_POST['clave']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']))
-    
+     isset($_POST['estado']) && !empty($_POST['estado']))
   {
 
-      $nivelacceso = $_POST['id_nivelacceso']; 
-      $cargo = $_POST['id_cargo'];
-      $nombre = $_POST['nombre'];
-      $apellido = $_POST['apellido'];
-      $domicilio = $_POST['domicilio'];
-      $fono = $_POST['fono'];
-      $rut = $_POST['rut'];
-      $clave = $_POST['clave'];
-      $correo = $_POST['correo'];
+      $estado = $_POST['estado']; 
+   
+
+    // conexión a la base de datos de
+$dbhandle = mysql_connect($hostname, $username, $password) 
+ or die("No se pudo Contactar a Base de Datos MySQL");
+
+
+// seleccionar una base de datos para trabajar con
+$selected = mysql_select_db("bdcass",$dbhandle) 
+  or die("No se pudo seleccionar la base de datos CASS");
 
 // ============================================== 
 // Comprobamos si el rut esta registrado 
+include("conexion.php");
 
-
-$nuevo=mysql_query("SELECT rut FROM usuario WHERE rut='$rut'"); 
-if(mysql_num_rows($nuevo)>0) 
+$nuevo_estado=mysql_query("SELECT estado FROM estado WHERE estado='$estado'"); 
+if(mysql_num_rows($nuevo_estado)>0) 
 { 
 echo " 
-<p class='avisos'>El RUT ya esta registrado</p> 
+<p class='avisos'>El ESTADO ya esta registrado</p> 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
-  mysql_query("INSERT INTO usuario (id_nivelacceso, id_cargo, nombre, apellido, domicilio, fono, rut, clave, correo) VALUES ('$nivelacceso', '$cargo','$nombre','$apellido','$domicilio','$fono', '$rut',  '$clave','$correo')")or die(mysql_errno());
-   echo '<script> alert("Usuario Creado con Exito."); </script>';
-}
-
-}
-else{
   
+  mysql_query("INSERT INTO estado (estado ) VALUES ('$estado')") or die(mysql_errno());
+ echo '<script> alert("Estado Creado con Exito."); </script>';
+
 }
 
+}
 ?>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -268,8 +196,7 @@ else{
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>
-     
+    <script src="validanumeros.js"></script>    
 </body>
 <footer> </footer>
 </html>

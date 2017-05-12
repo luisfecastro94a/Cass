@@ -8,20 +8,20 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-<?php
+  <?php
 include("conexion.php");
 
-$consulta="SELECT * FROM cliente";
+$consulta="SELECT * FROM ciudad";
 $result=mysql_query($consulta);
 
 
 ?>
-	<title>Cliente Encargado</title>
+
+	<title>Proveedor</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
 
-	  
       <style>
  * {
  
@@ -47,6 +47,7 @@ $result=mysql_query($consulta);
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    
   }
   .contenedor {
     width: 1300px;
@@ -54,7 +55,7 @@ $result=mysql_query($consulta);
     margin: auto;
 }
 label {
-  color:#515151;
+  color:#8E8E8E;
 }
  .cerrar{
     height: 40px;
@@ -127,79 +128,110 @@ label {
 	<div class="contenedor">
 
 
-<a href="cliente.encargado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.encargado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="proveedor.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="proveedor.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cliente Encargado</h1>
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
 
-<form class="form-group" action=""  method="POST">
+      
+      
+      $consulta=mysql_query("SELECT * FROM proveedor WHERE id_proveedor='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+<h1>Modificar Proveedor</h1>
+<!--Comienzo de Formulario-->
+<form class="form-group" action=""  method="POST" onSubmit="return validar()"> 
 
 <div class="container">
+<label class="fe" for="">Fecha Creación:<input class="fecha" type="text" value="<?php echo $reg['fecha_creacion'];?>" name="fecha_creacion" id="fecha_creacion"></label><!--fecha con jquey-->
 
 <div class="form-group" >
-<label for="">Cliente a asociar</label>
-<select id="id_cliente" class="form-control" name="id_cliente" > 
-<option value="" selected="">Seleccionar Cliente</option>
+<label for="">Ciudad:</label>
+<select id="id_ciudad" class="form-control" name="id_ciudad" autofocus="" > 
+<option value="" selected="">Seleccionar Ciudad</option>
  <?php
       while($fila=mysql_fetch_array($result))
   {?>
-      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
+      <option value="<?php echo $fila['0']?>"><?php echo $fila['1'];?></option>
   <?php } ?>
 </select>
 </div>
 
 <div class="form-group" >
-<label for="">Nombre</label>
-<input type="text" class="form-control" name="nombreE" placeholder="Nombre Encargado"  required=""></div>
+<label for="">Rut Empresa</label>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut" value="<?php echo $reg['rut'];?>"  required oninput="checkRut(this)"></div>
 
 <div class="form-group" >
-<label for="">Apellido</label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellido" onKeyPress="return soloLetras(event)" required=""></div>
-
+<label for="">Razon Social</label>
+<input type="text" class="form-control" id="razon_social" name="razon_social" value="<?php echo $reg['razon_social'];?>" placeholder="Razon Social"  required=""></div>
 
 <div class="form-group" >
-<label for="">rut</label>
-<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)"></div>
-
+<label for="">Direccion</label>
+<input type="text" class="form-control" name="direccion" placeholder="Direccion" value="<?php echo $reg['direccion'];?>" required=""></div>
 
 
 <div class="form-group" >
-<label for="">fono</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<label for="">Fono/Fax Empresa</label>
+<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" value="<?php echo $reg['fono'];?>" onKeyPress="return SoloNumeros(event)"
   required=""></div>
 
 <div class="form-group" >
-<label for="">correo</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
+<label for="">Giro</label>
+<input type="text" class="form-control" name="giro" placeholder="Giro" value="<?php echo $reg['giro'];?>" onKeyPress="return soloLetras(event)" required=""></div>
+
+<div class="form-group" >
+<label for="">Correo</label>
+<input type="email" class="form-control" name="correo" id="correo" value="<?php echo $reg['correo'];?>" placeholder="E-mail" required=""></div>
+
+<div class="form-group" >
+<label for="">Nombre Contacto:</label>
+<input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" value="<?php echo $reg['nombre_contacto'];?>" onKeyPress="return soloLetras(event)" required=""></div>
+<div class="form-group" >
+<label for="">Fono Contacto:</label>
+<input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" value="<?php echo $reg['fono_contacto'];?>" onKeyPress="return SoloNumeros(event)" required=""></div>
+<div class="form-group" >
+<label for="">Correo Contacto:</label>
+<input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" value="<?php echo $reg['correo_contacto'];?>" required=""></div>
+<div class="form-group" >
+<label for="">Cargo Contacto:</label>
+<input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" value="<?php echo $reg['cargo_contacto'];?>" onKeyPress="return soloLetras(event)" required=""></div>
+ 
+  
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button>
+  <input type="reset" class="btn btn-default btn-lg btn-block" value="Cancelar">
 
   
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
 
 </div>
 </form>
 </div>
 
 <?php
-if
-  (  isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
-     isset($_POST['nombreE']) && !empty($_POST['nombreE']) &&
-     isset($_POST['apellido']) && !empty($_POST['apellido']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']))
-  {
+include("conexion.php");
+ 
 
-      $Cliente = $_POST['id_cliente']; 
-      $Nombre = $_POST['nombreE'];
-      $Apellido = $_POST['apellido'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      
-    // conexión a la base de datos de
+
+$id=$_REQUEST['id'];  
+$ciudad = isset($_POST['id_ciudad']) ? $_POST['id_ciudad']: '';
+$rut = isset($_POST['rut']) ? $_POST['rut']: ''; 
+$razon_social = isset($_POST['razon_social']) ? $_POST['razon_social']: ''; 
+$direccion = isset($_POST['direccion']) ? $_POST['direccion']: ''; 
+$fono = isset($_POST['fono']) ? $_POST['fono']: ''; 
+$giro = isset($_POST['giro']) ? $_POST['giro']: ''; 
+$correo = isset($_POST['correo']) ? $_POST['correo']: ''; 
+$nombre_contacto = isset($_POST['nombre_contacto']) ? $_POST['nombre_contacto']: ''; 
+$fono_contacto = isset($_POST['fono_contacto']) ? $_POST['fono_contacto']: ''; 
+$correo_contacto = isset($_POST['correo_contacto']) ? $_POST['correo_contacto']: ''; 
+$cargo_contacto = isset($_POST['cargo_contacto']) ? $_POST['cargo_contacto']: ''; 
+$fecha_creacion = isset($_POST['fecha_creacion']) ? $_POST['fecha_creacion']: ''; 
+    
+     
+
+   // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 
@@ -207,14 +239,11 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
-  
 
-
-  mysql_query("INSERT INTO cliente_encargado (id_cliente, nombreE, apellido, rut, fono, correo) VALUES ('$Cliente', '$Nombre', '$Apellido','$Rut','$Fono','$Correo')")or die(mysql_error());
-
-}
-
+  mysql_query("UPDATE  proveedor SET id_ciudad=$ciudad, rut='$rut' , razon_social='$razon_social', direccion='$direccion' , fono='$fono' , giro='$giro' , correo='$correo' ,   nombre_contacto='$nombre_contacto' , fono_contacto='$fono_contacto' , correo_contacto='$correo_contacto' , cargo_contacto='$cargo_contacto' , fecha_creacion='$fecha_creacion' WHERE id_proveedor='$id'");
+ 
 ?>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -226,6 +255,8 @@ $selected = mysql_select_db("bdcass",$dbhandle)
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
+    <script src="validaremail.js"></script>
+    <!--<script src="relaciones.js"></script>-->
 </body>
 <footer> </footer>
 </html>

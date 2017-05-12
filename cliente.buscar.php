@@ -1,3 +1,7 @@
+<?php
+session_start();
+include("conexion.php");
+if (isset($_SESSION['correo'])) {?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,7 +62,12 @@ $result=mysql_query($consulta);
 label {
   color:#555555;
 }
-
+ .cerrar{
+    height: 40px;
+    margin: 5px auto;
+    width: 60px;
+    border: auto;
+  }
 
    </style>
 
@@ -79,7 +88,7 @@ label {
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <li><a  href="index.php">Inicio</a></li>
+       <li><a  href="inicio.php">Inicio</a></li>
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
@@ -117,6 +126,7 @@ label {
           </ul>
         </li>
       </ul>
+       <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
 <body>
@@ -180,7 +190,7 @@ if($busca!=""){
    echo '<td>'.$muestra['correo'].'</td>';
    echo '<td>'.$muestra['fono'].'</td>';
    echo '<td>'.$muestra['nombre_contacto'].'</td>';
-   echo '<td>'.'<a href="modificar.cliente.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<a href="cliente.modificar.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_cliente'].'\');">'.'Eliminar'.'</button> '.'</td>';   
 }
@@ -220,3 +230,9 @@ mysql_close();
 </body>
 <footer> </footer>
 </html>
+<?php
+}else{
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
+}
+
+?>

@@ -1,3 +1,7 @@
+<?php
+session_start();
+include("conexion.php");
+if (isset($_SESSION['correo'])) {?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,3 +39,9 @@
 </body>
 <footer> </footer>
 </html>
+<?php
+}else{
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
+}
+
+?>

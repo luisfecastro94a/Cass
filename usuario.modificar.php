@@ -147,7 +147,7 @@ label {
 
       
       
-      $consulta=mysql_query("SELECT usuario.id_usuario, usuario.nombre, usuario.apellido, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE id_usuario='$id'")or die(mysql_error());
+      $consulta=mysql_query("SELECT usuario.id_usuario, usuario.nombre, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE id_usuario='$id'")or die(mysql_error());
       $reg=mysql_fetch_array($consulta);
   ?>
 <h1>Modificar Usuario</h1>
@@ -158,11 +158,9 @@ label {
 
 
 <div class="form-group" >
-<label for="">Nombre </label>
+<label for="">Nombre Completo</label>
 <input type="text" class="form-control" name="nombre" placeholder="Nombre Empresa"  required="" value="<?php echo $reg['nombre'];?>"></div>
-<div class="form-group" >
-<label for="">Apellido </label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellido"  required="" value="<?php echo $reg['apellido'];?>"></div>
+
 <div class="form-group" >
 <label for="">Domicilio </label>
 <input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  required="" value="<?php echo $reg['domicilio'];?>"></div>
@@ -232,7 +230,6 @@ include("conexion.php");
       $nivelacceso = isset($_POST['id_nivelacceso']) ? $_POST['id_nivelacceso']: '';    
       $cargo = isset($_POST['id_cargo']) ? $_POST['id_cargo']: '';
       $nombre = isset($_POST['nombre']) ? $_POST['nombre']:'';
-      $apellido = isset($_POST['apellido']) ? $_POST['apellido']:'';
       $domicilio = isset($_POST['domicilio']) ? $_POST['domicilio']:'';
       $fono = isset($_POST['fono']) ? $_POST['fono']: '';
       $rut = isset($_POST['rut']) ? $_POST['rut']:'';
@@ -250,7 +247,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   or die("No se pudo seleccionar la base de datos CASS");
 
 
-$query=mysql_query("UPDATE  usuario SET id_nivelacceso=$nivelacceso, id_cargo=$cargo, nombre='$nombre', apellido='$apellido', domicilio='$domicilio', fono='$fono', rut='$rut' , clave='$clave' , correo='$correo' WHERE id_usuario='$id'");
+$query=mysql_query("UPDATE  usuario SET id_nivelacceso=$nivelacceso, id_cargo=$cargo, nombre='$nombre', domicilio='$domicilio', fono='$fono', rut='$rut' , clave='$clave' , correo='$correo' WHERE id_usuario='$id'");
 
 
 

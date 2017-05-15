@@ -154,26 +154,22 @@ label {
       <tr>
         <td><h4>#</h4></td>
         <td><h4>Estado</h4></td>
-        <td colspan="2"><h4>Operaciones</h4></td>
+       
       </tr>
 
 <?php
 
-$busca="";
-$busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
+;  
 include("conexion.php");
-if($busca!=""){
-  $dbhandle=mysql_query("SELECT * FROM estado WHERE estado like '%".$busca."%' ");
-}
+
+  $dbhandle=mysql_query("SELECT * FROM estado ");
+
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
    echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_estado'].'\")">'.$muestra['id_estado'].'</a>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
-   echo '<td>'.'<a href="estado.modificar.php?id='.$muestra['id_estado'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
-                         onclick="eliminarDato(\''.$muestra['id_estado'].'\');">'.'Eliminar'.'</button> '.'</td>';   
+   echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>'; 
 }
 ?>          
   </ul>

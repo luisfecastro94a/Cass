@@ -85,7 +85,7 @@ if (isset($_SESSION['correo'])) {?>
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">

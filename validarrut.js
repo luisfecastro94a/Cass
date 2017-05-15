@@ -5,7 +5,7 @@
   <!--funcion para validar el rut-->
 function checkRut(rut) {
     // para Despejar Puntos
-    var valor = rut.value.replace('.','');
+    var valor = rut.value.replace('','');
     // para Despejar Guión
     valor = valor.replace('-','');
     // Aislar Cuerpo y Dígito Verificador

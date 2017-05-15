@@ -141,37 +141,34 @@ label {
 <div class="container">
 
 
-<div class="form-group" >
-<label for="">Nombre </label>
+<div class="col-xs-5" ><!--al div hay que cambiar el form-group por col-xs-->
+<label for="">Nombre Completo</label>
 <input type="text" class="form-control"  name="nombre" placeholder="Nombre" onKeyPress="return soloLetras(event)" autofocus=""  required=""></div>
 
-<div class="form-group" >
-<label for="">Apellido </label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellido" onKeyPress="return soloLetras(event)"  required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Domicilio</label>
 <input type="text" class="form-control"  name="domicilio" placeholder="Domicilio"  required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Fono </label>
 <input type="text" class="form-control"  name="fono" placeholder="Fono " onKeyPress="return SoloNumeros(event)" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Rut</label>
 <input type="text" class="form-control"  name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo</label>
 <input type="email" class="form-control" name="correo"   placeholder="E-mail" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Clave</label>
 <input type="password" class="form-control" name="clave"  placeholder="Contraseña" required=""></div>
 
-            <div class="form-group" >
-              <label for="">Cargo</label>
+            <div class="col-xs-5" >
+              <label for="" >Cargo</label>
               <select id="id_cargo" class="form-control" name="id_cargo" > 
                 <option value="" selected="">-------------Selecciona Cargo-------------</option>
                  <?php
@@ -188,7 +185,7 @@ label {
             $reg=mysql_query($sol);
 
             ?>    
-            <div class="form-group" >
+            <div class="col-xs-5" >
               <label for="">Nivel de Acceso</label>
               <select id="id_nivelacceso" class="form-control" name="id_nivelacceso" > 
                 <option value="" selected="">-------------Selecciona Cargo-------------</option>
@@ -200,10 +197,10 @@ label {
               </select>
             </div>
 
-            <div class="form-group ">
+            <div class="col-xs-5">
               <button type="submit"  class="btn btn-primary btn-lg btn-block">Registrar</button>
             </div>
-            <div class="login-register">
+            <div class="col-xs-5">
                     <a href="index.php" class="btn btn-danger">Login</a>
             </div>
 </div>
@@ -217,7 +214,6 @@ if
      isset($_POST['id_nivelacceso']) && !empty($_POST['id_nivelacceso']) &&
      isset($_POST['id_cargo']) && !empty($_POST['id_cargo']) &&
      isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['apellido']) && !empty($_POST['apellido']) &&
      isset($_POST['domicilio']) && !empty($_POST['domicilio']) &&
      isset($_POST['fono']) && !empty($_POST['fono']) &&
      isset($_POST['rut']) && !empty($_POST['rut']) &&
@@ -229,7 +225,6 @@ if
       $nivelacceso = $_POST['id_nivelacceso']; 
       $cargo = $_POST['id_cargo'];
       $nombre = $_POST['nombre'];
-      $apellido = $_POST['apellido'];
       $domicilio = $_POST['domicilio'];
       $fono = $_POST['fono'];
       $rut = $_POST['rut'];
@@ -249,7 +244,7 @@ echo "
 "; 
 }
 else{
-  mysql_query("INSERT INTO usuario (id_nivelacceso, id_cargo, nombre, apellido, domicilio, fono, rut, clave, correo) VALUES ('$nivelacceso', '$cargo','$nombre','$apellido','$domicilio','$fono', '$rut',  '$clave','$correo')")or die(mysql_errno());
+  mysql_query("INSERT INTO usuario (id_nivelacceso, id_cargo, nombre,  domicilio, fono, rut, clave, correo) VALUES ('$nivelacceso', '$cargo','$nombre','$domicilio','$fono', '$rut',  '$clave','$correo')")or die(mysql_errno());
    echo '<script> alert("Usuario Creado con Exito."); </script>';
 }
 

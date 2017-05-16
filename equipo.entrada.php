@@ -11,18 +11,38 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 <?php
 include("conexion.php");
-
-
-$consulta="SELECT * FROM ciudad";
+var_dump($_POST);
+$consulta="SELECT * FROM cliente ORDER BY nombre ASC";
 $result=mysql_query($consulta);
 
 
 ?>
 	<title>Equipo</title>
-   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="js/bootstrap.min.js">
+    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/calendario.css">
+  <link rel="stylesheet" href="js/bootstrap.min.js">
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
 
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script>
+  $( function() {
+    $( "#fecha_creacion" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
 	
       <style>
  * {
@@ -137,72 +157,111 @@ label {
 <br><br>
 <h1>Entrada de Equipo</h1>
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+<form class="form-group" action=""  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
 
 <div class="container">
 
+<div class="form-group" >
+<label class="fe" for="">Fecha Creación</label>
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion"></div>
 
-<div class="form-group" >
-<label for="">Nombre Empresa:</label>
-<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Empresa"  required=""></div>
-<div class="form-group" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
-
-
-<div class="form-group" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required=""></div>
-
-
-<div class="form-group" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
-<div class="form-group" >
-<label for="">Giro:</label>
-<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="form-group" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
-
-<div class="form-group" >
-<label for="">Ciudad:</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
-<option value="" selected="">Seleccionar Ciudad</option>
+<div class="col-xs-5" >
+<label for="">Cliente</label>
+<select id="id_cliente" class="form-control" name="id_cliente" autofocus="" > 
+<option value="" selected="">Seleccionar Cliente</option>
  <?php
       while($fila=mysql_fetch_array($result))
   {?>
-      <option value="<?php echo $fila['0']?>"><?php echo $fila['1'];?></option>
+      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
   <?php } ?>
 </select>
 </div>
-<div class="form-group" >
-<label for="">Nombre Contacto:</label>
-<input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="form-group" >
-<label for="">Fono Contacto:</label>
-<input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required=""></div>
-<div class="form-group" >
-<label for="">Correo Contacto:</label>
-<input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required=""></div>
-<div class="form-group" >
-<label for="">Cargo Contacto:</label>
-<input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
 
-<div class="form-group">
-<label for="">Condición de Pago:</label>
-<select class="form-control" name="condicion_pago">
-<option value="" selected="">--Selecciona Condicion de Pago--</option>
-  <option value="EFECTIVO">EFECTIVO</option>
-  <option value="CREDITO 30 DÍAS">CREDITO 30 DÍAS</option>
-  <option value="CREDITO 60 DÍAS">CREDITO 60 DÍAS</option>
-  <option value="CREDITO 90 DÍAS">CREDITO 90 DÍAS</option>
+
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Cliente</label>
+<textarea rows="4" cols="53" name="sintoma_cliente"></textarea>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Serie de Equipo</label>
+<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
+
+
+
+<?php
+include("conexion.php");
+
+$consulta1="SELECT * FROM marca ORDER BY marca ASC";
+$resultM=mysql_query($consulta1);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Marca</label>
+<select id="id_marca" class="form-control" name="id_marca" > 
+<option value="" selected="">Seleccionar la Marca</option>
+ <?php
+      while($marca=mysql_fetch_array($resultM))
+  {?>
+      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
+  <?php } ?>
 </select>
 </div>
+
+<div class="col-xs-5" >
+<label for="">Modelo del Equipo</label>
+<input type="text" class="form-control" name="modelo" id="modelo"   placeholder="Modelo del Equipo" required=""></div>
+
+<div class="col-xs-5">
+<label for="">Tipo de Ingreso</label>
+<select class="form-control" name="tipo_ingreso">
+<option value="" selected="">--Selecciona el tipo de Ingreso--</option>
+  <option value="REPARACION">REPARACION</option>
+  <option value="CONTRATO">CONTRATO</option>
+  <option value="GARANTIA CASS">GARANTIA CASS</option>
+  <option value="GARANTIA CANON">GARANTIA CANON</option>
+  <option value="GARANTIA ACER">GARANTIA ACER</option>
+</select>
+</div>
+
+<?php
+include("conexion.php");
+
+$consulta2="SELECT * FROM estado ORDER BY estado ASC ";
+$resultE=mysql_query($consulta2);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Estado</label>
+<select id="id_estado" class="form-control" name="id_estado" > 
+<option value="" selected="">Seleccionar el Estado</option>
+ <?php
+      while($esta=mysql_fetch_array($resultE))
+  {?>
+      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Técnico</label>
+<textarea rows="4" cols="53" name="sintoma_tecnico"></textarea>
+</div>
+<!--subir imagen-->
+<div class="col-xs-5">
+    <label for="">Subir Fotografia de Equipo</label><br>
+    <input type="text" name="nombreImagen" placeholder="Nombre....." value="">
+    <input type="file" name="imagen" value="">
   
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+</div>
+  
+  <div class="col-xs-5">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el Equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
   
 
 </div>
@@ -210,33 +269,41 @@ label {
 </div>
 
 <?php
+include("conexion.php");
+
 if
-    (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']) &&
-     isset($_POST['giro']) && !empty($_POST['giro']) &&
-     isset($_POST['direccion']) && !empty($_POST['direccion']) &&
-     isset($_POST['nombre_contacto']) && !empty($_POST['nombre_contacto']) &&
-     isset($_POST['fono_contacto']) && !empty($_POST['fono_contacto']) &&
-     isset($_POST['correo_contacto']) && !empty($_POST['correo_contacto']) &&
-     isset($_POST['cargo_contacto']) && !empty($_POST['cargo_contacto']) &&
-     isset($_POST['condicion_pago']) && !empty($_POST['condicion_pago']))
+    (isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
+     isset($_POST['id_marca']) && !empty($_POST['id_marca']) &&
+     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
+     isset($_POST['fecha_creacion']) && !empty($_POST['fecha_creacion']) &&
+     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
+     isset($_POST['tipo_ingreso']) && !empty($_POST['tipo_ingreso']) &&
+     isset($_POST['serie_equipo']) && !empty($_POST['serie_equipo']) &&
+     isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
+     isset($_POST['sintoma_tecnico']) && !empty($_POST['sintoma_tecnico']) &&
+     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen']) &&
+     isset($_POST['imagen']) && !empty($_POST['imagen']))
   {
 
-      $Ciudad = $_POST['id_ciudad']; 
-      $Nombre = $_POST['nombre'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      $Giro = $_POST['giro'];
-      $Direccion = $_POST['direccion'];
-      $Nombre_contacto = $_POST['nombre_contacto'];
-      $Fono_contacto = $_POST['fono_contacto'];
-      $Correo_contacto = $_POST['correo_contacto'];
-      $Cargo_contacto = $_POST['cargo_contacto'];
-      $Condicion_pago = $_POST['condicion_pago'];
+    $ruta = "img";
+    $archivo=$_FILES['imagen']['tmp_name'];
+    $nombreArchivo=$_FILES['imagen']['name'];//TEXTO
+    move_uploaded_file($archivo, $ruta."/".$nombreArchivo);
+    $ruta=$ruta."/".$nombreArchivo;
+
+
+      $id_cliente = $_POST['id_cliente']; 
+      $id_marca = $_POST['id_marca'];
+      $id_estado = $_POST['id_estado'];
+      $fecha_creacion = $_POST['fecha_creacion'];
+      $modelo = $_POST['modelo'];
+      $tipo_ingreso = $_POST['tipo_ingreso'];
+      $serie_equipo = $_POST['serie_equipo'];
+      $sintoma_cliente = $_POST['sintoma_cliente'];
+      $sintoma_tecnico = $_POST['sintoma_tecnico'];
+      $nombreImagen = $_POST['nombreImagen'];
+      $imagen = $_POST['imagen'];
+       
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -251,24 +318,23 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
+$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo'"); 
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
 echo " 
-<p class='avisos'>El RUT ya esta registrado</p> 
+<p class='avisos'>El Equipo ya esta registrado</p> 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
- echo '<script> alert("Cliente Creado con Exito."); </script>';
+  $consulta=mysql_query("INSERT INTO cliente (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$ruta')") or die(mysql_errno());
+ echo '<script> alert("Equipo Creado con Exito."); </script>';
 
 }
 
 }
 ?>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -278,7 +344,10 @@ else{
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
+    <script src="validanumeros.js"></script>   
+    <script src="js/jquery.js"></script>   
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/datepicker-es.js"></script> 
 </body>
 <footer> </footer>
 </html>

@@ -30,11 +30,10 @@ $result=mysql_query($consulta);
   <link rel="stylesheet" href="js/bootstrap.min.js">
   <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
-
+  <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
   <script>
   $( function() {
     $( "#fecha_creacion" ).datepicker({
@@ -317,23 +316,11 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--aqui va formulario de div-->
-      <?php
-include("conexion.php");
-
-
-$consulta3="SELECT * FROM cliente";
-$asig2=mysql_query($consulta3);
-
-?>
+      
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="id_cliente" class="form-control" name="id_cliente" onchange="escola(this.value)" > 
-<option value="" selected="">---Selecionar Cliente---</option>
- <?php
-      while($fi=mysql_fetch_array($asig2))
-  {?>
-      <option value="<?php echo $fi['0']?>"><?php echo $fi['3'];?></option>
-  <?php } ?>
+<select id="nombreCliente" class="form-control" name="nombreCliente" onchange="escola(this.value)" value="" > 
+<option value="0">---Selecionar Cliente---</option>
 </select>
 </div>
 
@@ -365,8 +352,8 @@ $asig2=mysql_query($consulta3);
 
 <div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>
-<select id="" class="form-control" name="" > 
-<option id="n" name="nombreE" value="" selected=""></option>
+<select  class="form-control" id="nombreE" name="nombreE" value=""> 
+<option value="0" ></option>
 </select>
 </div> 
 
@@ -497,10 +484,11 @@ else{
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>    
-      <script src="js/jquery.js"></script>   
+    <script src="js/jquery.js"></script>    
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
     <script src="js/autollenado.js" ></script>
+    <script src="listarencargado.js"></script>
 </body>
 <footer> </footer>
 </html>

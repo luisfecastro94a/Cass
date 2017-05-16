@@ -156,7 +156,7 @@ label {
 
 <div class="form-group" >
 <label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required=""></div>
 
 

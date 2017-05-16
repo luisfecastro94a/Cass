@@ -164,10 +164,6 @@ label {
 <label for="">Nombre</label>
 <input type="text" class="form-control" name="nombreE" placeholder="Nombres"  required="" value="<?php echo $reg['nombreE'];?>"></div>
 
-<div class="form-group" >
-<label for="">Apellido</label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellidos" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['apellido'];?>"></div>
-
 
 <div class="form-group" >
 <label for="">rut</label>
@@ -199,7 +195,6 @@ include("conexion.php");
       $id=$_REQUEST['id'];          
       $Cliente = isset($_POST['id_cliente'])? $_POST['id_cliente']:''; 
       $Nombre =isset($_POST['nombreE'])? $_POST['nombreE']:''; 
-      $Apellido = isset($_POST['apellido'])? $_POST['apellido']:''; 
       $Rut = isset($_POST['rut'])? $_POST['rut']:''; 
       $Fono = isset($_POST['fono'])? $_POST['fono']:''; 
       $Correo = isset($_POST['correo'])? $_POST['correo']:''; 
@@ -215,7 +210,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   
 
 
-  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', apellido='$Apellido', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
+  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
 
 ?>
 <?php

@@ -158,7 +158,7 @@ label {
 <input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
 <div class="form-group" >
 <label for="">Fono/Fax:</label>
-<input type="text" class="form-control" name="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>"></div>
+<input type="text" class="form-control" name="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>"></div>
 <div class="form-group" >
 <label for="">Correo:</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>

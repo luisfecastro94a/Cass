@@ -151,12 +151,8 @@ label {
 </div>
 
 <div class="form-group" >
-<label for="">Nombre</label>
+<label for="">Nombre Completo</label>
 <input type="text" class="form-control" name="nombreE" placeholder="Nombre Encargado"  required=""></div>
-
-<div class="form-group" >
-<label for="">Apellido</label>
-<input type="text" class="form-control" name="apellido" placeholder="Apellido" onKeyPress="return soloLetras(event)" required=""></div>
 
 
 <div class="form-group" >
@@ -186,7 +182,6 @@ label {
 if
   (  isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
      isset($_POST['nombreE']) && !empty($_POST['nombreE']) &&
-     isset($_POST['apellido']) && !empty($_POST['apellido']) &&
      isset($_POST['rut']) && !empty($_POST['rut']) &&
      isset($_POST['fono']) && !empty($_POST['fono']) &&
      isset($_POST['correo']) && !empty($_POST['correo']))
@@ -194,7 +189,6 @@ if
 
       $Cliente = $_POST['id_cliente']; 
       $Nombre = $_POST['nombreE'];
-      $Apellido = $_POST['apellido'];
       $Rut = $_POST['rut'];
       $Fono = $_POST['fono'];
       $Correo = $_POST['correo'];
@@ -210,7 +204,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   
 
 
-  mysql_query("INSERT INTO cliente_encargado (id_cliente, nombreE, apellido, rut, fono, correo) VALUES ('$Cliente', '$Nombre', '$Apellido','$Rut','$Fono','$Correo')")or die(mysql_error());
+  mysql_query("INSERT INTO cliente_encargado (id_cliente, nombreE, rut, fono, correo) VALUES ('$Cliente', '$Nombre', '$Rut','$Fono','$Correo')")or die(mysql_error());
 
 }
 

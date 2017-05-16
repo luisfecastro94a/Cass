@@ -7,12 +7,12 @@
 function escola(id){
 	$.post("client.php",{id_cliente:id}, function(retorno){
 		da = retorno.split("/");
-		$('#rut').val(da[1]);
-		$('#fono').val(da[2]);
-		$('#correo').val(da[3]);
-		$('#direccion').val(da[4]);
-		$('#nombrec').val(da[5]);
-		
+		$('#nombre').val(da[1]);
+		$('#rut').val(da[2]);
+		$('#fono').val(da[3]);
+		$('#correo').val(da[4]);
+		$('#direccion').val(da[5]);
+		$('#nombrec').val(da[6]);
 
 	});
 

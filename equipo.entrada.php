@@ -11,7 +11,7 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 <?php
 include("conexion.php");
-var_dump($_POST);
+//var_dump($_POST);
 $consulta="SELECT * FROM cliente ORDER BY nombre ASC";
 $result=mysql_query($consulta);
 
@@ -150,8 +150,8 @@ label {
 	<div class="contenedor">
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -251,9 +251,11 @@ $resultE=mysql_query($consulta2);
 <textarea rows="4" cols="53" name="sintoma_tecnico"></textarea>
 </div>
 <!--subir imagen-->
+
+
 <div class="col-xs-5">
     <label for="">Subir Fotografia de Equipo</label><br>
-    <input type="text" name="nombreImagen" placeholder="Nombre....." value="">
+    <input type="text" name="nombreImagen" value="" placeholder="Nombre Imagen....">
     <input type="file" name="imagen" value="">
   
 </div>
@@ -280,16 +282,9 @@ if
      isset($_POST['tipo_ingreso']) && !empty($_POST['tipo_ingreso']) &&
      isset($_POST['serie_equipo']) && !empty($_POST['serie_equipo']) &&
      isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
-     isset($_POST['sintoma_tecnico']) && !empty($_POST['sintoma_tecnico']) &&
-     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen']) &&
-     isset($_POST['imagen']) && !empty($_POST['imagen']))
+     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen']))
   {
 
-    $ruta = "img";
-    $archivo=$_FILES['imagen']['tmp_name'];
-    $nombreArchivo=$_FILES['imagen']['name'];//TEXTO
-    move_uploaded_file($archivo, $ruta."/".$nombreArchivo);
-    $ruta=$ruta."/".$nombreArchivo;
 
 
       $id_cliente = $_POST['id_cliente']; 
@@ -302,8 +297,8 @@ if
       $sintoma_cliente = $_POST['sintoma_cliente'];
       $sintoma_tecnico = $_POST['sintoma_tecnico'];
       $nombreImagen = $_POST['nombreImagen'];
-      $imagen = $_POST['imagen'];
-       
+      $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));//aqui guardo los bits en la variable
+                //ver si va la c - addslashes... 
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -328,7 +323,7 @@ echo "
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cliente (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$ruta')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen')") or die(mysql_errno());
  echo '<script> alert("Equipo Creado con Exito."); </script>';
 
 }

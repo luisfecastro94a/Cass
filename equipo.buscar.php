@@ -8,15 +8,8 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-  <?php
-include("conexion.php");
 
-$consulta="SELECT * FROM  cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cliente</title>
+	<title>Equipo</title>
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
@@ -134,8 +127,8 @@ label {
 
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -145,54 +138,55 @@ label {
 <div class="container" >
 
 <div class="form-group" id="datos">
-<h4><label for="caja_busqueda"><h1>Buscar Cliente</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Buscar">
+<h4><label for="caja_busqueda"><h1>Buscar Equipos</h1></label></h4>
+    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de Serie">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
 </div>
 
 
+   
+
+
+
 <table  class="table table-striped" id="" name="" >
 <thead>
-      <th colspan="1"><a href="cliente.php" class="btn btn-primary">Nuevo Cliente</a></th>
-      <th colspan="11">Lista de Clientes</th>
+      <th colspan="1"><a href="equipo.entrada.php" class="btn btn-primary">Nueva Equipo</a></th>
+     
     </thead>
     <tbody>
       <tr>
-        <td><h4>#</h4></td>
+       
         <td><h4>Cliente</h4></td>
-        <td><h4>Codigo Legal</h4></td>
-        <td><h4>Giro</h4></td>
-        <td><h4>Dirección</h4></td>
-        <td><h4>Correo</h4></td>
-        <td><h4>Telefono Empresa</h4></td>
-        <td><h4>Contacto</h4></td>
-        <td colspan="2"><h4>Operaciones</h4></td>
+        <td><h4>Serie del Equipo</h4></td>
+        <td><h4>Fecha de Ingreso</h4></td>
+        <td><h4>Marca</h4></td>
+        <td><h4>Estado</h4></td>
+        
+  
       </tr>
 
 <?php
 
-$busca="";
+  $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT * FROM cliente WHERE nombre like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT equipo.fecha_creacion, equipo.serie_equipo, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
 }
+
+
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
-   echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_cliente'].'\")">'.$muestra['id_cliente'].'</a>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['rut'].'</td>';
-   echo '<td>'.$muestra['giro'].'</td>';
-   echo '<td>'.$muestra['direccion'].'</td>';
-   echo '<td>'.$muestra['correo'].'</td>';
-   echo '<td>'.$muestra['fono'].'</td>';
-   echo '<td>'.$muestra['nombre_contacto'].'</td>';
-   echo '<td>'.'<a href="cliente.modificar.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
-                         onclick="eliminarDato(\''.$muestra['id_cliente'].'\');">'.'Eliminar'.'</button> '.'</td>';   
+   echo '<td>'.'<strong>'.$muestra['serie_equipo'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$muestra['fecha_creacion'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$muestra['marca'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
+
+      
 }
 ?>  
 

@@ -135,13 +135,13 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
             <li><a href="usuario.php">Usuario</a></li>
-            <li><a href="proveedor.php">Proveedor</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
@@ -149,6 +149,7 @@ label {
             <li><a href="estado.php">Estado</a></li>
             <li><a href="parametro.php">Parametro</a></li>
             <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -172,7 +173,7 @@ label {
 <div class="container">
 <label class="fe" for="">Fecha Creación:<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion"></label><!--fecha con jquey-->
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Ciudad:</label>
 <select id="id_ciudad" class="form-control" name="id_ciudad" autofocus="" > 
 <option value="" selected="">Seleccionar Ciudad</option>
@@ -184,48 +185,52 @@ label {
 </select>
 </div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Rut Empresa</label>
 <input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Razon Social</label>
 <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Razon Social"  required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Direccion</label>
 <input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Fono/Fax Empresa</label>
 <input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Giro</label>
 <input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Contacto:</label>
 <input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Fono Contacto:</label>
 <input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Correo Contacto:</label>
 <input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Cargo Contacto:</label>
 <input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
  
-  
+  <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
   <input type="reset" class="btn btn-default btn-lg btn-block" value="Cancelar">
+  </div>
 
   
 

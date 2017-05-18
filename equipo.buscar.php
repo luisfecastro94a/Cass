@@ -106,7 +106,7 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -116,6 +116,11 @@ label {
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
+            <li><a href="marca.php">Marca</a></li>
+            <li><a href="estado.php">Estado</a></li>
+            <li><a href="parametro.php">Parametro</a></li>
+            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -162,6 +167,7 @@ label {
         <td><h4>Fecha de Ingreso</h4></td>
         <td><h4>Marca</h4></td>
         <td><h4>Estado</h4></td>
+        <td colspan="2"><h4>Operaciones</h4></td>
         
   
       </tr>
@@ -172,7 +178,7 @@ label {
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT equipo.fecha_creacion, equipo.serie_equipo, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT equipo.id_equipo, equipo.fecha_creacion, equipo.serie_equipo, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
 }
 
 
@@ -185,7 +191,9 @@ if($busca!=""){
    echo '<td>'.'<strong>'.$muestra['fecha_creacion'].'</strong>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['marca'].'</strong>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
-
+   echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
+                         onclick="eliminarDato(\''.$muestra['id_equipo'].'\');">'.'Eliminar'.'</button> '.'</td>';  
       
 }
 ?>  

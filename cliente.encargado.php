@@ -106,7 +106,7 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -116,6 +116,11 @@ label {
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
+            <li><a href="marca.php">Marca</a></li>
+            <li><a href="estado.php">Estado</a></li>
+            <li><a href="parametro.php">Parametro</a></li>
+            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -138,7 +143,7 @@ label {
 
 <div class="container">
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Cliente a asociar</label>
 <select id="id_cliente" class="form-control" name="id_cliente" > 
 <option value="" selected="">Seleccionar Cliente</option>
@@ -150,30 +155,30 @@ label {
 </select>
 </div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Completo</label>
 <input type="text" class="form-control" name="nombreE" placeholder="Nombre Encargado"  required=""></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">rut</label>
 <input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)"></div>
 
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">fono</label>
 <input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">correo</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
 
-  
+  <div class="col-xs-5">
   <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-
+  </div>
 </div>
 </form>
 </div>

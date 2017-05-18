@@ -155,7 +155,7 @@ label {
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
             <li><a href="usuario.php">Usuario</a></li>
-            <li><a href="proveedor.php">Proveedor</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
@@ -163,6 +163,7 @@ label {
             <li><a href="estado.php">Estado</a></li>
             <li><a href="parametro.php">Parametro</a></li>
             <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -357,6 +358,8 @@ $asig3=mysql_query($consulta4);
 </select>
 </div> 
 
+
+
       </div>
     </div>
   </div>
@@ -371,10 +374,70 @@ $asig3=mysql_query($consulta4);
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
-        aqui son los datos del equipo
+
+      <!--Aqui va los datos del EQUIPO-->
+<div class="col-xs-5" >
+<label for="">Serie del Equipo</label>
+<select  class="form-control" id="serie_equipo" name="serie_equipo" value=""> 
+<option value="0" ></option>
+</select>
+</div> 
+
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Cliente</label>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" name="sintoma_cliente"></textarea>
+</div>
+
+
+<?php
+include("conexion.php");
+
+$consulta1="SELECT * FROM marca ORDER BY marca ASC";
+$resultM=mysql_query($consulta1);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Marca</label>
+<select id="id_marca" class="form-control" name="id_marca" title="Seleccionar Marca del equipo" > 
+<option value="" selected="">---Seleccionar la Marca---</option>
+ <?php
+      while($marca=mysql_fetch_array($resultM))
+  {?>
+      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+<?php
+include("conexion.php");
+
+$consulta2="SELECT * FROM estado ORDER BY estado ASC ";
+$resultE=mysql_query($consulta2);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Estado</label>
+<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
+<option value="" selected="">---Seleccionar el Estado---</option>
+ <?php
+      while($esta=mysql_fetch_array($resultE))
+  {?>
+      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+
+
+
       </div>
     </div>
   </div>
+
+
+
 
     <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingFour">
@@ -489,6 +552,8 @@ else{
     <script src="js/datepicker-es.js"></script>
     <script src="js/autollenado.js" ></script>
     <script src="listarencargado.js"></script>
+    <script src="listaequipos.js"></script>
+    
 </body>
 <footer> </footer>
 </html>

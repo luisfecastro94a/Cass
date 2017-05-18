@@ -1,15 +1,7 @@
 <?php
 include("conexion.php");
 
-/*
-$query = $dbhandle->query("SELECT * FROM cliente");
-echo '<option value="0"> Seleccione</opcion>';
 
-while ($row = $query->fetch_assoc())
-{
-	echo '<option value="' . $row['id_cliente']. '">' .$row['nombre']. '</opcion>' . "\n";
-}
-*/
 
 $consulta="SELECT * FROM cliente ORDER BY nombre ASC";
 	echo '<option value="0">---Seleccione Cliente---</opcion>';

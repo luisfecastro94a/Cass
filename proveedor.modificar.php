@@ -107,7 +107,7 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -117,6 +117,11 @@ label {
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
+            <li><a href="marca.php">Marca</a></li>
+            <li><a href="estado.php">Estado</a></li>
+            <li><a href="parametro.php">Parametro</a></li>
+            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -149,7 +154,7 @@ label {
 <div class="container">
 <label class="fe" for="">Fecha Creación:<input class="fecha" type="text" value="<?php echo $reg['fecha_creacion'];?>" name="fecha_creacion" id="fecha_creacion"></label><!--fecha con jquey-->
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Ciudad:</label>
 <select id="id_ciudad" class="form-control" name="id_ciudad" autofocus="" > 
 <option value="" selected="">Seleccionar Ciudad</option>
@@ -161,48 +166,52 @@ label {
 </select>
 </div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Rut Empresa</label>
 <input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut" value="<?php echo $reg['rut'];?>"  required oninput="checkRut(this)"></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Razon Social</label>
 <input type="text" class="form-control" id="razon_social" name="razon_social" value="<?php echo $reg['razon_social'];?>" placeholder="Razon Social"  required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Direccion</label>
 <input type="text" class="form-control" name="direccion" placeholder="Direccion" value="<?php echo $reg['direccion'];?>" required=""></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Fono/Fax Empresa</label>
 <input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" value="<?php echo $reg['fono'];?>" onKeyPress="return SoloNumeros(event)"
   required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Giro</label>
 <input type="text" class="form-control" name="giro" placeholder="Giro" value="<?php echo $reg['giro'];?>" onKeyPress="return soloLetras(event)" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo</label>
 <input type="email" class="form-control" name="correo" id="correo" value="<?php echo $reg['correo'];?>" placeholder="E-mail" required=""></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Contacto:</label>
 <input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" value="<?php echo $reg['nombre_contacto'];?>" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Fono Contacto:</label>
 <input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" value="<?php echo $reg['fono_contacto'];?>" onKeyPress="return SoloNumeros(event)" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Correo Contacto:</label>
 <input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" value="<?php echo $reg['correo_contacto'];?>" required=""></div>
-<div class="form-group" >
+
+<div class="col-xs-5" >
 <label for="">Cargo Contacto:</label>
 <input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" value="<?php echo $reg['cargo_contacto'];?>" onKeyPress="return soloLetras(event)" required=""></div>
  
-  
+  <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button>
   <input type="reset" class="btn btn-default btn-lg btn-block" value="Cancelar">
+  </div>
 
   
 

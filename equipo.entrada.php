@@ -129,16 +129,21 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
             <li><a href="usuario.php">Usuario</a></li>
-            <li><a href="proveedor.php">Proveedor</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
+            <li><a href="marca.php">Marca</a></li>
+            <li><a href="estado.php">Estado</a></li>
+            <li><a href="parametro.php">Parametro</a></li>
+            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -167,8 +172,8 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="id_cliente" class="form-control" name="id_cliente" autofocus="" > 
-<option value="" selected="">Seleccionar Cliente</option>
+<select id="id_cliente" class="form-control" name="id_cliente" autofocus="" title="Seleccione el cliente" > 
+<option value="" selected="">---Seleccionar Cliente---</option>
  <?php
       while($fila=mysql_fetch_array($result))
   {?>
@@ -181,12 +186,12 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" name="sintoma_cliente"></textarea>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" name="sintoma_cliente"></textarea>
 </div>
 
 <div class="col-xs-5" >
 <label for="">Serie de Equipo</label>
-<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
+<input type="text" class="form-control" title="Numero de Serie" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
 
 
 
@@ -200,8 +205,8 @@ $resultM=mysql_query($consulta1);
 ?>
 <div class="col-xs-5" >
 <label for="">Marca</label>
-<select id="id_marca" class="form-control" name="id_marca" > 
-<option value="" selected="">Seleccionar la Marca</option>
+<select id="id_marca" class="form-control" name="id_marca" title="Seleccionar Marca del equipo" > 
+<option value="" selected="">---Seleccionar la Marca---</option>
  <?php
       while($marca=mysql_fetch_array($resultM))
   {?>
@@ -212,11 +217,11 @@ $resultM=mysql_query($consulta1);
 
 <div class="col-xs-5" >
 <label for="">Modelo del Equipo</label>
-<input type="text" class="form-control" name="modelo" id="modelo"   placeholder="Modelo del Equipo" required=""></div>
+<input type="text" class="form-control" name="modelo" id="modelo" title="Modelo del equipo"  placeholder="Modelo del Equipo" required=""></div>
 
 <div class="col-xs-5">
 <label for="">Tipo de Ingreso</label>
-<select class="form-control" name="tipo_ingreso">
+<select class="form-control" name="tipo_ingreso" title="Seleccione el tipo de ingreso" >
 <option value="" selected="">--Selecciona el tipo de Ingreso--</option>
   <option value="REPARACION">REPARACION</option>
   <option value="CONTRATO">CONTRATO</option>
@@ -236,8 +241,8 @@ $resultE=mysql_query($consulta2);
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">Seleccionar el Estado</option>
+<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
+<option value="" selected="">---Seleccionar el Estado---</option>
  <?php
       while($esta=mysql_fetch_array($resultE))
   {?>
@@ -248,7 +253,7 @@ $resultE=mysql_query($consulta2);
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Técnico</label>
-<textarea rows="4" cols="53" name="sintoma_tecnico"></textarea>
+<textarea rows="4" cols="53" name="sintoma_tecnico" title="¡hee Técnico, Ingresa tu sintoma!" ></textarea>
 </div>
 <!--subir imagen-->
 
@@ -261,9 +266,9 @@ $resultE=mysql_query($consulta2);
 </div>
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el Equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
   <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
+  <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
   
 
 </div>
@@ -298,7 +303,7 @@ if
       $sintoma_tecnico = $_POST['sintoma_tecnico'];
       $nombreImagen = $_POST['nombreImagen'];
       $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));//aqui guardo los bits en la variable
-                //ver si va la c - addslashes... 
+                
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 

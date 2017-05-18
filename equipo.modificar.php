@@ -7,31 +7,35 @@ if (isset($_SESSION['correo'])) {?>
 
 <head>
 
-	<meta charset="UTF-8">
-<?php
+  <meta charset="UTF-8">
+  <?php
 include("conexion.php");
 
-?>
-	<title>Ciudad</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="js/bootstrap.min.js">
+$consulta="SELECT * FROM cliente";
+$result=mysql_query($consulta);
 
-	
+
+?>
+  <title>Equipo</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="js/bootstrap.min.js">
+
+
       <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
 
 }
-	body{
+  body{
   background: #F2F2F2;
 }
-   	 nav ul ul.dropdown-menu li a:hover {
-	background: #CCCCCC;
- 	}
- 	 nav ul li:hover {
-	background: #CCCCCC;
- 	}
+     nav ul ul.dropdown-menu li a:hover {
+  background: #CCCCCC;
+  }
+   nav ul li:hover {
+  background: #CCCCCC;
+  }
   img.logo {
     height: 50px;
     margin: auto;
@@ -51,12 +55,13 @@ include("conexion.php");
 label {
   color:#515151;
 }
-  .cerrar{
+ .cerrar{
     height: 40px;
     margin: 5px auto;
     width: 60px;
     border: auto;
   }
+
 
    </style>
 </head>
@@ -82,7 +87,7 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="cliente.php">Ingresar Cliente</a></li>
-            <li><a href="cliente.encargado.php">Ingresar Encargado</a></li>
+            <li><a href="#">Ingresar Encargado</a></li>
             <li><a href="#">Ingreso Garantia</a></li>
             <li><a href="#">Presupuesto</a></li>
             <li><a href="#">Cotización</a></li>
@@ -124,28 +129,123 @@ label {
 </nav>
 
 <body>
-<div class="contenedor">
+  <div class="contenedor">
 
 
-<a href="ciudad.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="ciudad.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="equipo.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Ciudad</h1>
+<?php
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+
+    $id=$_REQUEST['id'];
+    include("conexion.php");
+      
+      $pedir=mysql_query("SELECT * FROM equipo WHERE id_equipo='$id' ")or die(mysql_error());
+      $reg=mysql_fetch_array($pedir);
+  ?>
+<h1>Modificar Equipo</h1>
+
+<form class="form-group" action=""  method="POST">
 
 <div class="container">
 
+<div class="form-group" >
+<label class="fe" for="">Fecha Creación</label>
+<input class="fecha" type="text" name="fecha_creacion" value="<?php echo $reg['fecha_creacion'];?>" id="fecha_creacion"></div>
 
 <div class="col-xs-5" >
-<label for="">Nombre Ciudad</label>
-<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Nombre Ciudad" autofocus="" required=""></div>
+<label for="">Cliente</label>
+<select id="id_cliente" class="form-control" name="id_cliente"  > 
+<option value="" selected="">Seleccionar Cliente</option>
+ <?php
+      while($fila=mysql_fetch_array($result))
+  {?>
+      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Cliente</label>
+<textarea rows="4" cols="53" name="sintoma_cliente" value="<?php echo $reg['sintoma_cliente'];?>"></textarea>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Serie de Equipo</label>
+<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" placeholder="Serie del Equipo" required=""></div>
+
+
+
+<?php
+include("conexion.php");
+
+$consulta1="SELECT * FROM marca ORDER BY marca ASC";
+$resultM=mysql_query($consulta1);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Marca</label>
+<select id="id_marca" class="form-control" name="id_marca" > 
+<option value="" selected="">Seleccionar la Marca</option>
+ <?php
+      while($marca=mysql_fetch_array($resultM))
+  {?>
+      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Modelo del Equipo</label>
+<input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required=""></div>
+
+<div class="col-xs-5">
+<label for="">Tipo de Ingreso</label>
+<select class="form-control" name="tipo_ingreso">
+<option value="" selected="">--Selecciona el tipo de Ingreso--</option>
+  <option value="REPARACION">REPARACION</option>
+  <option value="CONTRATO">CONTRATO</option>
+  <option value="GARANTIA CASS">GARANTIA CASS</option>
+  <option value="GARANTIA CANON">GARANTIA CANON</option>
+  <option value="GARANTIA ACER">GARANTIA ACER</option>
+</select>
+</div>
+
+<?php
+include("conexion.php");
+
+$consulta2="SELECT * FROM estado ORDER BY estado ASC ";
+$resultE=mysql_query($consulta2);
+
+
+?>
+<div class="col-xs-5" >
+<label for="">Estado</label>
+<select id="id_estado" class="form-control" name="id_estado" > 
+<option value="" selected="">Seleccionar el Estado</option>
+ <?php
+      while($esta=mysql_fetch_array($resultE))
+  {?>
+      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Técnico</label>
+<textarea rows="4" cols="53" name="sintoma_tecnico"></textarea>
+</div>
+
 
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block">Modificar</button>
+  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
 
 </div>
@@ -154,15 +254,15 @@ label {
 
 <?php
 include("conexion.php");
-if
-    (
-     isset($_POST['nombrec']) && !empty($_POST['nombrec'])) 
-  {
 
       
-      $Nombre = $_POST['nombrec'];
-     
-
+      $id=$_REQUEST['id'];          
+      $Cliente = isset($_POST['id_cliente'])? $_POST['id_cliente']:''; 
+      $Nombre =isset($_POST['nombreE'])? $_POST['nombreE']:''; 
+      $Rut = isset($_POST['rut'])? $_POST['rut']:''; 
+      $Fono = isset($_POST['fono'])? $_POST['fono']:''; 
+      $Correo = isset($_POST['correo'])? $_POST['correo']:''; 
+      
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
@@ -171,40 +271,28 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
-
-// Comprobamos si el usuario esta registrado 
-
-$nuevo_usuario=mysql_query("SELECT nombrec FROM ciudad WHERE nombrec='$Nombre'"); 
-if(mysql_num_rows($nuevo_usuario)>0) 
-{ 
-echo " 
-<p class='avisos'>Ciudad ya esta registrada</p> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
-}else{
   
-  $consulta=mysql_query("INSERT INTO ciudad (nombrec) VALUES ('$Nombre')") or die(mysql_errno());
-   echo '<script> alert("Ciudad Creada con Exito."); </script>';
-}
 
-}
 
+  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
 
 ?>
-
+<?php
+// close connection; 
+mysql_close();
+?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
     <script src="validaremail.js"></script>
     <script src="validartelefono.js"></script>
-    
 </body>
 <footer> </footer>
 </html>

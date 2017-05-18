@@ -101,7 +101,7 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -139,13 +139,14 @@ label {
 <div class="container">
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Area</label>
 <input type="text" class="form-control" id="area" name="area" placeholder="Nombre Area" autofocus="" required=""></div>
 
-  
+  <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  </div>
   
 
 </div>

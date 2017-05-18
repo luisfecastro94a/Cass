@@ -101,16 +101,21 @@ label {
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="#">Repuestos</a></li>
-        <li><a  href="#">Orden de Trabajo</a></li>
+        <li><a  href="ot.php">Orden de Trabajo</a></li>
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="ciudad.php">Ciudad</a></li>
             <li><a href="usuario.php">Usuario</a></li>
-            <li><a href="proveedor.php">Proveedor</a></li>
+             <li><a href="proveedor.php">Proveedor</a></li>
             <li><a href="uf.php">Uf</a></li>
             <li><a href="comision.php">Comisiones</a></li>
             <li><a href="periodo.php">Periodo</a></li>
+            <li><a href="marca.php">Marca</a></li>
+            <li><a href="estado.php">Estado</a></li>
+            <li><a href="parametro.php">Parametro</a></li>
+            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="area.php">Area</a></li>
           </ul>
         </li>
       </ul>
@@ -134,14 +139,14 @@ label {
 <div class="container">
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Estado</label>
 <input type="text" class="form-control" id="estado" name="estado" placeholder="Ingresar Estado" autofocus="" onKeyPress="return soloLetras(event)" required=""></div>
 
-  
+  <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  
+  </div>
 
 </div>
 </form>

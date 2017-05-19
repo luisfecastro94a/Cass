@@ -8,14 +8,7 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
   <meta charset="UTF-8">
-  <?php
-include("conexion.php");
 
-$consulta="SELECT * FROM cliente";
-$result=mysql_query($consulta);
-
-
-?>
   <title>Equipo</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
@@ -132,7 +125,7 @@ label {
   <div class="contenedor">
 
 
-<a href="equipo.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
@@ -143,7 +136,7 @@ label {
     $id=$_REQUEST['id'];
     include("conexion.php");
       
-      $pedir=mysql_query("SELECT * FROM equipo WHERE id_equipo='$id' ")or die(mysql_error());
+      $pedir=mysql_query("SELECT equipo.fecha_creacion, equipo.modelo, equipo.tipo_ingreso, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cliente.nombre FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE id_equipo='$id' ")or die(mysql_error());
       $reg=mysql_fetch_array($pedir);
   ?>
 <h1>Modificar Equipo</h1>
@@ -154,68 +147,37 @@ label {
 
 <div class="form-group" >
 <label class="fe" for="">Fecha Creación</label>
-<input class="fecha" type="text" name="fecha_creacion" value="<?php echo $reg['fecha_creacion'];?>" id="fecha_creacion"></div>
+<input class="fecha" type="text" name="fecha_creacion" value="<?php echo $reg['fecha_creacion'];?>" id="fecha_creacion" disabled></div>
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="id_cliente" class="form-control" name="id_cliente"  > 
-<option value="" selected="">Seleccionar Cliente</option>
- <?php
-      while($fila=mysql_fetch_array($result))
-  {?>
-      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
-  <?php } ?>
-</select>
-</div>
+<input type="text" class="form-control" name="nombre" id="id_cliente" value="<?php echo $reg['nombre'];?>"  required="" disabled></div>
 
 
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" name="sintoma_cliente" value="<?php echo $reg['sintoma_cliente'];?>"></textarea>
+<textarea rows="4" cols="53" name="sintoma_cliente" id="sintoma_cliente" value="" disabled><?php echo $reg['sintoma_cliente'];?></textarea>
 </div>
 
 <div class="col-xs-5" >
 <label for="">Serie de Equipo</label>
-<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" placeholder="Serie del Equipo" required=""></div>
+<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" required="" disabled></div>
 
-
-
-<?php
-include("conexion.php");
-
-$consulta1="SELECT * FROM marca ORDER BY marca ASC";
-$resultM=mysql_query($consulta1);
-
-
-?>
 <div class="col-xs-5" >
 <label for="">Marca</label>
-<select id="id_marca" class="form-control" name="id_marca" > 
-<option value="" selected="">Seleccionar la Marca</option>
- <?php
-      while($marca=mysql_fetch_array($resultM))
-  {?>
-      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
-  <?php } ?>
-</select>
-</div>
+<input type="text" class="form-control" name="id_marca" id="id_marca" value="<?php echo $reg['marca'];?>" placeholder="Serie del Equipo" required="" disabled></div>
+
 
 <div class="col-xs-5" >
 <label for="">Modelo del Equipo</label>
-<input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required=""></div>
+<input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required="" disabled></div>
 
-<div class="col-xs-5">
+
+<div class="col-xs-5" >
 <label for="">Tipo de Ingreso</label>
-<select class="form-control" name="tipo_ingreso">
-<option value="" selected="">--Selecciona el tipo de Ingreso--</option>
-  <option value="REPARACION">REPARACION</option>
-  <option value="CONTRATO">CONTRATO</option>
-  <option value="GARANTIA CASS">GARANTIA CASS</option>
-  <option value="GARANTIA CANON">GARANTIA CANON</option>
-  <option value="GARANTIA ACER">GARANTIA ACER</option>
-</select>
-</div>
+<input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
+
 
 <?php
 include("conexion.php");
@@ -227,8 +189,8 @@ $resultE=mysql_query($consulta2);
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">Seleccionar el Estado</option>
+<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" autofocus=""> 
+<option value="" selected="">---Seleccionar el Estado---</option>
  <?php
       while($esta=mysql_fetch_array($resultE))
   {?>
@@ -236,6 +198,7 @@ $resultE=mysql_query($consulta2);
   <?php } ?>
 </select>
 </div>
+
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Técnico</label>

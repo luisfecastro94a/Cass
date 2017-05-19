@@ -155,26 +155,26 @@ label {
 <div class="container">
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Empresa:</label>
 <input type="text" class="form-control" name="nombre" placeholder="Nombre Empresa"  required="" value="<?php echo $reg['nombre'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Rut Empresa:</label>
 <input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Fono/Fax:</label>
 <input type="text" class="form-control" name="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo:</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Giro:</label>
 <input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['giro'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Direccion:</label>
 <input type="text" class="form-control" name="direccion" placeholder="Direccion" required="" value="<?php echo $reg['direccion'];?>"></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Ciudad:</label>
 <select id="id_ciudad" class="form-control" name="id_ciudad"> 
 <?php
@@ -184,19 +184,19 @@ label {
   <?php } ?>
 </select>
 </div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Contacto:</label>
 <input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['nombre_contacto'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Fono Contacto:</label>
 <input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono_contacto'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo Contacto:</label>
 <input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required="" value="<?php echo $reg['correo_contacto'];?>"></div>
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Cargo Contacto:</label>
 <input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required="" value="<?php echo $reg['cargo_contacto'];?>"></div>
-<div class="form-group">
+<div class="col-xs-5">
 <label for="">Condición de Pago:</label>
 <select class="form-control" name="condicion_pago">
 <option value="<?php echo $reg['condicion_pago'];?>" selected=""><?php echo $reg['condicion_pago'];?></option>
@@ -207,8 +207,10 @@ label {
 </select>
 </div>
   
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <div class="col-xs-5">
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
 
 </div>
 </form>

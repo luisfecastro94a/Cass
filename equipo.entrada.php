@@ -271,6 +271,7 @@ $resultE=mysql_query($consulta2);
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
   
 
+
 </div>
 </form>
 </div>

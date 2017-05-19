@@ -182,7 +182,7 @@ $busca=isset($_POST['busca'])?$_POST['busca']: NULL;
 include("conexion.php");
 if($busca!=""){
   $dbhandle=mysql_query("SELECT * FROM cliente WHERE nombre like '%".$busca."%' ");
-}
+
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
@@ -198,6 +198,7 @@ if($busca!=""){
    echo '<td>'.'<a href="cliente.modificar.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_cliente'].'\');">'.'Eliminar'.'</button> '.'</td>';   
+}
 }
 ?>  
 

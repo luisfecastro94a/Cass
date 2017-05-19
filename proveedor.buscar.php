@@ -132,8 +132,8 @@ label {
 
 
 
-<a href="estado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="estado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="proveedor.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="proveedor.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -174,7 +174,7 @@ $busca=isset($_POST['busca'])?$_POST['busca']: NULL;
 include("conexion.php");
 if($busca!=""){
   $dbhandle=mysql_query("SELECT * FROM proveedor WHERE razon_social like '%".$busca."%' ");
-}
+
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
@@ -189,6 +189,7 @@ if($busca!=""){
    echo '<td>'.'<a href="proveedor.modificar.php?id='.$muestra['id_proveedor'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_proveedor'].'\');">'.'Eliminar'.'</button> '.'</td>';   
+}
 }
 ?>          
   </ul>

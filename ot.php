@@ -175,8 +175,8 @@ label {
 	<div class="contenedor">
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="ot.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -211,6 +211,15 @@ $ot=mysql_query($consulta);
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
 <input type="text" class="form-control" id="id_orden_trabajo" value="<?php echo $ot['id_orden_trabajo']?>" name="id_orden_trabajo"  ></div>
+
+<div class="col-xs-2">
+<label for="">Hora Llegada</label>
+<input type="text" class="form-control" id="hora_llegada" value="" name="hora_llegada"  ></div>
+
+<div class="col-xs-2">
+<label for="">Hora Salida</label>
+<input type="text" class="form-control" id="hora_salida" value="" name="hora_salida"  ></div>
+<br/>
 
 <div class="col-xs-5">
 <label class="fe" for="">Fecha Creación<input class="" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
@@ -378,7 +387,7 @@ $asig3=mysql_query($consulta4);
       <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<select  class="form-control" id="serie_equipo" name="serie_equipo" value=""> 
+<select  class="form-control" id="serie_equipo" onchange="listaequipo(this.value)" name="serie_equipo" value=""> 
 <option value="0" ></option>
 </select>
 </div> 
@@ -386,50 +395,17 @@ $asig3=mysql_query($consulta4);
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" name="sintoma_cliente"></textarea>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
 </div>
 
 
-<?php
-include("conexion.php");
-
-$consulta1="SELECT * FROM marca ORDER BY marca ASC";
-$resultM=mysql_query($consulta1);
-
-
-?>
 <div class="col-xs-5" >
 <label for="">Marca</label>
-<select id="id_marca" class="form-control" name="id_marca" title="Seleccionar Marca del equipo" > 
-<option value="" selected="">---Seleccionar la Marca---</option>
- <?php
-      while($marca=mysql_fetch_array($resultM))
-  {?>
-      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
-  <?php } ?>
-</select>
-</div>
-<?php
-include("conexion.php");
+<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
 
-$consulta2="SELECT * FROM estado ORDER BY estado ASC ";
-$resultE=mysql_query($consulta2);
-
-
-?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
-<option value="" selected="">---Seleccionar el Estado---</option>
- <?php
-      while($esta=mysql_fetch_array($resultE))
-  {?>
-      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
-  <?php } ?>
-</select>
-</div>
-
-
+<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
 
 
       </div>
@@ -449,7 +425,15 @@ $resultE=mysql_query($consulta2);
     </div>
     <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
       <div class="panel-body">
-        aqui van las causas de la visita
+     
+<div class="col-xs-5" >
+<label for="">Motivo</label>
+<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita" required="" value=""></div>
+
+<div class="col-xs-5" >
+<label for="">Comentario</label>
+<textarea name="comentario" id="comentario" cols="53"  rows="4"></textarea>
+</div>
       </div>
     </div>
   </div>
@@ -458,13 +442,28 @@ $resultE=mysql_query($consulta2);
     <div class="panel-heading" role="tab" id="headingFive">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-         Costos
+         Presupuesto
         </a>
       </h4>
     </div>
     <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
       <div class="panel-body">
-        aqui van los COOSTOS
+        aqui el presupuesto
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingSix">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+         Cotizacion
+        </a>
+      </h4>
+    </div>
+    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+      <div class="panel-body">
+        aqui va la cotizacion
       </div>
     </div>
   </div>
@@ -472,11 +471,20 @@ $resultE=mysql_query($consulta2);
 </div><!--el segundo div del acordion-->
 </div><!--el primer div del acordion-->
 
+  <div class="col-xs-5">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  </div>
+  <br>
+  <br>
+  <br>
+
 </div><!--div contenedor-->
   
 </form>
 </div>
-
+    
 <?php
 if
     (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
@@ -553,9 +561,11 @@ else{
     <script src="js/autollenado.js" ></script>
     <script src="listarencargado.js"></script>
     <script src="listaequipos.js"></script>
-    
+    <script src="js/autollenadoequipo.js"></script>
+
+<footer></footer><!--antes de que se cierre el body se agrega el footer o pie de pagina-->
 </body>
-<footer> </footer>
+
 </html>
 <?php
 }else{

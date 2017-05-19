@@ -153,7 +153,7 @@ label {
 
 <div class="container">
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Cliente a asociar</label>
 <select id="id_cliente" class="form-control" name="id_cliente"> 
 <option value="<?php echo $fila['id_cliente']?>">---Seleccionar Cliente---</option>
@@ -165,29 +165,30 @@ label {
 </select>
 </div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre</label>
 <input type="text" class="form-control" name="nombreE" placeholder="Nombres"  required="" value="<?php echo $reg['nombreE'];?>"></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">rut</label>
 <input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
 
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">fono</label>
 <input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="<?php echo $reg['fono'];?>"></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">correo</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>
 
-  
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <div class="col-xs-5">
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
 
 </div>
 </form>

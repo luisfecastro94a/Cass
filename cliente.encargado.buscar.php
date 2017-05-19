@@ -186,7 +186,7 @@ if($busca!=""){
  //  Consulta Mysql donde se aplica INNER JOIN
         $dbhandle=mysql_query("SELECT cliente_encargado.id_cliente_encargado, cliente_encargado.nombreE, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE nombreE like '%".$busca."%' ")or die(mysql_error());
        
-}
+
 
   while($fila=mysql_fetch_array($dbhandle)){
    echo '<tr>';
@@ -198,6 +198,7 @@ if($busca!=""){
    echo '<td>'.'<a href="cliente.modificar.encargado.php?id='.$fila['id_cliente_encargado'].'" 
    class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger">'.'Eliminar'.'</a>'.'</td>';   
+}
 }
 ?>  
 

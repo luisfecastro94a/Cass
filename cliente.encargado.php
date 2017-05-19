@@ -207,12 +207,19 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
   
+  include("conexion.php");
 
-
+$nuevo_rut=mysql_query("SELECT rut FROM cliente_encargado WHERE rut='$Rut'"); 
+if(mysql_num_rows($nuevo_rut)>0) 
+{ 
+echo " '<script> alert('Cliente Encagado ya se encuentra registrado en Cliente');</script>'
+<p class='avisos '><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> "; 
+}
+else{ 
   mysql_query("INSERT INTO cliente_encargado (id_cliente, nombreE, rut, fono, correo) VALUES ('$Cliente', '$Nombre', '$Rut','$Fono','$Correo')")or die(mysql_error());
 
 }
-
+}
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

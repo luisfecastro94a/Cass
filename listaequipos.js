@@ -24,7 +24,7 @@ $ (function(){
 	$('#serie_equipo').change( function()
 	{
 		var equipo  = $(this).children('option:selected').html();
-		alert ('El equipo elegido es ' + equipo);
+		alert ('El Serie del equipo elegido es ' + equipo);
 	});
 
 

@@ -162,65 +162,42 @@ label {
 <div class="container">
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nombre Completo</label>
-<input type="text" class="form-control" name="nombre" placeholder="Nombre Empresa"  required="" value="<?php echo $reg['nombre'];?>"></div>
+<input type="text" class="form-control" name="nombre"  required="" value="<?php echo $reg['nombre'];?>" disabled></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Domicilio </label>
-<input type="text" class="form-control" name="domicilio" placeholder="Domicilio"  required="" value="<?php echo $reg['domicilio'];?>"></div>
-<div class="form-group" >
+<input type="text" class="form-control" name="domicilio" required="" value="<?php echo $reg['domicilio'];?>" disabled></div>
+<div class="col-xs-5" >
 <label for="">Fono</label>
-<input type="text" class="form-control" name="fono" placeholder="Fono" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>"></div>
-<div class="form-group" >
+<input type="text" class="form-control" name="fono" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['fono'];?>" disabled></div>
+<div class="col-xs-5" >
 <label for="">Rut</label>
-<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
+<input type="text" class="form-control" name="rut" id="rut" required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>" disabled></div>
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>
-<div class="form-group" >
+<input type="email" class="form-control" name="correo" id="correo" required="" value="<?php echo $reg['correo'];?>" disabled></div>
+
+<div class="col-xs-5" >
 <label for="">Clave</label>
-<input type="password" class="form-control" name="clave" placeholder="Clave" onKeyPress="return SoloNumeros(event)" required="" value="<?php echo $reg['clave'];?>"></div>
+<input type="password" class="form-control" name="clave" placeholder="Clave" required="" value="<?php echo $reg['clave'];?>"></div>
 
 
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Cargo</label>
-<select id="id_cargo" class="form-control" name="id_cargo"> 
-<?php
-      while($result=mysql_fetch_array($regs))
-  {?>
-      <option value="<?php echo $result['id_cargo']?>"><?php echo $result['nombreC'];?></option>
-  <?php } ?>
-</select>
-</div>
-<?php
+<input type="email" class="form-control" name="nombreC" id="nombreC" required="" value="<?php echo $reg['nombreC'];?>" disabled></div>
 
-
-include("conexion.php");
-
-$consultam="SELECT * FROM nivelacceso";
-$nivel=mysql_query($consultam);
-
-
-?>
-
-<div class="form-group" >
+<div class="col-xs-5" >
 <label for="">Nivel de Acceso</label>
-<select id="id_nivelacceso" class="form-control" name="id_nivelacceso"> 
-<?php
-      while($acceso=mysql_fetch_array($nivel))
-  {?>
-      <option value="<?php echo $acceso['id_nivelacceso']?>"><?php echo $acceso['nivel'];?></option>
-  <?php } ?>
-</select>
-</div>
+<input type="email" class="form-control" name="nivel" id="nivel" required="" value="<?php echo $reg['nivel'];?>" disabled></div>
 
 
-
-
-  <button type="submit" class="btn btn-primary btn-lg btn-block"  onclick="Limpiar();">Modificar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <div class="col-xs-5">
+  <button type="submit" class="btn btn-primary btn-lg btn-block"  onclick="Limpiar();">Modificar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
 
 </div>
 </form>
@@ -232,14 +209,10 @@ include("conexion.php");
 
 
       $id=$_REQUEST['id'];  
-      $nivelacceso = isset($_POST['id_nivelacceso']) ? $_POST['id_nivelacceso']: '';    
-      $cargo = isset($_POST['id_cargo']) ? $_POST['id_cargo']: '';
-      $nombre = isset($_POST['nombre']) ? $_POST['nombre']:'';
-      $domicilio = isset($_POST['domicilio']) ? $_POST['domicilio']:'';
-      $fono = isset($_POST['fono']) ? $_POST['fono']: '';
-      $rut = isset($_POST['rut']) ? $_POST['rut']:'';
+      
+     
       $clave = isset($_POST['clave']) ? $_POST['clave']: '';
-      $correo = isset($_POST['correo']) ? $_POST['correo']: '';
+      
      
 
    // conexión a la base de datos de
@@ -252,7 +225,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   or die("No se pudo seleccionar la base de datos CASS");
 
 
-$query=mysql_query("UPDATE  usuario SET id_nivelacceso=$nivelacceso, id_cargo=$cargo, nombre='$nombre', domicilio='$domicilio', fono='$fono', rut='$rut' , clave='$clave' , correo='$correo' WHERE id_usuario='$id'");
+$query=mysql_query("UPDATE  usuario SET  clave='$clave' WHERE id_usuario='$id'");
 
 
 

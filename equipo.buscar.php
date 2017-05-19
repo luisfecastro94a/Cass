@@ -149,11 +149,6 @@ label {
 
 </div>
 
-
-   
-
-
-
 <table  class="table table-striped" id="" name="" >
 <thead>
       <th colspan="1"><a href="equipo.entrada.php" class="btn btn-primary">Nueva Equipo</a></th>
@@ -165,42 +160,40 @@ label {
         <td><h4>Cliente</h4></td>
         <td><h4>Serie del Equipo</h4></td>
         <td><h4>Fecha de Ingreso</h4></td>
+        <td><h4>Sintoma Cliente</h4></td>
         <td><h4>Marca</h4></td>
         <td><h4>Estado</h4></td>
-        <td colspan="2"><h4>Operaciones</h4></td>
+        <td colspan="3"><h4>Operaciones</h4></td>
         
   
       </tr>
 
 <?php
 
-  $busca="";
+$busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT equipo.id_equipo, equipo.fecha_creacion, equipo.serie_equipo, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
-}
-
-
+  $dbhandle=mysql_query("SELECT equipo.id_equipo, equipo.fecha_creacion, equipo.serie_equipo, equipo.sintoma_cliente, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
-   echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['nombre'].'</td>';
    echo '<td>'.'<strong>'.$muestra['serie_equipo'].'</strong>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['fecha_creacion'].'</strong>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['marca'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['fecha_creacion'].'</td>';
+   echo '<td>'.$muestra['sintoma_cliente'].'</td>';
+   echo '<td>'.$muestra['marca'].'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
-   echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary" title="Modificar el equipo">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
-                         onclick="eliminarDato(\''.$muestra['id_equipo'].'\');">'.'Eliminar'.'</button> '.'</td>';  
+                         onclick="eliminarDato(\''.$muestra['id_equipo'].'\');">'.'Eliminar'.'</button> '.'</td>';
+   echo '<td>'.'<a href="presupuesto.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Generar presupuesto para el equipo">'.'<span class="glyphicon glyphicon-paperclip" aria-hidden="true"> GENERAR PRESUPUESTO</span>'.'</a>'.'</td>';  
       
 }
+}
 ?>  
-
-
- 
-         
+   
   </ul>
       </tbody>
 </table>

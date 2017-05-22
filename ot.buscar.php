@@ -8,21 +8,14 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
 
-$consulta="SELECT * FROM cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cliente Encargado</title>
+	<title>Orden de Trabajo</title>
+  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
 
 
-	  
-      <style>
+	  <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -31,7 +24,7 @@ $result=mysql_query($consulta);
 	body{
   background: #F2F2F2;
 }
-   	 nav ul ul.dropdown-menu li a:hover {
+  nav ul ul.dropdown-menu li a:hover {
 	background: #CCCCCC;
  	}
  	 nav ul li:hover {
@@ -43,18 +36,24 @@ $result=mysql_query($consulta);
     width: 50px;
     border: auto;
   }
-  h1{
-    margin: 10px 500px 20px 500px;
+    h1{
+    margin: 10px 300px 20px 400px;
     color: orange;
     border-top: 30px;
+   
   }
-  .contenedor {
+   h4{
+    margin: 10px auto;
+    color: #555555;
+    
+  }
+    .contenedor {
     width: 1300px;
     height: 100px;
-    margin: auto;
+    margin:  auto;   
 }
 label {
-  color:#515151;
+  color:#555555;
 }
  .cerrar{
     height: 40px;
@@ -64,9 +63,10 @@ label {
   }
 
    </style>
+
 </head>
  <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid" >
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -127,101 +127,95 @@ label {
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
-
 <body>
-	<div class="contenedor">
+<!--se puede sacar el contenedor para que mi pagina sea responsive-->
+ <div class="contenedor">
 
 
-<a href="cliente.encargado.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.encargado.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+
+<a href="ot.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cliente Encargado</h1>
 
 <form class="form-group" action=""  method="POST">
 
-<div class="container">
+<div class="container" >
+<div class="table-responsive">
 
-<div class="col-xs-5" >
-<label for="">Cliente a asociar</label>
-<select id="id_cliente" class="form-control" name="id_cliente" > 
-<option value="" selected="">Seleccionar Cliente</option>
- <?php
-      while($fila=mysql_fetch_array($result))
-  {?>
-      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
-  <?php } ?>
-</select>
+<div class="form-group" id="datos">
+<h4><label for="caja_busqueda"><h1>Buscar Orden de Trabajo</h1></label></h4>
+    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de OT">
+    <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
+
 </div>
 
-<div class="col-xs-5" >
-<label for="">Nombre Completo</label>
-<input type="text" class="form-control" name="nombreE" placeholder="Nombre Encargado"  required=""></div>
-
-
-<div class="col-xs-5" >
-<label for="">rut</label>
-<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)"></div>
-
-
-
-<div class="col-xs-5" >
-<label for="">fono</label>
-<input type="text" class="form-control" minlength="8" maxlength="9" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required=""></div>
-
-<div class="col-xs-5" >
-<label for="">correo</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
-
-  <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  </div>
-</div>
-</form>
-</div>
+<table  class="table table-striped" id="" name="" >
+    <tbody>
+      <tr>
+        <td><h4>Numero</h4></td>
+        <td><h4>Fecha Creación</h4></td>
+        <td><h4>Técnico</h4></td>
+        <td><h4>Cliente</h4></td>
+        <td><h4>Tipo de OT</h4></td>
+        <td><h4>Area</h4></td>
+        <td><h4>Estado OT</h4></td>
+        <td><h4>Serie Equipo</h4></td>
+        <td><h4>Motivo de Visita</h4></td>
+        <td><h4>Valor Presupuesto</h4></td>
+        <td><h4>Fecha de Presupuesto</h4></td>
+        <td><h4>Valor Repuesto</h4></td>
+        <td><h4>Total</h4></td>
+        <td colspan="2"><h4>Operaciones</h4></td>
+      </tr>
 
 <?php
-if
-  (  isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
-     isset($_POST['nombreE']) && !empty($_POST['nombreE']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']))
-  {
 
-      $Cliente = $_POST['id_cliente']; 
-      $Nombre = $_POST['nombreE'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      
-    // conexión a la base de datos de
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("No se pudo Contactar a Base de Datos MySQL");
+$busca="";
+$busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
+include("conexion.php");
+if($busca!=""){
+  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo WHERE correlativo_ot like '%".$busca."%' ");
 
 
-// seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("bdcass",$dbhandle) 
-  or die("No se pudo seleccionar la base de datos CASS");
-  
-  include("conexion.php");
-
-$nuevo_rut=mysql_query("SELECT rut FROM cliente_encargado WHERE rut='$Rut'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
-{ 
-echo " '<script> alert('Cliente Encagado ya se encuentra registrado en Cliente');</script>'
-<p class='avisos '><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> "; 
-}
-else{ 
-  mysql_query("INSERT INTO cliente_encargado (id_cliente, nombreE, rut, fono, correo) VALUES ('$Cliente', '$Nombre', '$Rut','$Fono','$Correo')")or die(mysql_error());
-
+   while($muestra=mysql_fetch_array($dbhandle)){
+   echo '<tr>';
+   echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['fecha_creacion'].'</td>';
+   echo '<td>'.$muestra['nombreUsuario'].'</td>';
+   echo '<td>'.$muestra['nombre'].'</td>';
+   echo '<td>'.$muestra['nombreTipo'].'</td>';
+   echo '<td>'.$muestra['area'].'</td>';
+   echo '<td>'.$muestra['estado'].'</td>';
+   echo '<td>'.$muestra['serie_equipo'].'</td>';
+   echo '<td>'.$muestra['motivo'].'</td>';
+   echo '<td>'.$muestra['valorReparacion'].'</td>';
+   echo '<td>'.$muestra['fechaPresupuesto'].'</td>';
+   echo '<td>'.$muestra['valorReparacion'].'</td>';
+   echo '<td>'.$muestra['valorReparacion'].'</td>';
+   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';     
 }
 }
+?>  
+   
+  </ul>
+      </tbody>
+</table>
+</div>
+<?php
+// close connection; 
+mysql_close();
 ?>
-
+<nav aria-label="">
+  <ul class="pagination">
+    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+</nav>
+</ul>
+</nav>
+</div>
+</form>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -232,6 +226,7 @@ else{
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
+    <script src="validaremail.js"></script> 
 </body>
 <footer> </footer>
 </html>

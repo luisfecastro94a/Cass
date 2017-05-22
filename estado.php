@@ -143,6 +143,18 @@ label {
 <label for="">Estado</label>
 <input type="text" class="form-control" id="estado" name="estado" placeholder="Ingresar Estado" autofocus="" onKeyPress="return soloLetras(event)" required=""></div>
 
+<div class="col-xs-5">
+<label for="">Relacionar estado</label>
+<select class="form-control" name="relacion">
+<option value="" selected="">--Selecciona relacion--</option>
+  <option value="equipo">equipo</option>
+  <option value="ot">ot</option>
+  <option value="cotizacion">cotizacion</option>
+  <option value="proforma">proforma</option>
+  <option value="factura">factura</option>
+</select>
+</div>
+
   <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
@@ -155,10 +167,12 @@ label {
 <?php
 if
     (
-     isset($_POST['estado']) && !empty($_POST['estado']))
+     isset($_POST['estado']) && !empty($_POST['estado'])&&
+     isset($_POST['relacion']) && !empty($_POST['relacion']))
   {
 
       $estado = $_POST['estado']; 
+      $relacion = $_POST['relacion']; 
    
 
     // conexión a la base de datos de
@@ -184,7 +198,7 @@ echo "
 }
 else{
   
-  mysql_query("INSERT INTO estado (estado ) VALUES ('$estado')") or die(mysql_errno());
+  mysql_query("INSERT INTO estado (estado, relacion ) VALUES ('$estado', '$relacion')") or die(mysql_errno());
  echo '<script> alert("Estado Creado con Exito."); </script>';
 
 }

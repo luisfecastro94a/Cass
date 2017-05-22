@@ -135,6 +135,7 @@ label {
     </div><!-- /.navbar-collapse -->
 </nav>
 <body>
+ 
  <div class="contenedor">
 
 
@@ -144,10 +145,11 @@ label {
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-
+</div>
 <form class="form-group" action=""  method="POST">
 
 <div class="container">
+<div class="table-responsive">
 
 <div class="form-group" id="datos">
 <h4><label for="caja_busqueda"><h1>Buscar Cliente Encargado</h1></label></h4>
@@ -161,7 +163,7 @@ label {
 
 </div>
 
-<table class="table table-striped" id="datos">
+<table class="table table-striped table-hover" id="datos">
 <thead>
       <th colspan="1"><a href="cliente.encargado.php" class="btn btn-primary">Nuevo Cliente</a></th>
       <th colspan="11">Lista de Usuarios</th>
@@ -205,6 +207,7 @@ if($busca!=""){
   </ul>
       </tbody>
 </table>
+</div>
 <?php
 // close connection; 
 mysql_close();

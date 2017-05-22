@@ -152,7 +152,7 @@ label {
 
       
       
-      $consulta=mysql_query("SELECT usuario.id_usuario, usuario.nombre, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE id_usuario='$id'")or die(mysql_error());
+      $consulta=mysql_query("SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE id_usuario='$id'")or die(mysql_error());
       $reg=mysql_fetch_array($consulta);
   ?>
 <h1>Modificar Usuario</h1>
@@ -164,7 +164,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Nombre Completo</label>
-<input type="text" class="form-control" name="nombre"  required="" value="<?php echo $reg['nombre'];?>" disabled></div>
+<input type="text" class="form-control" name="nombreUsuario"  required="" value="<?php echo $reg['nombre'];?>" disabled></div>
 
 <div class="col-xs-5" >
 <label for="">Domicilio </label>

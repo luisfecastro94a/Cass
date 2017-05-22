@@ -148,7 +148,7 @@ label {
 
 <div class="col-xs-5" ><!--al div hay que cambiar el form-group por col-xs-->
 <label for="">Nombre Completo</label>
-<input type="text" class="form-control"  name="nombre" placeholder="Nombre" onKeyPress="return soloLetras(event)" autofocus=""  required=""></div>
+<input type="text" class="form-control"  name="nombreUsuario" placeholder="Nombre" onKeyPress="return soloLetras(event)" autofocus=""  required=""></div>
 
 
 <div class="col-xs-5" >
@@ -218,7 +218,7 @@ if
     (
      isset($_POST['id_nivelacceso']) && !empty($_POST['id_nivelacceso']) &&
      isset($_POST['id_cargo']) && !empty($_POST['id_cargo']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
+     isset($_POST['nombreUsuario']) && !empty($_POST['nombreUsuario']) &&
      isset($_POST['domicilio']) && !empty($_POST['domicilio']) &&
      isset($_POST['fono']) && !empty($_POST['fono']) &&
      isset($_POST['rut']) && !empty($_POST['rut']) &&
@@ -229,7 +229,7 @@ if
 
       $nivelacceso = $_POST['id_nivelacceso']; 
       $cargo = $_POST['id_cargo'];
-      $nombre = $_POST['nombre'];
+      $nombre = $_POST['nombreUsuario'];
       $domicilio = $_POST['domicilio'];
       $fono = $_POST['fono'];
       $rut = $_POST['rut'];
@@ -249,7 +249,7 @@ echo "
 "; 
 }
 else{
-  mysql_query("INSERT INTO usuario (id_nivelacceso, id_cargo, nombre,  domicilio, fono, rut, clave, correo) VALUES ('$nivelacceso', '$cargo','$nombre','$domicilio','$fono', '$rut',  '$clave','$correo')")or die(mysql_errno());
+  mysql_query("INSERT INTO usuario (id_nivelacceso, id_cargo, nombreUsuario,  domicilio, fono, rut, clave, correo) VALUES ('$nivelacceso', '$cargo','$nombre','$domicilio','$fono', '$rut',  '$clave','$correo')")or die(mysql_errno());
    echo '<script> alert("Usuario Creado con Exito."); </script>';
 }
 

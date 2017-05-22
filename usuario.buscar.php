@@ -181,13 +181,13 @@ $busca=isset($_POST['busca'])?$_POST['busca']: NULL;
 include("conexion.php");
 if($busca!=""){
  //  Consulta Mysql donde se aplica INNER JOIN
-        $dbhandle=mysql_query("SELECT usuario.id_usuario, usuario.nombre, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE nombre like '%".$busca."%' ")or die(mysql_error());
+        $dbhandle=mysql_query("SELECT usuario.id_usuario, usuario.nombreUsuario, usuario.domicilio, usuario.fono, usuario.rut, usuario.clave, usuario.correo, nivelacceso.nivel, cargo.nombreC FROM usuario INNER JOIN nivelacceso  ON usuario.id_nivelacceso=nivelacceso.id_nivelacceso INNER JOIN cargo ON usuario.id_cargo=cargo.id_cargo WHERE nombreUsuario like '%".$busca."%' ")or die(mysql_error());
       
   while($fila=mysql_fetch_array($dbhandle)){
    echo '<tr>';
    echo '<td>'.$fila['nivel'].'</td>';
    echo '<td>'.$fila['nombreC'].'</td>';
-   echo '<td>'.'<strong>'.$fila['nombre'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$fila['nombreUsuario'].'</strong>'.'</td>';
    echo '<td>'.$fila['domicilio'].'</td>';
    echo '<td>'.$fila['fono'].'</td>';
    echo '<td>'.$fila['rut'].'</td>';

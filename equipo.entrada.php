@@ -234,7 +234,7 @@ $resultM=mysql_query($consulta1);
 <?php
 include("conexion.php");
 
-$consulta2="SELECT * FROM estado ORDER BY estado ASC ";
+$consulta2="SELECT * FROM estado WHERE relacion='equipo' ORDER BY estado ASC ";
 $resultE=mysql_query($consulta2);
 
 

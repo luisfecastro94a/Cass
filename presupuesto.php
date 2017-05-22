@@ -171,7 +171,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Valor por Reparación</label>
-<input type="text" class="form-control" id="valor_reparacion" onKeyPress="return SoloNumeros(event)" name="valor_reparacion" autofocus required=""></div>
+<input type="text" class="form-control" id="valor_reparacion" onKeyPress="return SoloNumeros(event)" name="valor_reparacion" required=""></div>
 
 <div class="form-group" >
 <label class="fe" for="">Fecha Presupuesto</label>

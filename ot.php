@@ -62,6 +62,20 @@ $result=mysql_query($consulta);
     });
   } );
   </script>
+  <script>
+  $( function() {
+    $( "#fechaPresupuesto" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
 
 	
       <style>
@@ -170,7 +184,6 @@ label {
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
-
 <body>
 	<div class="contenedor">
 
@@ -201,16 +214,15 @@ label {
 <!--INICIO DE TODO FORMULARIO-->
 
 <?php
-include("conexion.php");
-
-
-$consulta="SELECT id_orden_trabajo FROM orden_trabajo";
-$ot=mysql_query($consulta);
-
+  //codigo para que muestre el correlativo de mi orden de trabajo
+    $sql = "SELECT MAX(correlativo_ot) as max FROM orden_trabajo ";
+    $resultado = mysql_query($sql);
+    $row = mysql_fetch_array($resultado);
+    $mensaje =$row["max"]+1;
 ?>
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
-<input type="text" class="form-control" id="id_orden_trabajo" value="<?php echo $ot['id_orden_trabajo']?>" name="id_orden_trabajo"  ></div>
+<input type="text" class="form-control" id="correlativo_ot" value="<?=$mensaje?>" name="correlativo_ot"  ></div>
 
 <div class="col-xs-2">
 <label for="">Hora Llegada</label>
@@ -219,14 +231,9 @@ $ot=mysql_query($consulta);
 <div class="col-xs-2">
 <label for="">Hora Salida</label>
 <input type="text" class="form-control" id="hora_salida" value="" name="hora_salida"  ></div>
-<br/>
-
+</br>
 <div class="col-xs-5">
 <label class="fe" for="">Fecha Creación<input class="" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
-
-<div class="col-xs-5">
-<label class="fe" for="">Fecha Plazo de Entrega<input class="" type="text" name="fecha_plazo_entrega" id="fecha_plazo_entrega"></label></div><!--fecha con jquey-->
-
 
 <?php
 include("conexion.php");
@@ -238,7 +245,7 @@ $asig=mysql_query($consulta1);
 ?>
 <div class="col-xs-5" >
 <label for="">Asigar a Técnico</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
+<select id="id_usuario" class="form-control" name="id_usuario" > 
 <option value="" selected="">---Asignar Técnico---</option>
  <?php
       while($reci=mysql_fetch_array($asig))
@@ -258,7 +265,7 @@ $asig1=mysql_query($consulta2);
 ?>
 <div class="col-xs-5" >
 <label for="">Tipo de OT</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
+<select id="id_ot_tipo" class="form-control" name="id_ot_tipo" > 
 <option value="" selected="">---Tipo de Orde de Trabajo---</option>
  <?php
       while($f=mysql_fetch_array($asig1))
@@ -278,7 +285,7 @@ $asig2=mysql_query($consulta3);
 ?>
 <div class="col-xs-5" >
 <label for="">Area</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
+<select id="id_area" class="form-control" name="id_area" > 
 <option value="" selected="">---Area de Trabajo---</option>
  <?php
       while($fi=mysql_fetch_array($asig2))
@@ -293,13 +300,13 @@ $asig2=mysql_query($consulta3);
 include("conexion.php");
 
 
-$consulta4="SELECT * FROM estado";
+$consulta4="SELECT * FROM estado WHERE relacion='ot'";
 $asig3=mysql_query($consulta4);
 
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
+<select id="id_estado" class="form-control" name="id_estado" > 
 <option value="" selected="">---Estado Orden de Trabajo---</option>
  <?php
       while($fil=mysql_fetch_array($asig3))
@@ -329,7 +336,7 @@ $asig3=mysql_query($consulta4);
       
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="nombreCliente" class="form-control" name="nombreCliente" onchange="escola(this.value)" value="" > 
+<select id="nombreCliente" class="form-control" name="id_cliente" onchange="escola(this.value)" value="" > 
 <option value="0">---Selecionar Cliente---</option>
 </select>
 </div>
@@ -387,7 +394,7 @@ $asig3=mysql_query($consulta4);
       <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<select  class="form-control" id="serie_equipo" onchange="listaequipo(this.value)" name="serie_equipo" value=""> 
+<select  class="form-control" id="serie_equipo" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
 <option value="0" ></option>
 </select>
 </div> 
@@ -428,7 +435,7 @@ $asig3=mysql_query($consulta4);
      
 <div class="col-xs-5" >
 <label for="">Motivo</label>
-<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita" required="" value=""></div>
+<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita"  value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Comentario</label>
@@ -448,7 +455,15 @@ $asig3=mysql_query($consulta4);
     </div>
     <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
       <div class="panel-body">
-        aqui el presupuesto
+        <!--INICIO DEL PRESUPUESTO-->
+
+        <div class="col-xs-5" >
+          <label for="">Valor por Reparación</label>
+          <input type="text" class="form-control" id="valorReparacion" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
+
+          <div class="col-xs-5">
+<label class="fe" for="">Fecha Presupuesto<input class="" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
+
       </div>
     </div>
   </div>
@@ -457,7 +472,7 @@ $asig3=mysql_query($consulta4);
     <div class="panel-heading" role="tab" id="headingSix">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-         Cotizacion
+         Cotización
         </a>
       </h4>
     </div>
@@ -487,32 +502,24 @@ $asig3=mysql_query($consulta4);
     
 <?php
 if
-    (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
-     isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']) &&
-     isset($_POST['giro']) && !empty($_POST['giro']) &&
-     isset($_POST['direccion']) && !empty($_POST['direccion']) &&
-     isset($_POST['nombre_contacto']) && !empty($_POST['nombre_contacto']) &&
-     isset($_POST['fono_contacto']) && !empty($_POST['fono_contacto']) &&
-     isset($_POST['correo_contacto']) && !empty($_POST['correo_contacto']) &&
-     isset($_POST['cargo_contacto']) && !empty($_POST['cargo_contacto']) &&
-     isset($_POST['condicion_pago']) && !empty($_POST['condicion_pago']))
+    (isset($_POST['correlativo_ot']) && !empty($_POST['correlativo_ot']))
   {
 
-      $Ciudad = $_POST['id_ciudad']; 
-      $Nombre = $_POST['nombre'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      $Giro = $_POST['giro'];
-      $Direccion = $_POST['direccion'];
-      $Nombre_contacto = $_POST['nombre_contacto'];
-      $Fono_contacto = $_POST['fono_contacto'];
-      $Correo_contacto = $_POST['correo_contacto'];
-      $Cargo_contacto = $_POST['cargo_contacto'];
-      $Condicion_pago = $_POST['condicion_pago'];
+      $correlativo_ot = $_POST['correlativo_ot']; 
+      $id_usuario = $_POST['id_usuario'];
+      $id_cliente = $_POST['id_cliente'];
+      $id_ot_tipo = $_POST['id_ot_tipo'];
+      $id_area = $_POST['id_area'];
+      $id_estado = $_POST['id_estado'];
+      $id_equipo = $_POST['id_equipo'];
+      //cuando se quiera modificar se agrega el id_cotizacion
+      $fecha_creacion = $_POST['fecha_creacion'];
+      $motivo = $_POST['motivo'];
+      $comentario = $_POST['comentario'];
+      $valorReparacion = $_POST['valorReparacion'];
+      $fecha_presupuesto = $_POST['fechaPresupuesto'];
+      $hora_llegada = $_POST['hora_llegada'];
+      $hora_salida = $_POST['hora_salida'];
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -527,20 +534,18 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
+$nuevo_correlativo=mysql_query("SELECT correlativo_ot FROM orden_trabajo WHERE correlativo_ot='$correlativo_ot'"); 
+if(mysql_num_rows($nuevo_correlativo)>0) 
 { 
 echo " 
-<p class='avisos'>El RUT ya esta registrado</p> 
+<script> alert('El Numero de OT ya se encuentra registrado') </script>; 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
-  
-  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
- echo '<script> alert("Cliente Creado con Exito."); </script>';
-
-}
+  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_creacion, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_creacion','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
+ echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';
+  }
 
 }
 ?>

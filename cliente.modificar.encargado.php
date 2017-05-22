@@ -155,7 +155,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Cliente a asociar</label>
-<select id="id_cliente" class="form-control" name="id_cliente"> 
+<select id="id_cliente" class="form-control" name="id_cliente" autofocus> 
 <option value="<?php echo $fila['id_cliente']?>">---Seleccionar Cliente---</option>
 <?php
       while($fila=mysql_fetch_array($result))
@@ -167,23 +167,23 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Nombre</label>
-<input type="text" class="form-control" name="nombreE" placeholder="Nombres"  required="" value="<?php echo $reg['nombreE'];?>"></div>
+<input type="text" class="form-control" id="nombreE" name="nombreE" disabled="" required=""  value="<?php echo $reg['nombreE'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">rut</label>
-<input type="text" class="form-control" name="rut" id="rut" placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
+<input type="text" class="form-control" name="rut" id="rut" disabled="" required="" oninput="checkRut(this)" value="<?php echo $reg['rut'];?>"></div>
 
 
 
 <div class="col-xs-5" >
 <label for="">fono</label>
-<input type="text" class="form-control" name="fono" id="fono" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<input type="text" class="form-control" name="fono" id="fono" minlength="8" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="<?php echo $reg['fono'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">correo</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>"></div>
+<input type="email" class="form-control" name="correo" id="correo"   required="" value="<?php echo $reg['correo'];?>"></div>
 
   <div class="col-xs-5">
   <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
@@ -200,8 +200,6 @@ include("conexion.php");
       
       $id=$_REQUEST['id'];          
       $Cliente = isset($_POST['id_cliente'])? $_POST['id_cliente']:''; 
-      $Nombre =isset($_POST['nombreE'])? $_POST['nombreE']:''; 
-      $Rut = isset($_POST['rut'])? $_POST['rut']:''; 
       $Fono = isset($_POST['fono'])? $_POST['fono']:''; 
       $Correo = isset($_POST['correo'])? $_POST['correo']:''; 
       
@@ -216,7 +214,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   
 
 
-  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', nombreE='$Nombre', rut='$Rut', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
+  mysql_query("UPDATE cliente_encargado SET id_cliente='$Cliente', fono='$Fono', correo='$Correo' WHERE id_cliente_encargado='$id'")or die(mysql_error());
 
 ?>
 <?php

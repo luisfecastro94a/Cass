@@ -119,7 +119,7 @@ label {
             <li><a href="marca.php">Marca</a></li>
             <li><a href="estado.php">Estado</a></li>
             <li><a href="parametro.php">Parametro</a></li>
-            <li><a href="parametro.php">estadisticas</a></li>
+            <li><a href="parametro.php">Estadisticas</a></li>
             <li><a href="area.php">Area</a></li>
           </ul>
         </li>
@@ -141,8 +141,17 @@ label {
 
 <form class="form-group" action=""  method="POST">
 
-<div class="container" >
+<div class="container">
 <div class="table-responsive">
+
+<!--<div class="fomr-1-2">
+      <label for="caja_busqueda">Buscar OT :</label>
+      <input type="text" class="" name="caja_busqueda" id="caja_busqueda">
+</div>
+<section id="datos">
+      aqui se desplega la tabla de busqueda
+</section>-->
+
 
 <div class="form-group" id="datos">
 <h4><label for="caja_busqueda"><h1>Buscar Orden de Trabajo</h1></label></h4>
@@ -151,7 +160,7 @@ label {
 
 </div>
 
-<table  class="table table-striped" id="" name="" >
+<table  class="table table-striped table-bordered" id="" name="" >
     <tbody>
       <tr>
         <td><h4>Numero</h4></td>
@@ -176,7 +185,7 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo WHERE correlativo_ot like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo, cotizacion.valorRepuesto, cotizacion.valorCotizacion FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo WHERE correlativo_ot like '%".$busca."%' ");
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
@@ -192,9 +201,9 @@ if($busca!=""){
    echo '<td>'.$muestra['motivo'].'</td>';
    echo '<td>'.$muestra['valorReparacion'].'</td>';
    echo '<td>'.$muestra['fechaPresupuesto'].'</td>';
-   echo '<td>'.$muestra['valorReparacion'].'</td>';
-   echo '<td>'.$muestra['valorReparacion'].'</td>';
-   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';     
+   echo '<td>'.$muestra['valorRepuesto'].'</td>';
+   echo '<td>'.$muestra['valorCotizacion'].'</td>';
+   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['correlativo_ot'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';     
 }
 }
 ?>  
@@ -227,6 +236,7 @@ mysql_close();
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
     <script src="validaremail.js"></script> 
+    <!--<script src="js/buscar.ot.js"></script>-->
 </body>
 <footer> </footer>
 </html>

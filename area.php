@@ -144,7 +144,8 @@ label {
 <input type="text" class="form-control" id="area" name="area" placeholder="Nombre Area" autofocus="" required=""></div>
 
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
+  <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
   
@@ -179,8 +180,8 @@ $nuevo_usuario=mysql_query("SELECT area FROM area WHERE area='$area'");
 if(mysql_num_rows($nuevo_usuario)>0) 
 { 
 echo " 
-<p class='avisos'>El Area ya esta registrada</p> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+'<script> alert('Area, ya se encuentra registrada')</script>' 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
 "; 
 }else{
   

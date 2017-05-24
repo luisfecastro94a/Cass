@@ -191,15 +191,13 @@ include("conexion.php");
 $nuevo_estado=mysql_query("SELECT estado FROM estado WHERE estado='$estado'"); 
 if(mysql_num_rows($nuevo_estado)>0) 
 { 
-echo " 
-<p class='avisos'>El ESTADO ya esta registrado</p> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
+echo ' "<script> alert(" El Estado, ya esta registrado ")</script>"
+<p class="avisos"><a href="javascript:history.go(-1)" class="clase1 btn btn-danger">Volver atrás</a></p>'; 
 }
 else{
   
   mysql_query("INSERT INTO estado (estado, relacion ) VALUES ('$estado', '$relacion')") or die(mysql_errno());
- echo '<script> alert("Estado Creado con Exito."); </script>';
+ echo '<script> alert("Estado Creado con Exito")</script>';
 
 }
 

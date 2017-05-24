@@ -140,11 +140,12 @@ label {
 
 
 <div class="col-xs-5" >
-<label for="">Nombre Marca</label>
+<label for="">Nombre de la Marca</label>
 <input type="text" class="form-control" id="marca" name="marca" placeholder="Nombre Marca" autofocus="" required=""></div>
 
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
+  <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
 
@@ -155,8 +156,7 @@ label {
 <?php
 include("conexion.php");
 if
-    (
-     isset($_POST['marca']) && !empty($_POST['marca'])) 
+    (isset($_POST['marca']) && !empty($_POST['marca'])) 
   {
 
       
@@ -184,11 +184,10 @@ echo "
 }else{
   
   $consulta=mysql_query("INSERT INTO marca (marca) VALUES ('$marca')") or die(mysql_errno());
-   echo '<script> alert("Marca Creada con Exito."); </script>';
+   echo '<script> alert("Marca Creada con Exito")</script>';
 }
 
 }
-
 
 ?>
 

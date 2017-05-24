@@ -9,17 +9,6 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 <meta charset="UTF-8">
-<?php
-include("conexion.php");
-
-
-$consulta="SELECT * FROM ciudad";
-$result=mysql_query($consulta);
-
-
-?>
-
-
 
 
 	<title>Orden de Trabajo</title>
@@ -34,48 +23,8 @@ $result=mysql_query($consulta);
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   
-  <script>
-  $( function() {
-    $( "#fecha_creacion" ).datepicker({
-      changeMonth:true,
-      changeYear:true,
-      showOn: "button",
-      buttonImage: "css/images/cale.png",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      showButtonPanel:true, 
+ 
 
-    });
-  } );
-  </script>
-    <script>
-  $( function() {
-    $( "#fecha_plazo_entrega" ).datepicker({
-      changeMonth:true,
-      changeYear:true,
-      showOn: "button",
-      buttonImage: "css/images/cale.png",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      showButtonPanel:true, 
-
-    });
-  } );
-  </script>
-  <script>
-  $( function() {
-    $( "#fechaPresupuesto" ).datepicker({
-      changeMonth:true,
-      changeYear:true,
-      showOn: "button",
-      buttonImage: "css/images/cale.png",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      showButtonPanel:true, 
-
-    });
-  } );
-  </script>
 
 	
       <style>
@@ -192,10 +141,18 @@ label {
 <a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
-<br><br>
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
+
+      $consulta=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, cliente.nombre, cliente.rut,cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, cliente_encargado.nombreE, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.valorRepuesto, cotizacion.valorCotizacion  FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo WHERE correlativo_ot='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+
+
 <h1> Crear Orden de Trabajo</h1>
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+<form class="form-group" action=""  method="POST" >
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
@@ -213,27 +170,21 @@ label {
 
 <!--INICIO DE TODO FORMULARIO-->
 
-<?php
-  //codigo para que muestre el correlativo de mi orden de trabajo
-    $sql = "SELECT MAX(correlativo_ot) as max FROM orden_trabajo ";
-    $resultado = mysql_query($sql);
-    $row = mysql_fetch_array($resultado);
-    $mensaje =$row["max"]+1;
-?>
+
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
-<input type="text" class="form-control" id="correlativo_ot" value="<?=$mensaje?>" name="correlativo_ot"  ></div>
+<input type="text" class="form-control" id="correlativo_ot" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot"  ></div>
 
 <div class="col-xs-2">
 <label for="">Hora Llegada</label>
-<input type="text" class="form-control" id="hora_llegada" value="" name="hora_llegada"  ></div>
+<input type="text" class="form-control" id="hora_llegada" value="<?php echo $reg['hora_llegada'];?>" name="hora_llegada"  ></div>
 
 <div class="col-xs-2">
 <label for="">Hora Salida</label>
-<input type="text" class="form-control" id="hora_salida" value="" name="hora_salida"  ></div>
+<input type="text" class="form-control" id="hora_salida" value="<?php echo $reg['hora_salida'];?>" name="hora_salida"  ></div>
 </br>
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Creación<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Creación<input class="" value="<?php echo $reg['fecha_creacion'];?>" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
 
 <?php
 include("conexion.php");
@@ -334,46 +285,41 @@ $asig3=mysql_query($consulta4);
 
       <!--aqui va formulario de div-->
       
+
+
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="nombreCliente" class="form-control" name="id_cliente" onchange="escola(this.value)" value="" > 
-<option value="0">---Selecionar Cliente---</option>
-</select>
-</div>
+<input type="text" class="form-control" name="nombre" id="nombre" maxlength="9"  
+  required="" value="<?php echo $reg['nombre'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Fono/Fax Empresa:</label>
 <input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="" ></div>
+  required="" value="<?php echo $reg['fono'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value="<?php echo $reg['direccion'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Ciudad" required="" value=""></div>
+<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Ciudad" required="" value="<?php echo $reg['nombrec'];?>"></div>
 <!--Consulta para buscar al Encargado del Cliente-->
-
 
 <div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>
-<select  class="form-control" id="nombreE" name="nombreE" value=""> 
-<option value="0" ></option>
-</select>
-</div> 
-
+<input type="text" class="form-control" id="nombreE" name="nombreE"  required="" value="<?php echo $reg['nombreE'];?>"></div>
 
 
       </div>
@@ -392,27 +338,27 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--Aqui va los datos del EQUIPO-->
+
+
+
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<select  class="form-control" id="serie_equipo" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
-<option value="0" ></option>
-</select>
-</div> 
+<input type="text" class="form-control" id="serie_equipo" name="serie_equipo"  required="" value="<?php echo $reg['serie_equipo'];?>"></div>
 
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"><?php echo $reg['sintoma_cliente'];?></textarea>
 </div>
 
 
 <div class="col-xs-5" >
 <label for="">Marca</label>
-<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
+<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value="<?php echo $reg['marca'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
+<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value="<?php echo $reg['estado'];?>"></div>
 
 
       </div>
@@ -435,11 +381,11 @@ $asig3=mysql_query($consulta4);
      
 <div class="col-xs-5" >
 <label for="">Motivo</label>
-<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita"  value=""></div>
+<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita"  value="<?php echo $reg['motivo'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">Comentario</label>
-<textarea name="comentario" id="comentario" cols="53"  rows="4"></textarea>
+<textarea name="comentario" id="comentario" cols="53"  rows="4"><?php echo $reg['comentario'];?></textarea>
 </div>
       </div>
     </div>
@@ -459,10 +405,11 @@ $asig3=mysql_query($consulta4);
 
         <div class="col-xs-5" >
           <label for="">Valor por Reparación</label>
-          <input type="text" class="form-control" id="valorReparacion" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
+          <input type="text" class="form-control" id="valorReparacion" value="<?php echo $reg['valorReparacion'];?>" onKeyPress="return SoloNumeros(event)
+          " name="valorReparacion" ></div>
 
-          <div class="col-xs-5">
-<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
+<div class="col-xs-5">
+<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo $reg['fechaPresupuesto'];?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
 
       </div>
     </div>
@@ -478,7 +425,18 @@ $asig3=mysql_query($consulta4);
     </div>
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
-        aqui va la cotizacion
+       
+         <div class="col-xs-5">
+<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $reg['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
+
+ <div class="col-xs-5" >
+          <label for="">Valor por Repuesto</label>
+          <input type="text" class="form-control" id="valorRepuesto" value="<?php echo $reg['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuesto" ></div>
+ 
+ <div class="col-xs-5" >
+          <label for="">Valor Total Cotización</label>
+          <input type="text" class="form-control" id="valorCotizacion" value="<?php echo $reg['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacion" ></div>
+
       </div>
     </div>
   </div>
@@ -542,7 +500,6 @@ echo "
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
-//aqui ira otro else para preguntar si el equipo seleccionado ya esta con un OT asociado.
 else{
   $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_creacion, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_creacion','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
  echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';

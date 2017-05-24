@@ -60,18 +60,18 @@ if (isset($_SESSION['correo'])) {?>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <li><a  href="index.php">Inicio</a></li>
+       <li><a  href="inicio.php">Inicio</a></li>
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="cliente.php">Ingresar Cliente</a></li>
             <li><a href="cliente.encargado.php">Ingresar Encargado</a></li>
-            <li><a href="#">Ingreso Garantia</a></li>
+            <li><a href="garantia.php">Ingreso Garantia</a></li>
             <li><a href="#">Presupuesto</a></li>
-            <li><a href="#">Cotización</a></li>
-            <li><a href="#">Repuesto</a></li>
-            <li><a href="#">Generar OT</a></li>
+            <li><a href="cotizacion.php">Cotización</a></li>
+            <li><a href="repuesto.php">Repuesto</a></li>
+            <li><a href="ot.php">Generar OT</a></li>
           </ul>
         </li>
         <li class="dropdown">

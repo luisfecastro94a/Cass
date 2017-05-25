@@ -94,11 +94,10 @@ label {
           <ul class="dropdown-menu">
             <li><a href="cliente.php">Ingresar Cliente</a></li>
             <li><a href="cliente.encargado.php">Ingresar Encargado</a></li>
-            <li><a href="#">Ingreso Garantia</a></li>
-            <li><a href="#">Presupuesto</a></li>
-            <li><a href="#">Cotización</a></li>
-            <li><a href="#">Repuesto</a></li>
-            <li><a href="#">Generar OT</a></li>
+            <li><a href="garantia.php">Ingreso Garantia</a></li>
+            <li><a href="presupuesto.php">Presupuesto</a></li>
+            <li><a href="cotizacion.php">Cotización</a></li>
+            <li><a href="repuesto.php">Repuesto</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -108,11 +107,21 @@ label {
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
           </ul>
         </li>
+
         <li><a  href="#">Contratos</a></li>
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
-        <li><a  href="#">Repuestos</a></li>
-        <li><a  href="ot.php">Orden de Trabajo</a></li>
+        <li><a  href="repuesto.php">Repuestos</a></li>
+
+        <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orden de Trabajo<span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                     <li><a  href="ot.php" title="Generar OT a un Técnico">Orden de Trabajo</a></li>
+                     <li><a  href="proforma.php" title="Generar proforma para cerrar la OT">Proforma (cerrar ot)</a></li>
+                     <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
+               </ul>
+        </li>
+
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -409,7 +418,7 @@ $asig3=mysql_query($consulta4);
           " name="valorReparacion" ></div>
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo $reg['fechaPresupuesto'];?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y");?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
 
       </div>
     </div>
@@ -425,17 +434,21 @@ $asig3=mysql_query($consulta4);
     </div>
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
-       
+
+<div class="col-xs-5" >
+          <label for="">Numero de Cotización</label>
+          <input type="text" class="form-control" id="correlativo_cotizacion" value="<?php echo $reg['correlativo_cotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="correlativo_cotizacion" ></div>
+
          <div class="col-xs-5">
 <label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $reg['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
 
  <div class="col-xs-5" >
           <label for="">Valor por Repuesto</label>
-          <input type="text" class="form-control" id="valorRepuesto" value="<?php echo $reg['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuesto" ></div>
+          <input type="text" class="form-control" id="valorRepuestoOT" value="<?php echo $reg['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuestoOT" ></div>
  
  <div class="col-xs-5" >
           <label for="">Valor Total Cotización</label>
-          <input type="text" class="form-control" id="valorCotizacion" value="<?php echo $reg['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacion" ></div>
+          <input type="text" class="form-control" id="valorCotizacionOT" value="<?php echo $reg['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacionOT" ></div>
 
       </div>
     </div>
@@ -445,7 +458,7 @@ $asig3=mysql_query($consulta4);
 </div><!--el primer div del acordion-->
 
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
@@ -459,27 +472,20 @@ $asig3=mysql_query($consulta4);
 </div>
     
 <?php
-if
-    (isset($_POST['correlativo_ot']) && !empty($_POST['correlativo_ot']))
-  {
+include("conexion.php");
+ 
 
-      $correlativo_ot = $_POST['correlativo_ot']; 
-      $id_usuario = $_POST['id_usuario'];
-      $id_cliente = $_POST['id_cliente'];
-      $id_ot_tipo = $_POST['id_ot_tipo'];
-      $id_area = $_POST['id_area'];
-      $id_estado = $_POST['id_estado'];
-      $id_equipo = $_POST['id_equipo'];
-      //cuando se quiera modificar se agrega el id_cotizacion
-      $fecha_creacion = $_POST['fecha_creacion'];
-      $motivo = $_POST['motivo'];
-      $comentario = $_POST['comentario'];
-      $valorReparacion = $_POST['valorReparacion'];
-      $fecha_presupuesto = $_POST['fechaPresupuesto'];
-      $hora_llegada = $_POST['hora_llegada'];
-      $hora_salida = $_POST['hora_salida'];
 
-    // conexión a la base de datos de
+      $id=$_REQUEST['id'];  
+      $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario']: ''; 
+      $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: '';    
+      $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: ''; 
+      $valorRepuesto = isset($_POST['valorRepuesto']) ? $_POST['valorRepuesto']: '';
+      $valorCotizacion = isset($_POST['valorCotizacion']) ? $_POST['valorCotizacion']: '';
+ 
+     
+
+   // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 
@@ -488,24 +494,8 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_correlativo=mysql_query("SELECT correlativo_ot FROM orden_trabajo WHERE correlativo_ot='$correlativo_ot'"); 
-if(mysql_num_rows($nuevo_correlativo)>0) 
-{ 
-echo " 
-<script> alert('El Numero de OT ya se encuentra registrado') </script>; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
-}
-else{
-  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_creacion, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_creacion','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
- echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';
-  }
-
-}
+  mysql_query("UPDATE orden_trabajo SET id_usuario='$id_usuario', id_estado='$id_estado', correlativo_cotizacion='$correlativo_cotizacion', valorRepuesto='$valorRepuesto', valorCotizacion='$valorCotizacion'  WHERE id_orden_trabajo='$id'");
+ 
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

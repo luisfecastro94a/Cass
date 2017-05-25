@@ -68,7 +68,7 @@ label {
 
    </style>
 </head>
- <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
@@ -91,11 +91,10 @@ label {
           <ul class="dropdown-menu">
             <li><a href="cliente.php">Ingresar Cliente</a></li>
             <li><a href="cliente.encargado.php">Ingresar Encargado</a></li>
-            <li><a href="#">Ingreso Garantia</a></li>
-            <li><a href="#">Presupuesto</a></li>
-            <li><a href="#">Cotización</a></li>
-            <li><a href="#">Repuesto</a></li>
-            <li><a href="#">Generar OT</a></li>
+            <li><a href="garantia.php">Ingreso Garantia</a></li>
+            <li><a href="presupuesto.php">Presupuesto</a></li>
+            <li><a href="cotizacion.php">Cotización</a></li>
+            <li><a href="repuesto.php">Repuesto</a></li>
           </ul>
         </li>
         <li class="dropdown">
@@ -105,11 +104,21 @@ label {
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
           </ul>
         </li>
+
         <li><a  href="#">Contratos</a></li>
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
-        <li><a  href="#">Repuestos</a></li>
-        <li><a  href="ot.php">Orden de Trabajo</a></li>
+        <li><a  href="repuesto.php">Repuestos</a></li>
+
+        <li class="dropdown">
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orden de Trabajo<span class="caret"></span></a>
+               <ul class="dropdown-menu">
+                     <li><a  href="ot.php" title="Generar OT a un Técnico">Orden de Trabajo</a></li>
+                     <li><a  href="proforma.php" title="Generar proforma para cerrar la OT">Proforma (cerrar ot)</a></li>
+                     <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
+               </ul>
+        </li>
+
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -130,7 +139,6 @@ label {
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
-
 <body>
 	<div class="contenedor">
 

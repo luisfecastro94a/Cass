@@ -8,15 +8,8 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-  <?php
-include("conexion.php");
 
-$consulta="SELECT * FROM  cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cliente</title>
+	<title>Buscar Cotización</title>
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
@@ -144,43 +137,53 @@ label {
     </div><!-- /.navbar-collapse -->
 </nav>
 <body>
+<!--se puede sacar el contenedor para que mi pagina sea responsive-->
  <div class="contenedor">
 
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
 
 <form class="form-group" action=""  method="POST">
 
-<div class="container" >
+<div class="container">
+<div class="table-responsive">
+
+<!--<div class="fomr-1-2">
+      <label for="caja_busqueda">Buscar OT :</label>
+      <input type="text" class="" name="caja_busqueda" id="caja_busqueda">
+</div>
+<section id="datos">
+      aqui se desplega la tabla de busqueda
+</section>-->
+
 
 <div class="form-group" id="datos">
-<h4><label for="caja_busqueda"><h1>Buscar Cliente</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Buscar">
+<h4><label for="caja_busqueda"><h1>Buscar Cotización</h1></label></h4>
+    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de Cotización">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
 </div>
 
-
-<table  class="table table-striped" id="" name="" >
-<thead>
-      <th colspan="1"><a href="cliente.php" class="btn btn-primary">Nuevo Cliente</a></th>
-      <th colspan="11">Lista de Clientes</th>
-    </thead>
+<table  class="table table-striped table-bordered" id="" name="" >
     <tbody>
       <tr>
-        <td><h4>#</h4></td>
+     
+        <td><h4>Numero Cotización</h4></td>
+        <td><h4>Fecha Cotización</h4></td>
+        <td><h4>Numero OT</h4></td>
+        <td><h4>Fecha de OT</h4></td>
         <td><h4>Cliente</h4></td>
-        <td><h4>Codigo Legal</h4></td>
-        <td><h4>Giro</h4></td>
-        <td><h4>Dirección</h4></td>
-        <td><h4>Correo</h4></td>
-        <td><h4>Telefono Empresa</h4></td>
-        <td><h4>Contacto</h4></td>
+        <td><h4>Valor Presupuesto</h4></td>
+        <td><h4>Valor Repuesto</h4></td>
+        <td><h4>Total</h4></td>
+        <td><h4>Estado Cotización</h4></td>
+        <td><h4>Técnico</h4></td>
+        <td><h4>Comentario de Cotización</h4></td>     
         <td colspan="2"><h4>Operaciones</h4></td>
       </tr>
 
@@ -190,38 +193,37 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT * FROM cliente WHERE nombre like '%".$busca."%' ");
-
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, usuario.nombreUsuario, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE correlativo_cotizacion like '%".$busca."%' ");
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
-   echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_cliente'].'\")">'.$muestra['id_cliente'].'</a>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['rut'].'</td>';
-   echo '<td>'.$muestra['giro'].'</td>';
-   echo '<td>'.$muestra['direccion'].'</td>';
-   echo '<td>'.$muestra['correo'].'</td>';
-   echo '<td>'.$muestra['fono'].'</td>';
-   echo '<td>'.$muestra['nombre_contacto'].'</td>';
-   echo '<td>'.'<a href="cliente.modificar.php?id='.$muestra['id_cliente'].'" class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
-                         onclick="eliminarDato(\''.$muestra['id_cliente'].'\');">'.'Eliminar'.'</button> '.'</td>';   
+   echo '<td>'.'<strong>'.$muestra['correlativo_cotizacion'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['fecha_cotizacion'].'</td>';
+   echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['fecha_creacion'].'</td>';
+   echo '<td>'.$muestra['nombre'].'</td>';
+   echo '<td>'.$muestra['valorReparacion'].'</td>';
+   echo '<td>'.$muestra['valorRepuesto'].'</td>';
+   echo '<td>'.$muestra['valorCotizacion'].'</td>';
+   echo '<td>'.$muestra['estado'].'</td>';
+   echo '<td>'.$muestra['nombreUsuario'].'</td>';
+   echo '<td>'.$muestra['comentario'].'</td>';
+   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';     
+   echo '</tr>';
 }
+
 }
-?>  
-
-
- 
-         
-  </ul>
-      </tbody>
+  
+?> 
+</tbody>
 </table>
-
+</div>
 <?php
 // close connection; 
 mysql_close();
 ?>
+<!--paginacion-->
 <nav aria-label="">
   <ul class="pagination">
     <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
@@ -242,6 +244,7 @@ mysql_close();
     <script src="validaletras.js"></script>
     <script src="validanumeros.js"></script>
     <script src="validaremail.js"></script> 
+    <!--<script src="js/buscar.ot.js"></script>-->
 </body>
 <footer> </footer>
 </html>

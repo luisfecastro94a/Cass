@@ -9,29 +9,23 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
-//var_dump($_POST);
-$consulta="SELECT * FROM cliente ORDER BY nombre ASC";
-$result=mysql_query($consulta);
 
-
-?>
-	<title>Equipo</title>
-    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+	<title>Proforma</title>
+ <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
+  <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
+<script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
-
+  <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <script>
+
+<script>
   $( function() {
-    $( "#fecha_creacion" ).datepicker({
+    $( "#fecha_proforma" ).datepicker({
       changeMonth:true,
       changeYear:true,
       showOn: "button",
@@ -42,9 +36,8 @@ $result=mysql_query($consulta);
 
     });
   } );
-  </script>
-	
-      <style>
+  </script>	
+<style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -84,11 +77,11 @@ label {
     width: 60px;
     border: auto;
   }
- 
 
-   </style>
+
+</style>
 </head>
-  <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
@@ -164,156 +157,156 @@ label {
 	<div class="contenedor">
 
 
-<a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Entrada de Equipo</h1>
+<h1>Crear Proforma</h1>
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
+<form class="form-group" action="" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
 
 <div class="container">
 
-<div class="form-group" >
-<label class="fe" for="">Fecha Creación</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion"></div>
-
-<div class="col-xs-5" >
-<label for="">Cliente</label>
-<select id="id_cliente" class="form-control" name="id_cliente" autofocus="" title="Seleccione el cliente" > 
-<option value="" selected="">---Seleccionar Cliente---</option>
- <?php
-      while($fila=mysql_fetch_array($result))
-  {?>
-      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
-  <?php } ?>
-</select>
-</div>
-
-
-
-<div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" name="sintoma_cliente"></textarea>
-</div>
-
-<div class="col-xs-5" >
-<label for="">Serie de Equipo</label>
-<input type="text" class="form-control" title="Numero de Serie" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
-
 
 
 <?php
 include("conexion.php");
 
-$consulta1="SELECT * FROM marca ORDER BY marca ASC";
-$resultM=mysql_query($consulta1);
 
+$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion>0";//me muestra los que tienen una cotizacion
+$asig3=mysql_query($consulta4);
 
 ?>
 <div class="col-xs-5" >
-<label for="">Marca</label>
-<select id="id_marca" class="form-control" name="id_marca" title="Seleccionar Marca del equipo" > 
-<option value="" selected="">---Seleccionar la Marca---</option>
+<label for="">Elegir N° de Orden de Trabajo</label>
+<select id="correlativo_ot" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
+<option value="" selected="">---Seleccionar Numero de OT---</option>
  <?php
-      while($marca=mysql_fetch_array($resultM))
+      while($fil=mysql_fetch_array($asig3))
   {?>
-      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
+      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
   <?php } ?>
 </select>
 </div>
 
-<div class="col-xs-5" >
-<label for="">Modelo del Equipo</label>
-<input type="text" class="form-control" name="modelo" id="modelo" title="Modelo del equipo"  placeholder="Modelo del Equipo" required=""></div>
-
 <div class="col-xs-5">
-<label for="">Tipo de Ingreso</label>
-<select class="form-control" name="tipo_ingreso" title="Seleccione el tipo de ingreso" >
-<option value="" selected="">--Selecciona el tipo de Ingreso--</option>
-  <option value="REPARACION">REPARACION</option>
-  <option value="CONTRATO">CONTRATO</option>
-  <option value="GARANTIA CASS">GARANTIA CASS</option>
-  <option value="GARANTIA CANON">GARANTIA CANON</option>
-  <option value="GARANTIA ACER">GARANTIA ACER</option>
-</select>
-</div>
+<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
+
+<?php
+  //codigo para que muestre el correlativo de mi orden de trabajo
+    $sql = "SELECT MAX(correlativo_proforma) as max FROM proforma ";
+    $resultado = mysql_query($sql);
+    $row = mysql_fetch_array($resultado);
+    $mensaje =$row["max"]+1;
+?>
+<div class="col-xs-5">
+<label for="">Numero de Proforma</label>
+<input type="text" class="form-control" id="correlativo_proforma" value="<?=$mensaje?>" name="correlativo_proforma"  ></div>
+
+
+<div class="col-xs-5" >
+<label for="">Cliente</label>
+<input type="text" class="form-control" name="id_cliente" id="nombre"   placeholder="Nombre Cliente" required="" value="" ></div>
+
+
+<div class="col-xs-5" >
+<label for="">Rut Empresa:</label>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
+
+
+<div class="col-xs-5" >
+<label for="">Fono/Fax Empresa:</label>
+<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+  required="" value="" ></div>
+
+<div class="col-xs-5" >
+<label for="">Correo:</label>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+
+<div class="col-xs-5" >
+<label for="">Direccion:</label>
+<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+
+<div class="col-xs-5" >
+<label for="">Ciudad:</label>
+<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value=""></div>
+
+<div class="col-xs-5" >
+<label for="">Serie del Equipo</label>
+<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" ></div>
+
+
+<div class="col-xs-5" >
+<label for="">Valor Presupuesto</label>
+<input type="text" class="form-control"   name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="<?php echo $fil['valorReparacion'];?>" ></div>
+
+
+
+<div class="col-xs-5" >
+<label for="">Valor Repuesto</label>
+<input type="text" class="form-control"  name="valorRepuestoOT" id="valorRepuestoOT" maxlength="9" placeholder="$" 
+  required="" value="<?php echo $fil['valorRepuestoOT'];?>" ></div>
+
+
+
+<div class="col-xs-5" >
+<label for="">Valor Cotización</label>
+<input type="text" class="form-control"  name="valorCotizacionOT" id="valorCotizacionOT" maxlength="9" placeholder="$"
+  required="" value="<?php echo $fil['valorCotizacionOT'];?>" ></div>
+
+
+
 
 <?php
 include("conexion.php");
 
-$consulta2="SELECT * FROM estado WHERE relacion='equipo' ORDER BY estado ASC ";
-$resultE=mysql_query($consulta2);
 
+$consulta4="SELECT * FROM estado WHERE relacion='cotizacion'";
+$asig3=mysql_query($consulta4);
 
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
-<option value="" selected="">---Seleccionar el Estado---</option>
+<select id="id_estado" class="form-control" name="id_estado" > 
+<option value="" selected="">---Estado Orden de Trabajo---</option>
  <?php
-      while($esta=mysql_fetch_array($resultE))
+      while($fil=mysql_fetch_array($asig3))
   {?>
-      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
+      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
   <?php } ?>
 </select>
 </div>
-
-<div class="col-xs-5" >
-<label for="">Sintoma del Técnico</label>
-<textarea rows="4" cols="53" name="sintoma_tecnico" title="¡hee Técnico, Ingresa tu sintoma!" ></textarea>
-</div>
-<!--subir imagen-->
-
-
-<div class="col-xs-5">
-    <label for="">Subir Fotografia de Equipo</label><br>
-    <input type="text" name="nombreImagen" value="" placeholder="Nombre Imagen....">
-    <input type="file" name="imagen" value="">
-  
-</div>
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
-  
-
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  </div>
 
 </div>
 </form>
 </div>
 
 <?php
-include("conexion.php");
-
 if
-    (isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
-     isset($_POST['id_marca']) && !empty($_POST['id_marca']) &&
+    (isset($_POST['correlativo_cotizacion']) && !empty($_POST['correlativo_cotizacion']) &&
      isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
-     isset($_POST['fecha_creacion']) && !empty($_POST['fecha_creacion']) &&
-     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
-     isset($_POST['tipo_ingreso']) && !empty($_POST['tipo_ingreso']) &&
-     isset($_POST['serie_equipo']) && !empty($_POST['serie_equipo']) &&
-     isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
-     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen']))
+     isset($_POST['id_orden_trabajo']) && !empty($_POST['id_orden_trabajo']) &&
+     isset($_POST['fecha_cotizacion']) && !empty($_POST['fecha_cotizacion']) &&
+     isset($_POST['valorCotizacion']) && !empty($_POST['valorCotizacion']))
   {
 
-
-
-      $id_cliente = $_POST['id_cliente']; 
-      $id_marca = $_POST['id_marca'];
+      $correlativo_cotizacion = $_POST['correlativo_cotizacion']; 
       $id_estado = $_POST['id_estado'];
-      $fecha_creacion = $_POST['fecha_creacion'];
-      $modelo = $_POST['modelo'];
-      $tipo_ingreso = $_POST['tipo_ingreso'];
-      $serie_equipo = $_POST['serie_equipo'];
-      $sintoma_cliente = $_POST['sintoma_cliente'];
-      $sintoma_tecnico = $_POST['sintoma_tecnico'];
-      $nombreImagen = $_POST['nombreImagen'];
-      $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));//aqui guardo los bits en la variable
-                
+      $id_orden_trabajo = $_POST['id_orden_trabajo'];
+      $fecha_cotizacion = $_POST['fecha_cotizacion'];
+      $comentario= $_POST['comentario'];
+      $valorRepuesto = $_POST['valorRepuesto'];
+      $valorCotizacion = $_POST['valorCotizacion'];
+      $valorRepuestoProveedor = $_POST['valorRepuestoProveedor'];
+      $margen = $_POST['margen'];
+      $valorMargen = $_POST['valorMargen'];
+ 
 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -328,23 +321,24 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo'"); 
+$nuevo_rut=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
 echo " 
-<p class='avisos'>El Equipo ya esta registrado</p> 
+'<script> alert('N° de OT ya se encuentra Asociado a Cotización'); </script>'; 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen')") or die(mysql_errno());
- echo '<script> alert("Equipo Creado con Exito."); </script>';
+  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen')") or die(mysql_errno());
+ echo '<script> alert("Cotización Creada con Exito."); </script>';
 
 }
 
 }
 ?>
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -354,12 +348,22 @@ else{
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>   
-    <script src="js/jquery.js"></script>   
+    <script src="validanumeros.js"></script>    
+    <script src="js/jquery.js"></script>    
     <script src="js/jquery-ui.min.js"></script>
-    <script src="js/datepicker-es.js"></script> 
-</body>
+    <script src="js/datepicker-es.js"></script>
+    <script src="js/autollenado.js" ></script>
+    <script src="listarencargado.js"></script>
+    <script src="listaequipos.js"></script>
+    <script src="js/autollenadoequipo.js"></script>
+    <!--<script src="js/main.js"></script> -->
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/buscaot.js"></script>  
+    <script src="js/autollenadocotizacion.js"></script>
+    <script src="js/numerosiles.js"></script>
 <footer> </footer>
+</body>
 </html>
 <?php
 }else{

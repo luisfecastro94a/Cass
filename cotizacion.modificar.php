@@ -2,24 +2,14 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
-
-
-$consulta="SELECT * FROM cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cotización</title>
- <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+	<title>Modificar Cotización</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/calendario.css">
@@ -30,10 +20,9 @@ $result=mysql_query($consulta);
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
 <script>
   $( function() {
-    $( "#fecha_cotizacion" ).datepicker({
+    $( "#fecha_respuesta" ).datepicker({
       changeMonth:true,
       changeYear:true,
       showOn: "button",
@@ -41,32 +30,13 @@ $result=mysql_query($consulta);
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
-
     });
   } );
   </script>
-<script>
-  function sumar(){
-    a=document.formcotizacion.valorReparacion.value;
-    b=document.formcotizacion.valorRepuesto.value;
-    c=document.formcotizacion.valorRepuestoProveedor.value;
-    d=document.formcotizacion.margen.value;
-    e=document.formcotizacion.valorMargen.value;
-
-    f=parseInt(c)*parseInt(d)/100;
-    document.formcotizacion.valorMargen.value=f;
-    g=parseInt(e)+parseInt(c)+3000;
-    document.formcotizacion.valorRepuesto.value=g;
-    h=parseInt(a)+parseInt(g);
-    document.formcotizacion.valorCotizacion.value=h;
-  }
-</script>
-	
-<style>
+      <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
-
 }
 	body{
   background: #F2F2F2;
@@ -94,7 +64,7 @@ $result=mysql_query($consulta);
     margin: auto;
 }
 label {
-  color:#515151;
+  color:#8E8E8E;
 }
  .cerrar{
     height: 40px;
@@ -102,23 +72,7 @@ label {
     width: 60px;
     border: auto;
   }
- .custom-combobox {
-    position: relative;
-    display: inline-block;
-  }
-  .custom-combobox-toggle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin-left: -1px;
-    padding: 0;
-  }
-  .custom-combobox-input {
-    margin: 0;
-    padding: 5px 10px;
-  }
-
-</style>
+   </style>
 </head>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -131,13 +85,11 @@ label {
         <span class="icon-bar"></span>
       </button>
        <img class="logo" src="img/cass_logo.png" alt="">
-    </div>
-      
+    </div> 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-       <li><a  href="inicio.php">Inicio</a></li>
-        
+       <li><a  href="inicio.php">Inicio</a></li> 
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -156,12 +108,10 @@ label {
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
           </ul>
         </li>
-
         <li><a  href="#">Contratos</a></li>
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="repuesto.php">Repuestos</a></li>
-
         <li class="dropdown">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orden de Trabajo<span class="caret"></span></a>
                <ul class="dropdown-menu">
@@ -170,7 +120,6 @@ label {
                      <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
                </ul>
         </li>
-
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -191,133 +140,112 @@ label {
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
-
 <body>
 	<div class="contenedor">
-
-
 <a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cotización</h1>
-
-<form class="form-group" action="" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");     
+      $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, cotizacion.margen, cotizacion.valorMargen, cotizacion.valorRepuestoProveedor, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo  FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo WHERE correlativo_cotizacion='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+<h1>Modificar Cotización</h1>
+<!--Comienzo de Formulario-->
+<form class="form-group" action=""  method="POST">
 
 <div class="container">
 
 
+<div class="col-xs-5">
+<label for=""> N° de Orden de Trabajo</label>
+<input type="text" class="form-control" id="correlativo_ot" disabled="" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot" ></div>
 
-<?php
-include("conexion.php");
-
-
-$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion<=1";//me muestra los que no tienen cotizacion
-$asig3=mysql_query($consulta4);
-
-?>
-<div class="col-xs-5" >
-<label for="">Elegir N° de Orden de Trabajo</label>
-<select id="correlativo_ot" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
-<option value="" selected="">---Seleccionar Numero de OT---</option>
- <?php
-      while($fil=mysql_fetch_array($asig3))
-  {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
-  <?php } ?>
-</select>
-</div>
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
+<label class="fe" for="">Fecha Cotización<input class="" disabled="" value="<?php echo $reg['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
 
-<?php
-  //codigo para que muestre el correlativo de mi orden de trabajo
-    $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
-    $resultado = mysql_query($sql);
-    $row = mysql_fetch_array($resultado);
-    $mensaje =$row["max"]+1;
-?>
+
 <div class="col-xs-5">
 <label for="">Numero de Cotización</label>
-<input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  ></div>
+<input type="text" class="form-control" id="correlativo_cotizacion" disabled="" value="<?php echo $reg['correlativo_cotizacion'];?>" name="correlativo_cotizacion"  ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<input type="text" class="form-control" name="id_cliente" id="nombre"   placeholder="Nombre Cliente" required="" value="" ></div>
+<input type="text" class="form-control" name="id_cliente" id="nombre" disabled=""  placeholder="Nombre Cliente" required="" value="<?php echo $reg['nombre'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
+<input type="text" class="form-control" id="rut" name="rut" disabled=""  placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="" ></div>
+<input type="text" class="form-control" name="fono" id="fono" disabled="" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+  required="" value="<?php echo $reg['fono'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+<input type="email" class="form-control" name="correo" id="correo" disabled=""  placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+<input type="text" class="form-control" id="direccion" name="direccion" disabled="" placeholder="Direccion" required="" value="<?php echo $reg['direccion'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value=""></div>
+<input type="text" class="form-control" id="nombrec" name="id_ciudad" disabled="" placeholder="Ciudad" required="" value="<?php echo $reg['nombrec'];?>"></div>
 
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" ></div>
+<input type="text" class="form-control" name="id_equipo" id="serie_equipo" disabled=""  placeholder="Serie de Equipo" required="" value="<?php echo $reg['serie_equipo'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Valor Presupuesto</label>
-<input type="text" class="form-control"   name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="" ></div>
+<input type="text" class="form-control"  name="valorReparacion" disabled="" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="<?php echo $reg['valorReparacion'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Repuesto Proveedor</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorRepuestoProveedor" id="valorRepuestoProveedor" maxlength="9" placeholder="$"  required="" value="" ></div>
+<input type="text" class="form-control"  disabled="" name="valorRepuestoProveedor" id="valorRepuestoProveedor" maxlength="9" placeholder="$"  required="" value="<?php echo $reg['valorRepuestoProveedor'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Porcentaje %</label>
-<input type="text" class="form-control" onkeyup="sumar()"  name="margen" id="margen" maxlength="9"  title="Ingresa solo numero, sin %" required="" value="" ></div>
+<input type="text" class="form-control" disabled="" name="margen" id="margen" maxlength="9"  title="Ingresa solo numero, sin %" required="" value="<?php echo $reg['margen'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Porcentaje</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorMargen" id="valorMargen" maxlength="9" placeholder="$"   required="" value="" ></div>
+<input type="text" class="form-control"  disabled="" name="valormargen" id="valormargen" maxlength="9" placeholder="$"   required="" value="<?php echo $reg['valorMargen'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Repuesto</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
-  required="" value="" ></div>
-
+<input type="text" class="form-control"  disabled="" name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
+  required="" value="<?php echo $reg['valorRepuesto'];?>" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Valor Cotización</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion" maxlength="9" placeholder="$"
-  required="" value="" ></div>
+<input type="text" class="form-control" name="valorCotizacion" disabled="" id="valorCotizacion" maxlength="9" placeholder="$"
+  required="" value="<?php echo $reg['valorCotizacion'];?>" ></div>
 
 <div class="col-xs-5" >
 <label for="">Descripción de Cotización</label>
-<textarea name="comentario" id="comentario"  rows="4" cols="53"></textarea>
+<textarea name="comentario" id="comentario"  rows="4" cols="53"><?php echo $reg['comentario'];?></textarea>
 </div>
 
+<div class="col-xs-5">
+<label class="fe" for="">Fecha Respuesta <input class=""  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
 
 
 <?php
 include("conexion.php");
-
-
 $consulta4="SELECT * FROM estado WHERE relacion='cotizacion'";
 $asig3=mysql_query($consulta4);
-
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
@@ -332,36 +260,27 @@ $asig3=mysql_query($consulta4);
 </div>
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  </div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <div class="col-xs-5">
+  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
 
 </div>
 </form>
 </div>
 
 <?php
-if
-    (isset($_POST['correlativo_cotizacion']) && !empty($_POST['correlativo_cotizacion']) &&
-     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
-     isset($_POST['id_orden_trabajo']) && !empty($_POST['id_orden_trabajo']) &&
-     isset($_POST['fecha_cotizacion']) && !empty($_POST['fecha_cotizacion']) &&
-     isset($_POST['valorCotizacion']) && !empty($_POST['valorCotizacion']))
-  {
-
-      $correlativo_cotizacion = $_POST['correlativo_cotizacion']; 
-      $id_estado = $_POST['id_estado'];
-      $id_orden_trabajo = $_POST['id_orden_trabajo'];
-      $fecha_cotizacion = $_POST['fecha_cotizacion'];
-      $comentario= $_POST['comentario'];
-      $valorRepuesto = $_POST['valorRepuesto'];
-      $valorCotizacion = $_POST['valorCotizacion'];
-      $valorRepuestoProveedor = $_POST['valorRepuestoProveedor'];
-      $margen = $_POST['margen'];
-      $valorMargen = $_POST['valorMargen'];
+include("conexion.php");
  
 
-    // conexión a la base de datos de
+
+      $id=$_REQUEST['id'];  
+      $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: ''; 
+      $fecha_respuesta = isset($_POST['fecha_respuesta']) ? $_POST['fecha_respuesta']: '';    
+      $comentario = isset($_POST['comentario']) ? $_POST['comentario']: ''; 
+ 
+     
+
+   // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 
@@ -370,57 +289,32 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_rut=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
-{ 
-echo " 
-'<script> alert('N° de OT ya se encuentra Asociado a Cotización'); </script>'; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
-}
-else{
-  
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen')") or die(mysql_errno());
- echo '<script> alert("Cotización Creada con Exito."); </script>';
-
-}
-
-}
+  mysql_query("UPDATE cotizacion SET id_estado='$id_estado', fecha_respuesta='$fecha_respuesta', comentario='$comentario'  WHERE id_cotizacion='$id'");
+ 
 ?>
+
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
-    <script src="js/jquery.js"></script>    
+    <script src="validanumeros.js"></script>
+    <script src="validaremail.js"></script>
+    <!--<script src="relaciones.js"></script>-->
+      <script src="js/jquery.js"></script>    
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
-    <script src="js/autollenado.js" ></script>
-    <script src="listarencargado.js"></script>
-    <script src="listaequipos.js"></script>
-    <script src="js/autollenadoequipo.js"></script>
-    <!--<script src="js/main.js"></script> -->
-    <script src="js/jquery-1.12.4.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <script src="js/buscaot.js"></script>  
-    <script src="js/autollenadocotizacion.js"></script>
-    <script src="js/numerosiles.js"></script>
-<footer> </footer>
 </body>
+<footer> </footer>
 </html>
 <?php
 }else{
-  echo '<script> window.location="index.php";</script>';
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
 }
 
 ?>

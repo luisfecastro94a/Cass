@@ -197,7 +197,7 @@ if($busca!=""){
    echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary" title="Modificar el equipo">'.'Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_equipo'].'\');">'.'Eliminar'.'</button> '.'</td>';
-   echo '<td>'.'<a href="presupuesto.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Generar presupuesto para el equipo">'.'<span class="glyphicon glyphicon-paperclip" aria-hidden="true"> GENERAR PRESUPUESTO</span>'.'</a>'.'</td>';  
+  
       
 }
 }

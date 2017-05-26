@@ -23,10 +23,6 @@ if (isset($_SESSION['correo'])) {?>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   
- 
-
-
-	
       <style>
  * {
  
@@ -154,8 +150,8 @@ label {
     $id=$_REQUEST['id'];
     include("conexion.php");
 
-      $consulta=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, cliente.nombre, cliente.rut,cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, cliente_encargado.nombreE, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.valorRepuesto, cotizacion.valorCotizacion  FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo WHERE correlativo_ot='$id'")or die(mysql_error());
-      $reg=mysql_fetch_array($consulta);
+      $consulta=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, ot_tipo.nombreTipo, cliente.nombre, cliente.rut,cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, cliente_encargado.nombreE, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.valorRepuesto, cotizacion.valorCotizacion, usuario.nombreUsuario, area.area, estado.estado, usuario.id_usuario, estado.id_estado FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area WHERE correlativo_ot='$id'")or die(mysql_error());
+       $reg=mysql_fetch_array($consulta);
   ?>
 
 
@@ -206,11 +202,11 @@ $asig=mysql_query($consulta1);
 <div class="col-xs-5" >
 <label for="">Asigar a Técnico</label>
 <select id="id_usuario" class="form-control" name="id_usuario" > 
-<option value="" selected="">---Asignar Técnico---</option>
+<option value="<?php echo $reg['id_usuario'];?>" selected=""><?php echo $reg['nombreUsuario']?></option>
  <?php
       while($reci=mysql_fetch_array($asig))
   {?>
-      <option value="<?php echo $reci['0']?>"><?php echo $reci['3'];?></option>
+      <option value="<?php echo $reci['0'];?>"><?php echo $reci['3'];?></option>
   <?php } ?>
 </select>
 </div>
@@ -226,11 +222,11 @@ $asig1=mysql_query($consulta2);
 <div class="col-xs-5" >
 <label for="">Tipo de OT</label>
 <select id="id_ot_tipo" class="form-control" name="id_ot_tipo" > 
-<option value="" selected="">---Tipo de Orde de Trabajo---</option>
+<option value="" selected=""><?php echo $reg['nombreTipo']?></option>
  <?php
       while($f=mysql_fetch_array($asig1))
   {?>
-      <option value="<?php echo $f['0']?>"><?php echo $f['1'];?></option>
+      <option value="<?php echo $f['0']?>"><?php echo $f['1']?></option>
   <?php } ?>
 </select>
 </div>
@@ -246,7 +242,7 @@ $asig2=mysql_query($consulta3);
 <div class="col-xs-5" >
 <label for="">Area</label>
 <select id="id_area" class="form-control" name="id_area" > 
-<option value="" selected="">---Area de Trabajo---</option>
+<option value="<?php echo $fi['0']?>" selected=""><?php echo $reg['area']?></option>
  <?php
       while($fi=mysql_fetch_array($asig2))
   {?>
@@ -267,11 +263,11 @@ $asig3=mysql_query($consulta4);
 <div class="col-xs-5" >
 <label for="">Estado</label>
 <select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">---Estado Orden de Trabajo---</option>
+<option value="<?php echo $reg['id_estado'];?>" selected=""><?php echo $reg['estado'];?></option>
  <?php
       while($fil=mysql_fetch_array($asig3))
   {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
+      <option value="<?php echo $fil['0'];?>"><?php echo $fil['1'];?></option>
   <?php } ?>
 </select>
 </div>
@@ -414,7 +410,7 @@ $asig3=mysql_query($consulta4);
 
         <div class="col-xs-5" >
           <label for="">Valor por Reparación</label>
-          <input type="text" class="form-control" id="valorReparacion" value="<?php echo $reg['valorReparacion'];?>" onKeyPress="return SoloNumeros(event)
+          <input type="text" class="form-control" id="valorReparacion" required="" value="<?php echo $reg['valorReparacion'];?>" onKeyPress="return SoloNumeros(event)
           " name="valorReparacion" ></div>
 
 <div class="col-xs-5">
@@ -458,7 +454,7 @@ $asig3=mysql_query($consulta4);
 </div><!--el primer div del acordion-->
 
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <button type="submit" id="enviar" onclick="alert('¡Modificación realizada con Exito :) !!')" name="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
@@ -473,31 +469,36 @@ $asig3=mysql_query($consulta4);
     
 <?php
 include("conexion.php");
- 
-
 
       $id=$_REQUEST['id'];  
+   /*   
+   esto igual funciona 
+      $id_usuario = @$_POST['id_usuario']; 
+      $id_estado = @$_POST['id_estado']; 
+      $correlativo_cotizacion = @$_POST['correlativo_cotizacion']; 
+      $valorReparacion = @$_POST['valorReparacion']; 
+      $fechaPresupuesto = @$_POST['fechaPresupuesto']; 
+      $valorRepuestoOT = @$_POST['valorRepuestoOT']; 
+      $valorCotizacionOT = @$_POST['valorCotizacionOT'];*/
+
       $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario']: ''; 
       $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: '';    
       $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: ''; 
-      $valorRepuesto = isset($_POST['valorRepuesto']) ? $_POST['valorRepuesto']: '';
-      $valorCotizacion = isset($_POST['valorCotizacion']) ? $_POST['valorCotizacion']: '';
- 
-     
+      $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
+      $fechaPresupuesto = isset($_POST['fechaPresupuesto']) ? $_POST['fechaPresupuesto']: '';
+      $valorRepuestoOT = isset($_POST['valorRepuestoOT']) ? $_POST['valorRepuestoOT']: '';
+      $valorCotizacionOT = isset($_POST['valorCotizacionOT']) ? $_POST['valorCotizacionOT']: '';
+      
 
-   // conexión a la base de datos de
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("No se pudo Contactar a Base de Datos MySQL");
+  $sql=mysql_query("UPDATE `orden_trabajo` SET `id_usuario`='$id_usuario', `id_estado`='$id_estado', `correlativo_cotizacion`='$correlativo_cotizacion', `valorReparacion`='$valorReparacion', `fechaPresupuesto`='$fechaPresupuesto', `valorRepuestoOT`='$valorRepuestoOT', `valorCotizacionOT`='$valorCotizacionOT'  WHERE `id_orden_trabajo`='$id'");
 
-
-// seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("bdcass",$dbhandle) 
-  or die("No se pudo seleccionar la base de datos CASS");
-
-  mysql_query("UPDATE orden_trabajo SET id_usuario='$id_usuario', id_estado='$id_estado', correlativo_cotizacion='$correlativo_cotizacion', valorRepuesto='$valorRepuesto', valorCotizacion='$valorCotizacion'  WHERE id_orden_trabajo='$id'");
- 
 ?>
 
+
+<?php
+// close connection; 
+mysql_close();
+?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

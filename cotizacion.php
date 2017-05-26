@@ -52,10 +52,11 @@ $result=mysql_query($consulta);
     c=document.formcotizacion.valorRepuestoProveedor.value;
     d=document.formcotizacion.margen.value;
     e=document.formcotizacion.valorMargen.value;
+    i=document.formcotizacion.flete.value;
 
     f=parseInt(c)*parseInt(d)/100;
     document.formcotizacion.valorMargen.value=f;
-    g=parseInt(e)+parseInt(c)+3000;
+    g=parseInt(e)+parseInt(c)+parseInt(i);
     document.formcotizacion.valorRepuesto.value=g;
     h=parseInt(a)+parseInt(g);
     document.formcotizacion.valorCotizacion.value=h;
@@ -281,7 +282,7 @@ $asig3=mysql_query($consulta4);
 <input type="text" class="form-control"   name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="" ></div>
 
 <div class="col-xs-5" >
-<label for="">Valor Repuesto Proveedor</label>
+<label for="">Valor Repuesto Proveedor con Adicional</label>
 <input type="text" class="form-control" onkeyup="sumar()" name="valorRepuestoProveedor" id="valorRepuestoProveedor" maxlength="9" placeholder="$"  required="" value="" ></div>
 
 <div class="col-xs-5" >
@@ -290,19 +291,22 @@ $asig3=mysql_query($consulta4);
 
 <div class="col-xs-5" >
 <label for="">Valor Porcentaje</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorMargen" id="valorMargen" maxlength="9" placeholder="$"   required="" value="" ></div>
+<input type="text" class="form-control" onkeyup="sumar()"  name="valorMargen" id="valorMargen" maxlength="9" placeholder="$"   required="" value="" ></div>
+
+<div class="col-xs-5" >
+<label for="">Flete</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="flete" id="flete" maxlength="9" placeholder="$"   required="" value="" ></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Repuesto</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
+<input type="text" class="form-control" onkeyup="sumar()"  name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
   required="" value="" ></div>
 
 
 
 <div class="col-xs-5" >
 <label for="">Valor Cotización</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion" maxlength="9" placeholder="$"
-  required="" value="" ></div>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion" maxlength="9" placeholder="$" required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
 
 <div class="col-xs-5" >
 <label for="">Descripción de Cotización</label>
@@ -359,6 +363,7 @@ if
       $valorRepuestoProveedor = $_POST['valorRepuestoProveedor'];
       $margen = $_POST['margen'];
       $valorMargen = $_POST['valorMargen'];
+      $flete = $_POST['flete'];
  
 
     // conexión a la base de datos de
@@ -378,13 +383,13 @@ $nuevo_rut=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_t
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
 echo " 
-'<script> alert('N° de OT ya se encuentra Asociado a Cotización'); </script>'; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+'<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script>'; 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen, flete) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen', '$flete')") or die(mysql_errno()); 
  echo '<script> alert("Cotización Creada con Exito."); </script>';
 
 }

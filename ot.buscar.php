@@ -61,7 +61,6 @@ label {
     width: 60px;
     border: auto;
   }
-
    </style>
 
 </head>
@@ -172,7 +171,7 @@ label {
 <table  class="table table-striped table-bordered" id="" name="" >
     <tbody>
       <tr>
-        <td><h4>Numero</h4></td>
+        <td><h4>Numero OT</h4></td>
         <td><h4>Fecha Creación</h4></td>
         <td><h4>Técnico</h4></td>
         <td><h4>Cliente</h4></td>
@@ -185,6 +184,7 @@ label {
         <td><h4>Fecha de Presupuesto</h4></td>
         <td><h4>Valor Repuesto</h4></td>
         <td><h4>Total</h4></td>
+        
         <td colspan="2"><h4>Operaciones</h4></td>
       </tr>
 
@@ -194,8 +194,8 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo, cotizacion.valorRepuesto, cotizacion.valorCotizacion FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo WHERE correlativo_ot like '%".$busca."%' ");
-
+  $dbhandle=mysql_query("SELECT  orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo, cotizacion.valorRepuesto, cotizacion.valorCotizacion FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo  WHERE correlativo_ot like '%".$busca."%' ");
+//orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT,
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
@@ -210,9 +210,11 @@ if($busca!=""){
    echo '<td>'.$muestra['motivo'].'</td>';
    echo '<td>'.$muestra['valorReparacion'].'</td>';
    echo '<td>'.$muestra['fechaPresupuesto'].'</td>';
-   echo '<td>'.$muestra['valorRepuesto'].'</td>';
+   //echo '<td>'.$muestra['valorRepuestoOT'].'</td>';
+   //echo '<td>'.$muestra['valorCotizacionOT'].'</td>';
+    echo '<td>'.$muestra['valorRepuesto'].'</td>';
    echo '<td>'.$muestra['valorCotizacion'].'</td>';
-   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['correlativo_ot'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['correlativo_ot'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar">'.'Modificar'.'</a>'.'</td>';   
   echo '</tr>';  
 }
 }
@@ -220,8 +222,12 @@ if($busca!=""){
    
   </ul>
       </tbody>
+
 </table>
+
 </div>
+<br>
+<div class="slider alert alert-info" role="alert"><strong>Para poder modificar OT debes ASOCIAR una cotización</strong></div>
 <?php
 // close connection; 
 mysql_close();

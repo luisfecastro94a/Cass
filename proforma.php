@@ -157,8 +157,8 @@ label {
 	<div class="contenedor">
 
 
-<a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="proforma.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="proforma.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -180,7 +180,7 @@ $asig3=mysql_query($consulta4);
 ?>
 <div class="col-xs-5" >
 <label for="">Elegir N° de Orden de Trabajo</label>
-<select id="correlativo_ot" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
+<select id="correlativo_ot" class="form-control" name="id_orden_trabajo" onchange="proforma(this.value)" value="" > 
 <option value="" selected="">---Seleccionar Numero de OT---</option>
  <?php
       while($fil=mysql_fetch_array($asig3))
@@ -191,7 +191,7 @@ $asig3=mysql_query($consulta4);
 </div>
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
+<label class="fe" for="">Fecha de Proforma<input class="" readonly value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_proforma" id="fecha_proforma"></label></div>
 
 <?php
   //codigo para que muestre el correlativo de mi orden de trabajo
@@ -202,84 +202,68 @@ $asig3=mysql_query($consulta4);
 ?>
 <div class="col-xs-5">
 <label for="">Numero de Proforma</label>
-<input type="text" class="form-control" id="correlativo_proforma" value="<?=$mensaje?>" name="correlativo_proforma"  ></div>
+<input type="text" class="form-control" id="correlativo_proforma" readonly value="<?=$mensaje?>" name="correlativo_proforma"  ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<input type="text" class="form-control" name="id_cliente" id="nombre"   placeholder="Nombre Cliente" required="" value="" ></div>
+<input type="text" class="form-control" name="id_cliente" id="nombre" disabled=""  placeholder="Nombre Cliente" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
+<input type="text" class="form-control" id="rut" name="rut" disabled="" placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<input type="text" class="form-control" name="fono" id="fono" disabled="" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="" ></div>
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+<input type="email" class="form-control" name="correo" id="correo" disabled=""  placeholder="E-mail" required="" value="" ></div>
 
 <div class="col-xs-5" >
 <label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+<input type="text" class="form-control" id="direccion" disabled="" name="direccion" placeholder="Direccion" required="" value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value=""></div>
+<input type="text" class="form-control" id="nombrec" disabled="" name="id_ciudad" placeholder="Ciudad" required="" value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" ></div>
+<input type="text" class="form-control" name="id_equipo" id="serie_equipo" disabled=""   placeholder="Serie de Equipo" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Valor Presupuesto</label>
-<input type="text" class="form-control"   name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="<?php echo $fil['valorReparacion'];?>" ></div>
+<input type="text" class="form-control" disabled=""  name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="" ></div>
 
 
 
 <div class="col-xs-5" >
 <label for="">Valor Repuesto</label>
-<input type="text" class="form-control"  name="valorRepuestoOT" id="valorRepuestoOT" maxlength="9" placeholder="$" 
-  required="" value="<?php echo $fil['valorRepuestoOT'];?>" ></div>
+<input type="text" class="form-control" disabled="" name="valorRepuestoOT" id="valorRepuestoOT" maxlength="9" placeholder="$" 
+  required="" value="" ></div>
 
 
 
 <div class="col-xs-5" >
 <label for="">Valor Cotización</label>
-<input type="text" class="form-control"  name="valorCotizacionOT" id="valorCotizacionOT" maxlength="9" placeholder="$"
-  required="" value="<?php echo $fil['valorCotizacionOT'];?>" ></div>
+<input type="text" class="form-control" disabled="" name="valorCotizacionOT" id="valorCotizacionOT" maxlength="9" placeholder="$"
+  required="" value="" ></div>
 
-
-
-
-<?php
-include("conexion.php");
-
-
-$consulta4="SELECT * FROM estado WHERE relacion='cotizacion'";
-$asig3=mysql_query($consulta4);
-
-?>
 <div class="col-xs-5" >
-<label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">---Estado Orden de Trabajo---</option>
- <?php
-      while($fil=mysql_fetch_array($asig3))
-  {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
-  <?php } ?>
-</select>
-</div>
+<label for="">Técnico</label>
+<input type="text" class="form-control" disabled="" name="nombreUsuario" id="nombreUsuario" 
+  required="" value="" ></div>
+
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Generar Proforma</button></div>
+  <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
 
@@ -289,23 +273,16 @@ $asig3=mysql_query($consulta4);
 
 <?php
 if
-    (isset($_POST['correlativo_cotizacion']) && !empty($_POST['correlativo_cotizacion']) &&
-     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
-     isset($_POST['id_orden_trabajo']) && !empty($_POST['id_orden_trabajo']) &&
-     isset($_POST['fecha_cotizacion']) && !empty($_POST['fecha_cotizacion']) &&
-     isset($_POST['valorCotizacion']) && !empty($_POST['valorCotizacion']))
+    (
+     isset($_POST['correlativo_proforma']) && !empty($_POST['correlativo_proforma']) &&
+     isset($_POST['fecha_proforma']) && !empty($_POST['fecha_proforma']) &&
+     isset($_POST['id_orden_trabajo']) && !empty($_POST['id_orden_trabajo']))
   {
 
-      $correlativo_cotizacion = $_POST['correlativo_cotizacion']; 
-      $id_estado = $_POST['id_estado'];
-      $id_orden_trabajo = $_POST['id_orden_trabajo'];
-      $fecha_cotizacion = $_POST['fecha_cotizacion'];
-      $comentario= $_POST['comentario'];
-      $valorRepuesto = $_POST['valorRepuesto'];
-      $valorCotizacion = $_POST['valorCotizacion'];
-      $valorRepuestoProveedor = $_POST['valorRepuestoProveedor'];
-      $margen = $_POST['margen'];
-      $valorMargen = $_POST['valorMargen'];
+      
+      $correlativo_proforma = $_POST['correlativo_proforma'];
+      $fecha_proforma = $_POST['fecha_proforma'];
+      $id_orden_trabajo = $_POST['id_orden_trabajo']; 
  
 
     // conexión a la base de datos de
@@ -321,18 +298,18 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
+$nuevo_ot=mysql_query("SELECT id_orden_trabajo FROM proforma WHERE id_orden_trabajo='$id_orden_trabajo'"); 
+if(mysql_num_rows($nuevo_ot)>0) 
 { 
 echo " 
-'<script> alert('N° de OT ya se encuentra Asociado a Cotización'); </script>'; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+'<script> alert('N° de OT ya tiene PROFORMA'); </script>'; 
+<p class='avisos'><a href='javascript:history.go(-1)' class='btn btn-danger clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen')") or die(mysql_errno());
- echo '<script> alert("Cotización Creada con Exito."); </script>';
+  $consulta=mysql_query("INSERT INTO proforma (correlativo_proforma, fecha_proforma, id_orden_trabajo ) VALUES ('$correlativo_proforma', '$fecha_proforma','$id_orden_trabajo')") or die(mysql_errno());
+ echo '<script> alert("Proforma Creada con Exito."); </script>';
 
 }
 
@@ -360,7 +337,7 @@ else{
     <script src="js/jquery-1.12.4.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/buscaot.js"></script>  
-    <script src="js/autollenadocotizacion.js"></script>
+    <script src="js/autollenadoproforma.js"></script>
     <script src="js/numerosiles.js"></script>
 <footer> </footer>
 </body>

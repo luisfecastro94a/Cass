@@ -174,7 +174,7 @@ label {
 include("conexion.php");
 
 
-$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion>0";//me muestra los que tienen una cotizacion
+$consulta4="SELECT * FROM orden_trabajo WHERE  correlativo_cotizacion>0";//me muestra los que tienen una cotizacion
 $asig3=mysql_query($consulta4);
 
 ?>

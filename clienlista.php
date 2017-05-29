@@ -4,7 +4,7 @@ include("conexion.php");
 
 
 $consulta="SELECT * FROM cliente ORDER BY nombre ASC";
-	echo '<option value="0">---Seleccione Cliente---</opcion>';
+echo '<option value="0">---Seleccione Cliente---</opcion>';
 $asig=mysql_query($consulta);
 
 

@@ -214,13 +214,13 @@ label {
 include("conexion.php");
 
 
-$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion<=1";//me muestra los que no tienen cotizacion
+$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion<1";//me muestra los que no tienen cotizacion
 $asig3=mysql_query($consulta4);
 
 ?>
 <div class="col-xs-5" >
 <label for="">Elegir N° de Orden de Trabajo</label>
-<select id="correlativo_ot" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
+<select id="id_orden_trabajo" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
 <option value="" selected="">---Seleccionar Numero de OT---</option>
  <?php
       while($fil=mysql_fetch_array($asig3))
@@ -379,8 +379,8 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
-if(mysql_num_rows($nuevo_rut)>0) 
+$nuevo_id=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
+if(mysql_num_rows($nuevo_id)>0) 
 { 
 echo " 
 '<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script>'; 
@@ -388,15 +388,11 @@ echo "
 "; 
 }
 else{
-  
   $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen, flete) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen', '$flete')") or die(mysql_errno()); 
- echo '<script> alert("Cotización Creada con Exito."); </script>';
-
+    echo '<script> alert("Cotización Creada con Exito."); </script>';
 }
-
 }
 ?>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

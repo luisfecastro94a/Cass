@@ -9,18 +9,6 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 <meta charset="UTF-8">
-<?php
-include("conexion.php");
-
-
-$consulta="SELECT * FROM ciudad";
-$result=mysql_query($consulta);
-
-
-?>
-
-
-
 
 	<title>Orden de Trabajo</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -337,7 +325,7 @@ $asig3=mysql_query($consulta4);
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Datos del Cliente
+          Datos del Equipo
         </a>
       </h4>
     </div>
@@ -345,10 +333,49 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--aqui va formulario de div-->
-      
+
+     <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
+<label for="">Serie del Equipo</label>
+<select  id="serieequipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
+<option value="0" >---Selecionar Equipo---</option>
+</select>
+</div> 
+
+
+<div class="col-xs-5" >
+<label for="">Sintoma del Cliente</label>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
+</div>
+
+
+<div class="col-xs-5" >
+<label for="">Marca</label>
+<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
+
+<div class="col-xs-5" >
+<label for="">Estado</label>
+<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
+      
+
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Datos del Cliente
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+
+     <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="nombreCliente" class="form-control" name="id_cliente" onchange="escola(this.value)" value="" > 
+<select id="nombre" class="form-control" name="id_cliente" onchange="escla(this.value)" value="" > 
 <option value="0">---Selecionar Cliente---</option>
 </select>
 </div>
@@ -385,47 +412,6 @@ $asig3=mysql_query($consulta4);
 <option value="0" ></option>
 </select>
 </div> 
-
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading" role="tab" id="headingThree">
-      <h4 class="panel-title">
-        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Datos del Equipo
-        </a>
-      </h4>
-    </div>
-    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-      <div class="panel-body">
-
-      <!--Aqui va los datos del EQUIPO-->
-<div class="col-xs-5" >
-<label for="">Serie del Equipo</label>
-<select  class="form-control" id="serie_equipo" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
-<option value="0" ></option>
-</select>
-</div> 
-
-
-<div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
-</div>
-
-
-<div class="col-xs-5" >
-<label for="">Marca</label>
-<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
-
-<div class="col-xs-5" >
-<label for="">Estado</label>
-<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
-
 
       </div>
     </div>
@@ -471,7 +457,7 @@ $asig3=mysql_query($consulta4);
 
         <div class="col-xs-5" >
           <label for="">Valor por Reparación</label>
-          <input type="text" class="form-control" id="valorReparacion" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
+          <input type="text" class="form-control" id="valorReparacion" value="15000" minlength="5" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
 
           <div class="col-xs-5">
 <label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
@@ -581,7 +567,7 @@ else{
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
     <script src="js/autollenado.js" ></script>
-    <script src="listarencargado.js"></script>
+    <!--<script src="listarencargado.js"></script>-->
     <script src="listaequipos.js"></script>
     <script src="js/autollenadoequipo.js"></script>
 

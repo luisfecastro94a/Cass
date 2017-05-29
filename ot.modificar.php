@@ -150,8 +150,8 @@ label {
     $id=$_REQUEST['id'];
     include("conexion.php");
 
-      $consulta=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, ot_tipo.nombreTipo, cliente.nombre, cliente.rut,cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, cliente_encargado.nombreE, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.valorRepuesto, cotizacion.valorCotizacion, usuario.nombreUsuario, area.area, estado.estado, usuario.id_usuario, estado.id_estado FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN cotizacion ON orden_trabajo.id_orden_trabajo=cotizacion.id_orden_trabajo INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area WHERE correlativo_ot='$id'")or die(mysql_error());
-       $reg=mysql_fetch_array($consulta);
+      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area WHERE id_orden_trabajo='$id'")or die(mysql_error());
+        $reg=mysql_fetch_array($consulta);
   ?>
 
 
@@ -194,15 +194,14 @@ label {
 <?php
 include("conexion.php");
 
-
-$consulta1="SELECT * FROM usuario";
+$consulta1="SELECT * FROM usuario ";
 $asig=mysql_query($consulta1);
 
 ?>
 <div class="col-xs-5" >
 <label for="">Asigar a Técnico</label>
 <select id="id_usuario" class="form-control" name="id_usuario" > 
-<option value="<?php echo $reg['id_usuario'];?>" selected=""><?php echo $reg['nombreUsuario']?></option>
+<option value="<?php echo $reg['id_usuario'];?>" selected=""><?php echo $reg['nombreUsuario'];?></option>
  <?php
       while($reci=mysql_fetch_array($asig))
   {?>
@@ -253,6 +252,7 @@ $asig2=mysql_query($consulta3);
 
 
 <?php
+$id=$_REQUEST['id'];
 include("conexion.php");
 
 
@@ -431,20 +431,28 @@ $asig3=mysql_query($consulta4);
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
 
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
+
+      $consulta=mysql_query("SELECT * FROM cotizacion WHERE  id_orden_trabajo='$id' AND id_estado=5")or die(mysql_error());
+        $co=mysql_fetch_array($consulta);
+?>
+
 <div class="col-xs-5" >
           <label for="">Numero de Cotización</label>
-          <input type="text" class="form-control" id="correlativo_cotizacion" value="<?php echo $reg['correlativo_cotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="correlativo_cotizacion" ></div>
+          <input type="text" class="form-control" id="correlativo_cotizacion" value="<?php echo $co['correlativo_cotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="correlativo_cotizacion" ></div>
 
          <div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $reg['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $co['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
 
  <div class="col-xs-5" >
           <label for="">Valor por Repuesto</label>
-          <input type="text" class="form-control" id="valorRepuestoOT" value="<?php echo $reg['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuestoOT" ></div>
+          <input type="text" class="form-control" id="valorRepuestoOT" value="<?php echo $co['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuestoOT" ></div>
  
  <div class="col-xs-5" >
           <label for="">Valor Total Cotización</label>
-          <input type="text" class="form-control" id="valorCotizacionOT" value="<?php echo $reg['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacionOT" ></div>
+          <input type="text" class="form-control" id="valorCotizacionOT" value="<?php echo $co['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacionOT" ></div>
 
       </div>
     </div>
@@ -483,14 +491,14 @@ include("conexion.php");
 
       $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario']: ''; 
       $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: '';    
-      $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: ''; 
       $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
       $fechaPresupuesto = isset($_POST['fechaPresupuesto']) ? $_POST['fechaPresupuesto']: '';
+      $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: '';
       $valorRepuestoOT = isset($_POST['valorRepuestoOT']) ? $_POST['valorRepuestoOT']: '';
       $valorCotizacionOT = isset($_POST['valorCotizacionOT']) ? $_POST['valorCotizacionOT']: '';
       
 
-  $sql=mysql_query("UPDATE `orden_trabajo` SET `id_usuario`='$id_usuario', `id_estado`='$id_estado', `correlativo_cotizacion`='$correlativo_cotizacion', `valorReparacion`='$valorReparacion', `fechaPresupuesto`='$fechaPresupuesto', `valorRepuestoOT`='$valorRepuestoOT', `valorCotizacionOT`='$valorCotizacionOT'  WHERE `id_orden_trabajo`='$id'");
+  $sql=mysql_query("UPDATE `orden_trabajo` SET `id_usuario`='$id_usuario', `id_estado`='$id_estado', `valorReparacion`='$valorReparacion', `fechaPresupuesto`='$fechaPresupuesto', `correlativo_cotizacion`='$correlativo_cotizacion', `valorRepuestoOT`='$valorRepuestoOT', `valorCotizacionOT`='$valorCotizacionOT'  WHERE `id_orden_trabajo`='$id'");
 
 ?>
 

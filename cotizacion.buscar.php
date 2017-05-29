@@ -172,7 +172,7 @@ label {
 <table  class="table table-striped table-bordered" id="" name="" >
     <tbody>
       <tr>
-     
+        <td><h4>ID</h4></td>
         <td><h4>Numero Cotización</h4></td>
         <td><h4>Fecha Cotización</h4></td>
         <td><h4>Numero OT</h4></td>
@@ -182,7 +182,6 @@ label {
         <td><h4>Valor Repuesto</h4></td>
         <td><h4>Total</h4></td>
         <td><h4>Estado Cotización</h4></td>
-        <td><h4>Técnico</h4></td>
         <td><h4>Comentario de Cotización</h4></td>     
         <td colspan="2"><h4>Operaciones</h4></td>
       </tr>
@@ -193,11 +192,11 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, usuario.nombreUsuario, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE correlativo_cotizacion like '%".$busca."%' ");
-
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente WHERE id_cotizacion like '%".$busca."%' ");
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
+   echo '<td>'.'<strong>'.$muestra['id_cotizacion'].'</strong>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['correlativo_cotizacion'].'</strong>'.'</td>';
    echo '<td>'.$muestra['fecha_cotizacion'].'</td>';
    echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
@@ -206,15 +205,12 @@ if($busca!=""){
    echo '<td>'.$muestra['valorReparacion'].'</td>';
    echo '<td>'.$muestra['valorRepuesto'].'</td>';
    echo '<td>'.$muestra['valorCotizacion'].'</td>';
-   echo '<td>'.$muestra['estado'].'</td>';
-   echo '<td>'.$muestra['nombreUsuario'].'</td>';
+   echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
    echo '<td>'.$muestra['comentario'].'</td>';
-   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';     
-   echo '</tr>';
+   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';   
+   echo '</tr>';  
 }
-
-}
-  
+} 
 ?> 
 </tbody>
 </table>

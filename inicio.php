@@ -117,12 +117,34 @@ if (isset($_SESSION['correo'])) {?>
 </nav>
 
 <body>
+<input  type="text" value="<?php echo date("d/m/Y") ?>">
+<br>
+<label for="">Equipos sin Reparar</label>
+<div id="datos">
+      
+</div>
+<label for="">Equipos Reparados</label>
+<div  id="datos1">
+     
+</div>
+
+<label for="">Equipos Esperando Respuesta</label>
+<div  id="datos2">
+      
+</div>
+
+
+
+
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/mostrar.sinreparar.js"></script>
+    <script src="js/mostrar.reparado.js"></script>
+    <script src="js/mostrar.esperandorespuesta.js"></script>
 </body>
 </html>
 <?php

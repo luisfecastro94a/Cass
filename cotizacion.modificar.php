@@ -150,7 +150,7 @@ label {
 <?php
     $id=$_REQUEST['id'];
     include("conexion.php");     
-      $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, cotizacion.margen, cotizacion.valorMargen, cotizacion.valorRepuestoProveedor, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo  FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo WHERE correlativo_cotizacion='$id'")or die(mysql_error());
+      $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, cotizacion.margen, cotizacion.valorMargen, cotizacion.valorRepuestoProveedor, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo, estado.id_estado, estado.estado FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON cotizacion.id_estado=estado.id_estado WHERE id_cotizacion='$id'")or die(mysql_error());
       $reg=mysql_fetch_array($consulta);
   ?>
 <h1>Modificar Cotización</h1>
@@ -250,7 +250,7 @@ $asig3=mysql_query($consulta4);
 <div class="col-xs-5" >
 <label for="">Estado</label>
 <select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">---Estado Orden de Trabajo---</option>
+<option value="<?php echo $reg['id_estado'];?>" selected=""><?php echo $reg['estado'];?></option>
  <?php
       while($fil=mysql_fetch_array($asig3))
   {?>
@@ -258,6 +258,7 @@ $asig3=mysql_query($consulta4);
   <?php } ?>
 </select>
 </div>
+
   
   <div class="col-xs-5">
   <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>

@@ -197,7 +197,7 @@ $selected = mysql_select_db("bdcass",$dbhandle)
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-$nuevo_estado=mysql_query("SELECT estado FROM estado WHERE estado='$estado'"); 
+$nuevo_estado=mysql_query("SELECT estado FROM estado WHERE estado='$estado' AND relacion='$relacion'"); 
 if(mysql_num_rows($nuevo_estado)>0) 
 { 
 echo ' "<script> alert(" El Estado, ya esta registrado ")</script>"

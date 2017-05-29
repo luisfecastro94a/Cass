@@ -177,20 +177,22 @@ label {
 
 <div class="form-group" >
 <label class="fe" for="">Fecha Creación</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion"></div>
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
+
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="id_cliente" class="form-control" name="id_cliente" autofocus="" title="Seleccione el cliente" > 
-<option value="" selected="">---Seleccionar Cliente---</option>
- <?php
-      while($fila=mysql_fetch_array($result))
-  {?>
-      <option value="<?php echo $fila['0']?>"> <?php echo $fila['2'];?></option>
-  <?php } ?>
+<select id="nombreCliente" class="form-control" name="id_cliente" onchange="escola(this.value)" value="" > 
+<option value="0">---Selecionar Cliente---</option>
 </select>
 </div>
 
+<div class="col-xs-5" >
+<label for="">Encargado Cliente:</label>
+<select  class="form-control" id="nombreE" name="id_cliente_encargado" value=""> 
+<option value="0" ></option>
+</select>
+</div> 
 
 
 <div class="col-xs-5" >
@@ -265,13 +267,10 @@ $resultE=mysql_query($consulta2);
 <textarea rows="4" cols="53" name="sintoma_tecnico" title="¡hee Técnico, Ingresa tu sintoma!" ></textarea>
 </div>
 <!--subir imagen-->
-
-
 <div class="col-xs-5">
     <label for="">Subir Fotografia de Equipo</label><br>
-    <input type="text" name="nombreImagen" value="" placeholder="Nombre Imagen....">
-    <input type="file" name="imagen" value="">
-  
+    <input type="text" name="nombreImagen" value="foto"  required="" placeholder="Nombre Imagen....">
+    <input type="file" name="imagen" value="" required="">
 </div>
   
   <div class="col-xs-5">
@@ -279,12 +278,9 @@ $resultE=mysql_query($consulta2);
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
   
-
-
 </div>
 </form>
 </div>
-
 <?php
 include("conexion.php");
 
@@ -299,9 +295,6 @@ if
      isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
      isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen']))
   {
-
-
-
       $id_cliente = $_POST['id_cliente']; 
       $id_marca = $_POST['id_marca'];
       $id_estado = $_POST['id_estado'];
@@ -312,37 +305,28 @@ if
       $sintoma_cliente = $_POST['sintoma_cliente'];
       $sintoma_tecnico = $_POST['sintoma_tecnico'];
       $nombreImagen = $_POST['nombreImagen'];
-      $imagen = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));//aqui guardo los bits en la variable
-                
-
-    // conexión a la base de datos de
+      $imagen = (addslashes(file_get_contents($_FILES['imagen']['tmp_name'])));//aqui guardo los bits en la variable
+// conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
-
-
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
-
-// ============================================== 
-// Comprobamos si el rut esta registrado 
+// Comprobamos si la serie_equipo esta registrado 
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo'"); 
+$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo' "); 
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
 echo " 
-<p class='avisos'>El Equipo ya esta registrado</p> 
+'<script> alert('El Equipo ya esta registrado'); </script>';
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
-  
   $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen')") or die(mysql_errno());
  echo '<script> alert("Equipo Creado con Exito."); </script>';
-
 }
-
 }
 ?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -358,8 +342,9 @@ else{
     <script src="js/jquery.js"></script>   
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script> 
+       <script src="listarencargado.js"></script>
 </body>
-<footer> </footer>
+<footer></footer>
 </html>
 <?php
 }else{

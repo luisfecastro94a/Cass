@@ -168,12 +168,10 @@ label {
       <tr>
         <td><h4>#</h4></td>
         <td><h4>Estado</h4></td>
-       
+        <td><h4>Relacion de Estado</h4></td>
       </tr>
-
 <?php
 
-;  
 include("conexion.php");
 
   $dbhandle=mysql_query("SELECT * FROM estado ");
@@ -184,6 +182,7 @@ include("conexion.php");
    echo '<tr>';
    echo '<td>'.'<a style=\"text-decoration:underline;cursor:pointer;\" onclick="eliminarDato(\"'.$muestra['id_estado'].'\")">'.$muestra['id_estado'].'</a>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>'; 
+   echo '<td>'.$muestra['relacion'].'</td>';
 }
 ?>          
   </ul>

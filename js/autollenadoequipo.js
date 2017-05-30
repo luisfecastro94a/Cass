@@ -9,9 +9,9 @@ function listaequipo(id){
 		$('#fono').val(da[6]);
 		$('#correo').val(da[7]);
 		$('#direccion').val(da[8]);
-		$('#nombrec').val(da[9]);
+		$('#nombreE').val(da[9]);
+		
 	
-
 	});
 
 }

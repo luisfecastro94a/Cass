@@ -336,7 +336,7 @@ $asig3=mysql_query($consulta4);
 
      <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
-<label for="">Serie del Equipo</label>
+<label for="">Serie del Equipo:</label>
 <select  id="serieequipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
 <option value="0" >---Selecionar Equipo---</option>
 </select>
@@ -344,17 +344,17 @@ $asig3=mysql_query($consulta4);
 
 
 <div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
+<label for="">Sintoma del Cliente:</label>
 <textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
 </div>
 
 
 <div class="col-xs-5" >
-<label for="">Marca</label>
+<label for="">Marca:</label>
 <input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
 
 <div class="col-xs-5" >
-<label for="">Estado</label>
+<label for="">Estado:</label>
 <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
       
 
@@ -373,12 +373,9 @@ $asig3=mysql_query($consulta4);
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
 
-     <div class="col-xs-5" >
-<label for="">Cliente</label>
-<select id="nombre" class="form-control" name="id_cliente" onchange="escla(this.value)" value="" > 
-<option value="0">---Selecionar Cliente---</option>
-</select>
-</div>
+<div class="col-xs-5" >
+<label for="">Cliente:</label>
+<input type="text" class="form-control" name="nombre" id="nombre" maxlength="9" placeholder="Cliente" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
@@ -401,17 +398,9 @@ $asig3=mysql_query($consulta4);
 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
 
 <div class="col-xs-5" >
-<label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Ciudad" required="" value=""></div>
-<!--Consulta para buscar al Encargado del Cliente-->
-
-
-<div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>
-<select  class="form-control" id="nombreE" name="nombreE" value=""> 
-<option value="0" ></option>
-</select>
-</div> 
+<input type="text" class="form-control" id="nombreE" name="nombreE" placeholder="Cliente encargado" required="" value=""></div>
+
 
       </div>
     </div>

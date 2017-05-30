@@ -11,7 +11,7 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 <?php
 include("conexion.php");
-//var_dump($_POST);
+var_dump($_POST);
 $consulta="SELECT * FROM cliente ORDER BY nombre ASC";
 $result=mysql_query($consulta);
 
@@ -182,7 +182,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<select id="nombreCliente" class="form-control" name="id_cliente" onchange="escola(this.value)" value="" > 
+<select id="nombreCliente" class="form-control" name="id_cliente"  value="" > 
 <option value="0">---Selecionar Cliente---</option>
 </select>
 </div>
@@ -197,7 +197,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" name="sintoma_cliente"></textarea>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" required="" name="sintoma_cliente"></textarea>
 </div>
 
 <div class="col-xs-5" >
@@ -232,7 +232,7 @@ $resultM=mysql_query($consulta1);
 
 <div class="col-xs-5">
 <label for="">Tipo de Ingreso</label>
-<select class="form-control" name="tipo_ingreso" title="Seleccione el tipo de ingreso" >
+<select class="form-control" name="tipo_ingreso" title="Seleccione el tipo de ingreso" required="" >
 <option value="" selected="">--Selecciona el tipo de Ingreso--</option>
   <option value="REPARACION">REPARACION</option>
   <option value="CONTRATO">CONTRATO</option>
@@ -306,6 +306,7 @@ if
       $sintoma_tecnico = $_POST['sintoma_tecnico'];
       $nombreImagen = $_POST['nombreImagen'];
       $imagen = (addslashes(file_get_contents($_FILES['imagen']['tmp_name'])));//aqui guardo los bits en la variable
+      $id_cliente_encargado = $_POST['id_cliente_encargado'];
 // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
@@ -324,7 +325,7 @@ echo "
 "; 
 }
 else{
-  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen, id_cliente_encargado) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$id_cliente_encargado')") or die(mysql_errno());
  echo '<script> alert("Equipo Creado con Exito."); </script>';
 }
 }
@@ -342,7 +343,7 @@ else{
     <script src="js/jquery.js"></script>   
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script> 
-       <script src="listarencargado.js"></script>
+    <script src="listarencargado.js"></script>
 </body>
 <footer></footer>
 </html>

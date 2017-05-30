@@ -133,7 +133,15 @@ if (isset($_SESSION['correo'])) {?>
       
 </div>
 
+<label for="">Equipos no reparados por Cass</label>
+<div  id="dato">
+      
+</div>
 
+<label for="">Equipos no reparados por Cliente</label>
+<div  id="datos3">
+      
+</div>
 
 
 
@@ -145,6 +153,8 @@ if (isset($_SESSION['correo'])) {?>
     <script src="js/mostrar.sinreparar.js"></script>
     <script src="js/mostrar.reparado.js"></script>
     <script src="js/mostrar.esperandorespuesta.js"></script>
+    <script src="js/mostrar.sinsolucioncass.js"></script>
+    <script src="js/mostrar.sinsolucioncliente.js"></script>
 </body>
 </html>
 <?php

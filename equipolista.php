@@ -9,6 +9,4 @@ $asig1=mysql_query($consulta1);
       while($fila=mysql_fetch_array($asig1))
   
  	echo '<option value="' . $fila['id_equipo']. '">' .$fila['serie_equipo']. '</opcion>' . "\n";
-
-
 ?>

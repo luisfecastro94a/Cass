@@ -78,6 +78,7 @@ if (isset($_SESSION['correo'])) {?>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.aviso.php">Avisos reparación</a></li>
           </ul>
         </li>
 

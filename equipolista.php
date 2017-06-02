@@ -2,11 +2,11 @@
 include("conexion.php");
 
 
-$consulta1="SELECT * FROM equipo ";
+$consultaa="SELECT * FROM equipo ORDER BY serie_equipo ASC";
 echo '<option value="0">---Seleccione Serie de Equipo---</opcion>';
-$asig1=mysql_query($consulta1);
+$asiga=mysql_query($consultaa);
 
-      while($fila=mysql_fetch_array($asig1))
+      while($filaa=mysql_fetch_array($asiga))
   
- 	echo '<option value="' . $fila['id_equipo']. '">' .$fila['serie_equipo']. '</opcion>' . "\n";
+ 	echo '<option value="' . $filaa['id_equipo']. '">' .$filaa['serie_equipo']. '</opcion>' . "\n";
 ?>

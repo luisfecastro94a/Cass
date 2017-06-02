@@ -10,16 +10,16 @@ $resultado=$selected->query($query);
 if($resultado->num_rows > 0) 
 {
 	$salida.=
-	'<div class="table-responsive">
-	<table border="2">
+	'
+	<table class="table-responsive">
 			<thead>
 	<tr>
-	     <td><h5>N° Cotizacion</h5></td>
-         <td><h5>Fecha</h5></td>
-         <td><h5>N° OT</h5></td>
-         <td><h5>Serie Equipo</h5></td>
-         <td><h5>Estado</h5></td>
-         <td colspan="2"><h5>Operaciones</h5></td>
+	     <th><h5><strong>N° Cotizacion</strong></h5></th>
+         <th><h5><strong>Fecha</strong></h5></th>
+         <th><h5><strong>N° OT</strong></h5></th>
+         <th><h5><strong>Serie Equipo</strong></h5></th>
+         <th><h5><strong>Estado</strong></h5></th>
+         <th><h5><strong>Operaciones</strong></h5></th>
 	</tr>
 			</thead>
 			<tbody>';
@@ -35,7 +35,7 @@ if($resultado->num_rows > 0)
 			</tr>';
 	}
 
-	$salida.="</tbody></table></div>";
+	$salida.="</tbody></table>";
 }else{
 
 	$salida.="<div class='alert alert-danger' role='alert'>No hay Datos en su busqueda :( </div>";

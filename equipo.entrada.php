@@ -11,7 +11,7 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 <?php
 include("conexion.php");
-var_dump($_POST);
+//var_dump($_POST);
 $consulta="SELECT * FROM cliente ORDER BY nombre ASC";
 $result=mysql_query($consulta);
 

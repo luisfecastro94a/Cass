@@ -142,6 +142,7 @@ label {
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.aviso.php">Aviso Reparación</a></li>
           </ul>
         </li>
 
@@ -184,8 +185,8 @@ label {
 	<div class="contenedor">
 
 
-<a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="equipo.aviso.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="equipo.avisob.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -198,7 +199,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Serie del Equipo:</label>
-<select  id="serieequipo" class="form-control" onchange="listaaviso(this.value)" name="id_equipo" value=""> 
+<select  id="serieEquipo" class="form-control" onchange="listaaviso(this.value)" name="id_equipo" value=""> 
 <option value="0" >---Selecionar Equipo---</option>
 </select>
 </div> 

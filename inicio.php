@@ -9,10 +9,7 @@ if (isset($_SESSION['correo'])) {?>
 	<title>Inicio</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-
-
-	  <style>
-	    
+<style>	    
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -22,10 +19,11 @@ if (isset($_SESSION['correo'])) {?>
   background: #F2F2F2;
 }
    	 nav ul ul.dropdown-menu li a:hover {
-	background: #CCCCCC;
+	background: #E1E1E1;/*# E1E1E1 FEAB63*/
  	}
  	 nav ul li:hover {
-	background: #CCCCCC;
+	background: #B6B6B6;
+  font-size: 15px;
  	}
 	img.logo {
 		height: 50px;
@@ -42,7 +40,41 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
 
-   </style>
+table {     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 14px;   margin: 15px;    width: 480px; text-align: left;    }
+
+th {     font-size: 13px;     font-weight: normal;     padding: 8px;     background: #4169E1;
+    border-top: 4px    border-bottom: 1px solid #fff; color: white; }
+
+td {    padding: 8px;     background: #e8edff;   border-bottom: 1px solid #fff;
+    color: #669;    border-top: 1px solid transparent; }
+
+tr:hover td { background: #d0dafd; color: #339; }
+
+
+.uno{
+  display: inline-block;
+}
+.dos{
+  display: inline-block;
+
+}
+.tres{
+  display: inline-block;
+
+}
+.cuatro{
+  display: inline-block;
+ 
+}
+.cinco{
+  display: inline-block;
+}
+.seis{
+  display: inline-block;
+}
+
+</style>
 </head>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -118,32 +150,32 @@ if (isset($_SESSION['correo'])) {?>
 </nav>
 
 <body>
-<input  type="text" value="<?php echo date("d/m/Y") ?>">
+<input  type="text" value="<?php echo date("d/m/Y");?>">
 <br>
-<label for="">Equipos sin Reparar</label>
-<div id="datos">
-      
+
+<label > Equipos sin Reparar</label>
+<div id="datos" class="uno table-responsive" >      
 </div>
+
 <label for="">Equipos Reparados</label>
-<div  id="datos1">
-     
+<div  id="datos1" class="dos table-responsive">     
 </div>
 
-<label for="">Equipos Esperando Respuesta</label>
-<div  id="datos2">
-      
+<label for=""> Esperando Respuesta</label>
+<div  id="datos2" class="tres table-responsive">  
 </div>
 
-<label for="">Equipos no reparados por Cass</label>
-<div  id="dato">
-      
+<label for="">Equipos Cass</label>
+<div  id="dato" class="cuatro table-responsive">      
 </div>
 
-<label for="">Equipos no reparados por Cliente</label>
-<div  id="datos3">
-      
+<label for="">No reparados por Cliente</label>
+<div  id="datos3" class="cinco table-responsive">     
 </div>
 
+<label for="">Equipos Avisados</label>
+<div  id="datos4" class="seis table-responsive">     
+</div>
 
 
 
@@ -156,6 +188,7 @@ if (isset($_SESSION['correo'])) {?>
     <script src="js/mostrar.esperandorespuesta.js"></script>
     <script src="js/mostrar.sinsolucioncass.js"></script>
     <script src="js/mostrar.sinsolucioncliente.js"></script>
+    <script src="js/mostrar.equipoavisado.js"></script>
 </body>
 </html>
 <?php

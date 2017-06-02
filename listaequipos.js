@@ -1,9 +1,9 @@
-$ (function(){
+$(function(){
 
 	//lista de equipos
-	$.post('equipolista.php').done( function( respuestas )
+	$.post('equipolista.php').done( function(respuesta)
 	{
-		$('#serieequipo').html(respuestas);
-	});
+		$('#serieEquipo').html(respuesta);
+	})
 
-	
+});

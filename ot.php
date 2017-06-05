@@ -337,7 +337,7 @@ $asig3=mysql_query($consulta4);
      <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
 <label for="">Serie del Equipo:</label>
-<select  id="serieequipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
+<select  id="serieEquipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
 <option value="0" >---Selecionar Equipo---</option>
 </select>
 </div> 
@@ -375,7 +375,7 @@ $asig3=mysql_query($consulta4);
 
 <div class="col-xs-5" >
 <label for="">Cliente:</label>
-<input type="text" class="form-control" name="nombre" id="nombre" maxlength="9" placeholder="Cliente" required="" value="" ></div>
+<input type="text" class="form-control" name="id_cliente" id="nombre" maxlength="9" placeholder="Cliente" required="" value="" ></div>
 
 
 <div class="col-xs-5" >

@@ -213,6 +213,7 @@ if($busca!=""){
    echo '<td>'.$muestra['valorRepuestoOT'].'</td>';
    echo '<td>'.$muestra['valorCotizacionOT'].'</td>';
    echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar">'.'Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="pdf.ot.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" >'.'PDF'.'</a>'.'</td>'; 
    echo '</tr>';  
 }
 }

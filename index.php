@@ -111,11 +111,11 @@ body {
     <form class="form-signin" method="POST" action=""> 
       <img src="img/cass_logo.png" alt="">
       <h2 class="form">Iniciar Sesion</h2>
-
+      
       <label class="lab" for="">Usuario</label>
       <input type="text" class="form-control" name="usuario" placeholder="Email" required="" autofocus="" />
-      <label  class="lab" for="">Contraseña</label>
 
+      <label  class="lab" for="">Contraseña</label>
       <input type="password" class="form-control" name="contraseña" placeholder="Contraseña" required=""/>      
         <br>
       <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Ingresar</button>   
@@ -124,7 +124,7 @@ body {
 <?php
 include("conexion.php");
 if (isset($_POST['login'])){
-    $usuario = $_POST['usuario'];//entre [] va el name de mi input
+    $usuario = $_POST['usuario'];//entre [] va el nombre de mi input
     $contraseña = $_POST['contraseña'];
     $log = mysql_query("SELECT * FROM usuario WHERE correo='$usuario' AND clave='$contraseña' ");
     if (mysql_num_rows($log)>0) {
@@ -142,9 +142,6 @@ if (isset($_POST['login'])){
   }
 
 ?>
-
-
-
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

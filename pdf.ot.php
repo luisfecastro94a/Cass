@@ -23,10 +23,13 @@ $pdf->Cell(18,10,'',0);
 $pdf->Cell(150,10,'Repuestos e Insumos',0);
 $pdf->Ln(3);
 $pdf->Cell(18,10,'',0);
-$pdf->Cell(150,10,'Egana 212 Fono 65-564300',0);
+$pdf->Cell(150,10,'Egana 212 Fono 65-2564300',0);
 $pdf->Ln(3);
 $pdf->Cell(18,10,'',0);
 $pdf->Cell(150,10,'Puerto Montt',0);
+$pdf->Ln(3);
+$pdf->Cell(18,10,'',0);
+$pdf->Cell(150,10,'www.cass.cl',0);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(50,10,'Fecha:'.date('d-m-Y').'',0);
 $pdf->Ln(15);//ln es un saldo de linea () le doy el valor

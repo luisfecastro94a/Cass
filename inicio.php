@@ -73,7 +73,11 @@ tr:hover td { background: #d0dafd; color: #339; }
 .seis{
   display: inline-block;
 }
-
+h2{
+  color: orange;
+  background: black;
+  width: 30px;
+}
 </style>
 </head>
   <nav class="navbar navbar-default">
@@ -150,32 +154,41 @@ tr:hover td { background: #d0dafd; color: #339; }
 </nav>
 
 <body>
-<input  type="text" value="<?php echo date("d/m/Y");?>">
+<input  type="text"  value="<?php echo date("d/m/Y");?>">
 <br>
 
-<label > Equipos sin Reparar</label>
-<div id="datos" class="uno table-responsive" >      
+
+
+<h2>Sin Reparar</h2>
+<div id="datos" class="uno table-responsive" > 
+
 </div>
 
-<label for="">Equipos Reparados</label>
+<h2>Equipos Reparados</h2>
 <div  id="datos1" class="dos table-responsive">     
 </div>
 
-<label for=""> Esperando Respuesta</label>
+<h2> Esperando Respuesta</h2>
 <div  id="datos2" class="tres table-responsive">  
 </div>
 
-<label for="">Equipos Cass</label>
+<h2>Equipos Cass</h2>
 <div  id="dato" class="cuatro table-responsive">      
 </div>
 
-<label for="">No reparados por Cliente</label>
+<h2>No reparados por Cliente</h2>
 <div  id="datos3" class="cinco table-responsive">     
 </div>
 
-<label for="">Equipos Avisados</label>
+<h2>Equipos Avisados</h2>
 <div  id="datos4" class="seis table-responsive">     
 </div>
+
+<h2>Equipos En Proceso</h2>
+<div  id="datos5" class="siete table-responsive">     
+</div>
+
+
 
 
 
@@ -189,7 +202,9 @@ tr:hover td { background: #d0dafd; color: #339; }
     <script src="js/mostrar.sinsolucioncass.js"></script>
     <script src="js/mostrar.sinsolucioncliente.js"></script>
     <script src="js/mostrar.equipoavisado.js"></script>
+    <script src="js/mostrar.equipoProceso.js"></script>
 </body>
+
 </html>
 <?php
 }else{

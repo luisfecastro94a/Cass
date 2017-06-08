@@ -19,7 +19,7 @@ if (isset($_SESSION['correo'])) {?>
   <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
   <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
-<script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -300,7 +300,7 @@ $asig2=mysql_query($consulta3);
 include("conexion.php");
 
 
-$consulta4="SELECT * FROM estado WHERE relacion='ot'";
+$consulta4="SELECT id_estado, estado, relacion FROM estado WHERE Condicion='Eo'";
 $asig3=mysql_query($consulta4);
 
 ?>

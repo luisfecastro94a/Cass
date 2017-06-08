@@ -164,7 +164,7 @@ label {
 
 <div class="form-group" id="datos">
 <h4><label for="caja_busqueda"><h1>Buscar Cotización</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de Cotización">
+    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Nombre de Cliente">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
 </div>
@@ -192,7 +192,7 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente WHERE id_cotizacion like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente WHERE nombre like '%".$busca."%' ");
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';

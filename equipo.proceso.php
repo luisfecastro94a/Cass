@@ -4,7 +4,7 @@ $selected= new mysqli("localhost","root","","bdcass");
 
 $salida= "";
 //esta consulta es la que hace que se muestren todos los datos en la tabla sin poner nada
-$query= "SELECT  equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.sintoma_cliente, estado.id_estado, estado.estado FROM equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE estado='Sin reparar' ";
+$query= "SELECT  equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.fecha_modificacion, equipo.sintoma_cliente, equipo.sintoma_tecnico, estado.id_estado, estado.estado FROM equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE estado='En Proceso' ";
 
 $resultado=$selected->query($query);
 if($resultado->num_rows > 0) 
@@ -17,7 +17,9 @@ if($resultado->num_rows > 0)
 		<th><h5><strong>Modelo</strong></h5></th>	
 	     <th><h5><strong>Serie Equipo</strong></h5></th>
 	     <th><h5><strong>Fecha Ingreso</strong></h5></th>
+	     <th><h5><strong>Fecha Modificación</strong></h5></th>
 	     <th><h5><strong>Sintoma del Cliente</strong></h5></th>
+	     <th><h5><strong>Sintoma del Técnico</strong></h5></th>
         <th><h5><strong>Estado</strong></h5></th>
         <th colspan="2"><h5><strong>Operaciones</strong></h5></th>
 			</tr>
@@ -27,19 +29,19 @@ if($resultado->num_rows > 0)
 	while ($fila = $resultado->fetch_assoc()) {
 		$salida.='<tr>
 	
-
-
-
-	 <td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
+	<td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
 	 <td>'.$fila["serie_equipo"].'</td>
 	 <td>'.$fila["fecha_creacion"].'</td>
+	 <td>'.$fila["fecha_modificacion"].'</td>
 	 <td>'.$fila["sintoma_cliente"].'</td>
+	 <td>'.$fila["sintoma_tecnico"].'</td>
    	 <td>'.$fila["estado"].'</td>
-   	 <td>'.'<a href="equipo.cotizacion.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>'.' Presupuesto'.'</a>'.'</td> 
-   	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Cambiar Estado'.'</a>'.'</td>   
+   	 <td>'.'<a href="equipo.modificar.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>    
+	 <td>'.'<a href="equipo.cotizacion.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar Tecnico'.'</a>'.'</td>
+
 			</tr>';
 	}
-//<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+
 	$salida.="</tbody></table>";
 
 }else{

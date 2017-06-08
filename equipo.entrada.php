@@ -241,14 +241,11 @@ $resultM=mysql_query($consulta1);
   <option value="GARANTIA ACER">GARANTIA ACER</option>
 </select>
 </div>
-
 <?php
 include("conexion.php");
 
-$consulta2="SELECT * FROM estado WHERE relacion='equipo' ORDER BY estado ASC ";
+$consulta2="SELECT id_estado, estado FROM estado WHERE estado='Sin reparar' ORDER BY estado ASC ";
 $resultE=mysql_query($consulta2);
-
-
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
@@ -353,3 +350,4 @@ else{
 }
 
 ?>
+

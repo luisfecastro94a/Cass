@@ -1,4 +1,3 @@
-
 <?php 
 //llamamos  la clase del pdf
 require('fpdf/fpdf.php');
@@ -24,10 +23,13 @@ $pdf->Cell(18,10,'',0);
 $pdf->Cell(100,10,'Repuestos e Insumos',0);
 $pdf->Ln(3);
 $pdf->Cell(18,10,'',0);
-$pdf->Cell(100,10,'Egana 212 Fono 65-564300',0);
+$pdf->Cell(100,10,'Egana 212 Fono 65-2564300',0);
 $pdf->Ln(3);
 $pdf->Cell(18,10,'',0);
 $pdf->Cell(100,10,'Puerto Montt',0);
+$pdf->Ln(3);
+$pdf->Cell(18,10,'',0);
+$pdf->Cell(100,10,'www.cass.cl',0);
 $pdf->SetFont('Arial','B',13);
 $pdf->Cell(20,8,'R.U.T. :',0);
 $pdf->Cell(50,8,'76.102.295-4',0);

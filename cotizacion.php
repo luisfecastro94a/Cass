@@ -30,14 +30,13 @@ $result=mysql_query($consulta);
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
 <script>
   $( function() {
     $( "#fecha_cotizacion" ).datepicker({
       changeMonth:true,
       changeYear:true,
-      showOn: "button",
-      buttonImage: "css/images/cale.png",
+      showOn: "",
+      buttonImage: "",
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
@@ -47,27 +46,23 @@ $result=mysql_query($consulta);
   </script>
 <script>
   function sumar(){
-    a=document.formcotizacion.valorReparacion.value;
-    b=document.formcotizacion.valorRepuesto.value;
-    c=document.formcotizacion.valorRepuestoProveedor.value;
-    d=document.formcotizacion.margen.value;
-    e=document.formcotizacion.valorMargen.value;
-    i=document.formcotizacion.flete.value;
+    a=document.formcotizacion.venta_repuesto.value;
+    b=document.formcotizacion.venta_repuesto_uno.value;
+    c=document.formcotizacion.venta_repuesto_dos.value;
+    d=document.formcotizacion.venta_repuesto_tres.value;
+    e=document.formcotizacion.venta_repuesto_cuatro.value;
+    f=document.formcotizacion.venta_repuesto_cinco.value;
+    g=document.formcotizacion.valorReparacion.value;
+    h=document.formcotizacion.valorCotizacion.value;
 
-    f=parseInt(c)*parseInt(d)/100;
-    document.formcotizacion.valorMargen.value=f;
-    g=parseInt(e)+parseInt(c)+parseInt(i);
-    document.formcotizacion.valorRepuesto.value=g;
-    h=parseInt(a)+parseInt(g);
+    h=parseInt(g)+parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f);
     document.formcotizacion.valorCotizacion.value=h;
   }
-</script>
-	
+</script>	
 <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
-
 }
 	body{
   background: #F2F2F2;
@@ -208,31 +203,8 @@ label {
 
 <div class="container">
 
-
-
-<?php
-include("conexion.php");
-
-
-$consulta4="SELECT * FROM orden_trabajo WHERE correlativo_cotizacion<1";//me muestra los que no tienen cotizacion
-$asig3=mysql_query($consulta4);
-
-?>
-<div class="col-xs-5" >
-<label for="">Elegir N° de Orden de Trabajo</label>
-<select id="id_orden_trabajo" class="form-control" name="id_orden_trabajo" onchange="cotizacion(this.value)" value="" > 
-<option value="" selected="">---Seleccionar Numero de OT---</option>
- <?php
-      while($fil=mysql_fetch_array($asig3))
-  {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
-  <?php } ?>
-</select>
-</div>
-
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
-
+<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
 <?php
   //codigo para que muestre el correlativo de mi orden de trabajo
     $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
@@ -244,10 +216,17 @@ $asig3=mysql_query($consulta4);
 <label for="">Numero de Cotización</label>
 <input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  ></div>
 
+<div class="col-xs-5" >
+<label for="">N° Orden de Trabajo</label>
+<select  id="correlativo_ot" class="form-control" onchange="cotizacion(this.value)" name="id_orden_trabajo" value=""> 
+<option value="0" >---Selecionar OT---</option>
+</select>
+</div> 
+
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<input type="text" class="form-control" name="id_cliente" id="nombre"   placeholder="Nombre Cliente" required="" value="" ></div>
+<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Cliente" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
@@ -276,54 +255,50 @@ $asig3=mysql_query($consulta4);
 <label for="">Serie del Equipo</label>
 <input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" ></div>
 
-
 <div class="col-xs-5" >
 <label for="">Valor Presupuesto</label>
-<input type="text" class="form-control"   name="valorReparacion" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Repuesto Proveedor con Adicional</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorRepuestoProveedor" id="valorRepuestoProveedor" maxlength="9" placeholder="$"  required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Porcentaje %</label>
-<input type="text" class="form-control" onkeyup="sumar()"  name="margen" id="margen" maxlength="9"  title="Ingresa solo numero, sin %" required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Porcentaje</label>
-<input type="text" class="form-control" onkeyup="sumar()"  name="valorMargen" id="valorMargen" maxlength="9" placeholder="$"   required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Flete</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="flete" id="flete" maxlength="9" placeholder="$"   required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Repuesto</label>
-<input type="text" class="form-control" onkeyup="sumar()"  name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
-  required="" value="" ></div>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion"  placeholder="$"  required="" value="" ></div>
 
 
 
-<div class="col-xs-5" >
-<label for="">Valor Cotización</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion" maxlength="9" placeholder="$" required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
-
-<div class="col-xs-5" >
-<label for="">Descripción de Cotización</label>
-<textarea name="comentario" id="comentario"  rows="4" cols="53"></textarea>
+<div class="col-xs-10  has-error">
+<h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
+<table class="table bg-info" id="tabla">
+  <tr class="fila-fija">
+    <td><input class="form-control" name="repuesto" id="repuesto" type="text"></td>
+    <td><input class="form-control" name="repuesto_uno" id="repuesto_uno" type="text"></td>
+    <td><input class="form-control" name="repuesto_dos" id="repuesto_dos" type="text"></td>
+    <td><input class="form-control" name="repuesto_tres" id="repuesto_tres" type="text"></td>
+    <td><input class="form-control" name="repuesto_cuatro" id="repuesto_cuatro" type="text"></td>
+    <td><input class="form-control" name="repuesto_cinco" id="repuesto_cinco" type="text"></td>
+  </tr>
+   <tr class="fila-fija">
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto" id="repuesto" type="text"></td>
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_uno" id="repuesto1" type="text"></td>
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_dos" id="repuesto2" type="text"></td>
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_tres" id="repuesto3" type="text"></td>
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cuatro" id="repuesto4" type="text"></td>
+    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
+  </tr>
+</table>
 </div>
 
+<div class="col-xs-5 has-error" >
+<label for="">Valor Cotización</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion"  placeholder="$"  required="" value="" ></div>
 
+<div class="col-xs-5 has-error" >
+<label  for="">Descripción de Cotización</label>
+<textarea  name="comentario" id="comentario"  rows="4" cols="53"></textarea>
+</div>
 
 <?php
 include("conexion.php");
-
-
-$consulta4="SELECT * FROM estado WHERE relacion='cotizacion'";
+$consulta4="SELECT id_estado, estado FROM estado WHERE relacion='cotizacion'";
 $asig3=mysql_query($consulta4);
 
 ?>
-<div class="col-xs-5" >
+<div class="col-xs-5 has-error" >
 <label for="">Estado</label>
 <select id="id_estado" class="form-control" name="id_estado" > 
 <option value="" selected="">---Estado Orden de Trabajo---</option>
@@ -334,8 +309,8 @@ $asig3=mysql_query($consulta4);
   <?php } ?>
 </select>
 </div>
-  
-  <div class="col-xs-5">
+
+  <div class="col-xs-5 ">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
@@ -358,14 +333,13 @@ if
       $id_orden_trabajo = $_POST['id_orden_trabajo'];
       $fecha_cotizacion = $_POST['fecha_cotizacion'];
       $comentario= $_POST['comentario'];
-      $valorRepuesto = $_POST['valorRepuesto'];
-      $valorCotizacion = $_POST['valorCotizacion'];
-      $valorRepuestoProveedor = $_POST['valorRepuestoProveedor'];
-      $margen = $_POST['margen'];
-      $valorMargen = $_POST['valorMargen'];
-      $flete = $_POST['flete'];
+      $venta_repuesto = $_POST['venta_repuesto'];
+      $venta_repuesto_uno = $_POST['venta_repuesto_uno'];
+      $venta_repuesto_dos = $_POST['venta_repuesto_dos'];
+      $venta_repuesto_tres = $_POST['venta_repuesto_tres'];
+      $venta_repuesto_cuatro = $_POST['venta_repuesto_cuatro'];
+      $venta_repuesto_cinco = $_POST['venta_repuesto_cinco'];
  
-
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
@@ -407,8 +381,6 @@ else{
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
     <script src="js/autollenado.js" ></script>
-    <script src="listarencargado.js"></script>
-    <script src="listaequipos.js"></script>
     <script src="js/autollenadoequipo.js"></script>
     <!--<script src="js/main.js"></script> -->
     <script src="js/jquery-1.12.4.js"></script>
@@ -416,6 +388,7 @@ else{
     <script src="js/buscaot.js"></script>  
     <script src="js/autollenadocotizacion.js"></script>
     <script src="js/numerosiles.js"></script>
+    <script src="listaot.js"></script>
 <footer> </footer>
 </body>
 </html>

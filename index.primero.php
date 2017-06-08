@@ -8,6 +8,8 @@ include("conexion.php");
 	<title>Index</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <link rel="stylesheet" href="materialize/css/materialize.min.css">
+
 
 
 	  <style>
@@ -95,7 +97,26 @@ include("conexion.php");
 </nav>
 <body>
 	
+ <div class="row">
+    <form class="col s6">
 
+      <div class="row"> 
+        <div class="input-field col s6">
+          <input id="last_name" type="text" class="validate">
+          <label for="last_name">Usuario</label>
+        </div>
+      </div>
+   
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="password" type="password" class="validate">
+          <label for="password">Contraseña</label>
+        </div>
+      </div>
+    
+     
+    </form>
+  </div>
 
 
 
@@ -103,5 +124,6 @@ include("conexion.php");
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="materialize/js/materialize.min.js"></script>
 </body>
 </html>

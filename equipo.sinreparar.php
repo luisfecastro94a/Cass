@@ -4,8 +4,9 @@ $selected= new mysqli("localhost","root","","bdcass");
 
 $salida= "";
 //esta consulta es la que hace que se muestren todos los datos en la tabla sin poner nada
-$query= "SELECT  equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.sintoma_cliente, estado.id_estado, estado.estado FROM equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE estado='Sin reparar' ";
-
+//si pongo la tabla orden de trabajo, se duplican todos los equipos porque lee todos los id_equipo de las tablas
+$query= "SELECT  equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.sintoma_cliente, estado.id_estado, estado.estado, estado.Inicio, estado.relacion FROM equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente  WHERE Inicio=1	AND relacion='equipo'  ";
+/*$query= "SELECT  orden_trabajo.id_equipo, equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.sintoma_cliente, estado.estado, usuario.nombreUsuario FROM orden_trabajo  INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario WHERE estado='Sin reparar' ORDER BY fecha_creacion DESC  ";*/
 $resultado=$selected->query($query);
 if($resultado->num_rows > 0) 
 {
@@ -26,10 +27,6 @@ if($resultado->num_rows > 0)
 
 	while ($fila = $resultado->fetch_assoc()) {
 		$salida.='<tr>
-	
-
-
-
 	 <td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
 	 <td>'.$fila["serie_equipo"].'</td>
 	 <td>'.$fila["fecha_creacion"].'</td>

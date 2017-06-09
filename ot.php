@@ -233,7 +233,7 @@ label {
 <input type="text" class="form-control" id="hora_salida" value="" name="hora_salida"  ></div>
 </br>
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Creación<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Creación<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_OT" id="fecha_OT"></label></div><!--fecha con jquey-->
 
 <?php
 include("conexion.php");
@@ -337,7 +337,7 @@ $asig3=mysql_query($consulta4);
      <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
 <label for="">Serie del Equipo:</label>
-<select  id="serieEquipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
+<select  id="serieEquipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipoOT" value=""> 
 <option value="0" >---Selecionar Equipo---</option>
 </select>
 </div> 
@@ -477,10 +477,10 @@ $asig3=mysql_query($consulta4);
 </div><!--el segundo div del acordion-->
 </div><!--el primer div del acordion-->
 
-  <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <div class="col-xs-6">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button></div>
+  <div class="col-xs-6">
+  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
   </div>
   <br>
   <br>
@@ -504,7 +504,7 @@ if
       $id_estado = $_POST['id_estado'];
       $id_equipo = $_POST['id_equipo'];
       //cuando se quiera modificar se agrega el id_cotizacion
-      $fecha_creacion = $_POST['fecha_creacion'];
+      $fecha_OT = $_POST['fecha_OT'];
       $motivo = $_POST['motivo'];
       $comentario = $_POST['comentario'];
       $valorReparacion = $_POST['valorReparacion'];
@@ -535,11 +535,11 @@ echo "
 }
 //aqui ira otro else para preguntar si el equipo seleccionado ya esta con un OT asociado.
 else{
-  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_creacion, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_creacion','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_OT, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_OT','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
  echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';
   }
 
-}
+}//SE CAMBIO ID_EQUIPO EN TABLA ORDEN_TRABAJO A id_equipoOT
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

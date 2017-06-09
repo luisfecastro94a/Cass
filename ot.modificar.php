@@ -150,11 +150,12 @@ label {
     $id=$_REQUEST['id'];
     include("conexion.php");
 
-      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area WHERE id_orden_trabajo='$id'")or die(mysql_error());
+    /*$consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca, cotizacion.fecha_cotizacion, cotizacion.valorCotizacion FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
+        $reg=mysql_fetch_array($consulta);*/
+
+      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
         $reg=mysql_fetch_array($consulta);
   ?>
-
-
 <h1> Crear Orden de Trabajo</h1>
 
 <form class="form-group" action=""  method="POST" >
@@ -178,18 +179,18 @@ label {
 
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
-<input type="text" class="form-control" id="correlativo_ot" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot"  ></div>
+<input type="text" class="form-control" id="correlativo_ot" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot"></div>
 
 <div class="col-xs-2">
 <label for="">Hora Llegada</label>
-<input type="text" class="form-control" id="hora_llegada" value="<?php echo $reg['hora_llegada'];?>" name="hora_llegada"  ></div>
+<input type="text" class="form-control" id="hora_llegada" value="<?php echo $reg['hora_llegada'];?>" name="hora_llegada"></div>
 
 <div class="col-xs-2">
 <label for="">Hora Salida</label>
-<input type="text" class="form-control" id="hora_salida" value="<?php echo $reg['hora_salida'];?>" name="hora_salida"  ></div>
+<input type="text" class="form-control" id="hora_salida" value="<?php echo $reg['hora_salida'];?>" name="hora_salida"></div>
 </br>
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Creación<input class="" value="<?php echo $reg['fecha_creacion'];?>" type="text" name="fecha_creacion" id="fecha_creacion"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Creación<input class="" value="<?php echo $reg['fecha_OT'];?>" type="text" name="fecha_OT" id="fecha_OT"></label></div><!--fecha con jquey-->
 
 <?php
 include("conexion.php");
@@ -205,18 +206,15 @@ $asig=mysql_query($consulta1);
  <?php
       while($reci=mysql_fetch_array($asig))
   {?>
-      <option value="<?php echo $reci['0'];?>"><?php echo $reci['3'];?></option>
+      <option value="<?php echo $reci['id_usuario'];?>"><?php echo $reci['3'];?></option>
   <?php } ?>
 </select>
 </div>
 
 <?php
 include("conexion.php");
-
-
 $consulta2="SELECT * FROM ot_tipo";
 $asig1=mysql_query($consulta2);
-
 ?>
 <div class="col-xs-5" >
 <label for="">Tipo de OT</label>
@@ -232,8 +230,6 @@ $asig1=mysql_query($consulta2);
 
 <?php
 include("conexion.php");
-
-
 $consulta3="SELECT * FROM area";
 $asig2=mysql_query($consulta3);
 
@@ -250,15 +246,11 @@ $asig2=mysql_query($consulta3);
 </select>
 </div>
 
-
 <?php
 $id=$_REQUEST['id'];
 include("conexion.php");
-
-
 $consulta4="SELECT * FROM estado WHERE relacion='ot'";
 $asig3=mysql_query($consulta4);
-
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
@@ -267,12 +259,10 @@ $asig3=mysql_query($consulta4);
  <?php
       while($fil=mysql_fetch_array($asig3))
   {?>
-      <option value="<?php echo $fil['0'];?>"><?php echo $fil['1'];?></option>
+      <option value="<?php echo $fil['id_estado'];?>"><?php echo $fil['1'];?></option>
   <?php } ?>
 </select>
 </div>
-
-  
         </div>
     </div>
   </div>
@@ -289,9 +279,6 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--aqui va formulario de div-->
-      
-
-
 <div class="col-xs-5" >
 <label for="">Cliente</label>
 <input type="text" class="form-control" name="nombre" id="nombre" maxlength="9"  
@@ -445,10 +432,6 @@ $asig3=mysql_query($consulta4);
 
          <div class="col-xs-5">
 <label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $co['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
-
- <div class="col-xs-5" >
-          <label for="">Valor por Repuesto</label>
-          <input type="text" class="form-control" id="valorRepuestoOT" value="<?php echo $co['valorRepuesto'];?>" onKeyPress="return SoloNumeros(event)" name="valorRepuestoOT" ></div>
  
  <div class="col-xs-5" >
           <label for="">Valor Total Cotización</label>
@@ -494,14 +477,14 @@ include("conexion.php");
       $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
       $fechaPresupuesto = isset($_POST['fechaPresupuesto']) ? $_POST['fechaPresupuesto']: '';
       $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: '';
-      $valorRepuestoOT = isset($_POST['valorRepuestoOT']) ? $_POST['valorRepuestoOT']: '';
       $valorCotizacionOT = isset($_POST['valorCotizacionOT']) ? $_POST['valorCotizacionOT']: '';
       
 
-  $sql=mysql_query("UPDATE `orden_trabajo` SET `id_usuario`='$id_usuario', `id_estado`='$id_estado', `valorReparacion`='$valorReparacion', `fechaPresupuesto`='$fechaPresupuesto', `correlativo_cotizacion`='$correlativo_cotizacion', `valorRepuestoOT`='$valorRepuestoOT', `valorCotizacionOT`='$valorCotizacionOT'  WHERE `id_orden_trabajo`='$id'");
+  $sql=mysql_query("UPDATE orden_trabajo SET id_usuario='$id_usuario', id_estado='$id_estado', valorReparacion='$valorReparacion', fechaPresupuesto='$fechaPresupuesto', correlativo_cotizacion='$correlativo_cotizacion', valorCotizacionOT='$valorCotizacionOT'  WHERE id_orden_trabajo = '$id' ");
+
+  /*mysql_query("UPDATE equipo SET id_cliente='$Cliente', sintoma_tecnico='$sintoma_tecnico', id_estado='$id_estado'WHERE id_equipo='$id'")or die(mysql_error());*/
 
 ?>
-
 
 <?php
 // close connection; 

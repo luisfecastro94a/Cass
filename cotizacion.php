@@ -223,43 +223,40 @@ label {
 </select>
 </div> 
 
-
 <div class="col-xs-5" >
 <label for="">Cliente</label>
-<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Cliente" required="" value="" ></div>
+<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Cliente" required="" value="" readonly></div>
 
 
 <div class="col-xs-5" >
 <label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" readonly></div>
 
 
 <div class="col-xs-5" >
 <label for="">Fono/Fax Empresa:</label>
 <input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="" ></div>
+  required="" value="" readonly></div>
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" readonly></div>
 
 <div class="col-xs-5" >
 <label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value="" readonly></div>
 
 <div class="col-xs-5" >
 <label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value=""></div>
+<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value="" readonly></div>
 
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
-<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" ></div>
+<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" readonly ></div>
 
 <div class="col-xs-5" >
-<label for="">Valor Presupuesto</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion"  placeholder="$"  required="" value="" ></div>
-
-
+<label for="">Valor Presupuesto (mano de obra)</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion"  placeholder="$"  required="" value="" readonly ></div>
 
 <div class="col-xs-10  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
@@ -273,12 +270,12 @@ label {
     <td><input class="form-control" name="repuesto_cinco" id="repuesto_cinco" type="text"></td>
   </tr>
    <tr class="fila-fija">
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto" id="repuesto" type="text"></td>
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_uno" id="repuesto1" type="text"></td>
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_dos" id="repuesto2" type="text"></td>
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_tres" id="repuesto3" type="text"></td>
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cuatro" id="repuesto4" type="text"></td>
-    <td><input class="form-control" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto" id="repuesto" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_uno" id="repuesto1" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_dos" id="repuesto2" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_tres" id="repuesto3" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cuatro" id="repuesto4" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
   </tr>
 </table>
 </div>
@@ -291,6 +288,10 @@ label {
 <label  for="">Descripción de Cotización</label>
 <textarea  name="comentario" id="comentario"  rows="4" cols="53"></textarea>
 </div>
+
+<div class="col-xs-5 has-error" >
+<label for="">Disponibilidad</label>
+<input type="text" class="form-control" name="disponibilidad" id="disponibilidad"  placeholder="Días"  required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
 
 <?php
 include("conexion.php");
@@ -327,28 +328,25 @@ if
      isset($_POST['fecha_cotizacion']) && !empty($_POST['fecha_cotizacion']) &&
      isset($_POST['valorCotizacion']) && !empty($_POST['valorCotizacion']))
   {
-
       $correlativo_cotizacion = $_POST['correlativo_cotizacion']; 
       $id_estado = $_POST['id_estado'];
       $id_orden_trabajo = $_POST['id_orden_trabajo'];
       $fecha_cotizacion = $_POST['fecha_cotizacion'];
       $comentario= $_POST['comentario'];
+      $valorCotizacion = $_POST['valorCotizacion'];
       $venta_repuesto = $_POST['venta_repuesto'];
       $venta_repuesto_uno = $_POST['venta_repuesto_uno'];
       $venta_repuesto_dos = $_POST['venta_repuesto_dos'];
       $venta_repuesto_tres = $_POST['venta_repuesto_tres'];
       $venta_repuesto_cuatro = $_POST['venta_repuesto_cuatro'];
       $venta_repuesto_cinco = $_POST['venta_repuesto_cinco'];
- 
+      $disponibilidad = $_POST['disponibilidad']; 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
-
-
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
-
 // ============================================== 
 // Comprobamos si el rut esta registrado 
 include("conexion.php");
@@ -357,12 +355,12 @@ $nuevo_id=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_tr
 if(mysql_num_rows($nuevo_id)>0) 
 { 
 echo " 
-'<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script>'; 
+<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script> 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
 "; 
 }
 else{
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario, valorRepuesto, valorCotizacion, valorRepuestoProveedor, margen, valorMargen, flete) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorRepuesto','$valorCotizacion', '$valorRepuestoProveedor', '$margen', '$valorMargen', '$flete')") or die(mysql_errno()); 
+  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario,  valorCotizacion, venta_repuesto, venta_repuesto_uno, venta_repuesto_dos, venta_repuesto_tres, venta_repuesto_cuatro, venta_repuesto_cinco, disponibilidad ) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorCotizacion', '$venta_repuesto', '$venta_repuesto_uno', '$venta_repuesto_dos', '$venta_repuesto_tres', '$venta_repuesto_cuatro', '$venta_repuesto_cinco', '$disponibilidad')") or die(mysql_errno()); 
     echo '<script> alert("Cotización Creada con Exito."); </script>';
 }
 }

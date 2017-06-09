@@ -13,6 +13,8 @@ if (isset($_SESSION['correo'])) {?>
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <link rel="stylesheet" href="fonts.css">
+  
 
 
 	  <style>
@@ -166,9 +168,7 @@ label {
 <h4><label for="caja_busqueda"><h1>Buscar Cotización</h1></label></h4>
     <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Nombre de Cliente">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
-
 </div>
-
 <table  class="table table-striped table-bordered" id="" name="" >
     <tbody>
       <tr>
@@ -178,21 +178,19 @@ label {
         <td><h4>Numero OT</h4></td>
         <td><h4>Fecha de OT</h4></td>
         <td><h4>Cliente</h4></td>
-        <td><h4>Valor Presupuesto</h4></td>
-        <td><h4>Valor Repuesto</h4></td>
-        <td><h4>Total</h4></td>
+        <td><h4>Valor Mano Obra</h4></td>
+        <td><h4>Valor Cotización</h4></td>
         <td><h4>Estado Cotización</h4></td>
         <td><h4>Comentario de Cotización</h4></td>     
         <td colspan="2"><h4>Operaciones</h4></td>
       </tr>
-
 <?php
 
 $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.valorReparacion, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente WHERE nombre like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorCotizacion, estado.estado, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.valorReparacion, cliente.nombre FROM cotizacion INNER JOIN estado ON cotizacion.id_estado=estado.id_estado INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente WHERE nombre  like '%".$busca."%' " );
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
@@ -200,14 +198,14 @@ if($busca!=""){
    echo '<td>'.'<strong>'.$muestra['correlativo_cotizacion'].'</strong>'.'</td>';
    echo '<td>'.$muestra['fecha_cotizacion'].'</td>';
    echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['fecha_creacion'].'</td>';
+   echo '<td>'.$muestra['fecha_OT'].'</td>';
    echo '<td>'.$muestra['nombre'].'</td>';
    echo '<td>'.$muestra['valorReparacion'].'</td>';
-   echo '<td>'.$muestra['valorRepuesto'].'</td>';
    echo '<td>'.$muestra['valorCotizacion'].'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
    echo '<td>'.$muestra['comentario'].'</td>';
-   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-pencil"></span>'.' Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="pdf.cotizacion.php?id='.$muestra['id_cotizacion'].'" class="btn btn-danger" title="Modificar Orden de Trabajo"><span class="icon-file-pdf"></span>'.' PDF'.'</a>'.'</td>'; 
    echo '</tr>';  
 }
 } 

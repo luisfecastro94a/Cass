@@ -13,7 +13,7 @@ if (isset($_SESSION['correo'])) {?>
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-
+   <link rel="stylesheet" href="fonts.css">
 
 	  <style>
  * {
@@ -194,13 +194,12 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo  WHERE correlativo_ot like '%".$busca."%' ");
-
+  $dbhandle=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo  WHERE correlativo_ot like '%".$busca."%' ");
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
    echo '<td>'.'<strong>'.$muestra['id_orden_trabajo'].'</strong>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['fecha_creacion'].'</td>';
+   echo '<td>'.$muestra['fecha_OT'].'</td>';
    echo '<td>'.$muestra['nombreUsuario'].'</td>';
    echo '<td>'.$muestra['nombre'].'</td>';
    echo '<td>'.$muestra['nombreTipo'].'</td>';
@@ -212,8 +211,8 @@ if($busca!=""){
    echo '<td>'.$muestra['fechaPresupuesto'].'</td>';
    echo '<td>'.$muestra['valorRepuestoOT'].'</td>';
    echo '<td>'.$muestra['valorCotizacionOT'].'</td>';
-   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar">'.'Modificar'.'</a>'.'</td>';   
-   echo '<td>'.'<a href="pdf.ot.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" >'.'PDF'.'</a>'.'</td>'; 
+   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar"><span class="glyphicon glyphicon-pencil"></span>'.' Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="pdf.ot.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-danger" ><span class="icon-file-pdf"></span>'.' PDF'.'</a>'.'</td>'; 
    echo '</tr>';  
 }
 }

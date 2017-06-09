@@ -108,7 +108,7 @@ body {
 </style>
 
 <div class="wrapper">
-    <form class="form-signin" method="POST" action=""> 
+    <form class="form-signin" method="POST" action="" > 
       <img src="img/cass_logo.png" alt="">
       <h2 class="form">Iniciar Sesion</h2>
       
@@ -121,14 +121,16 @@ body {
       <button class="btn btn-lg btn-primary btn-block" name="login" type="submit">Ingresar</button>   
     </form>
 </div>
+
 <?php
+
 include("conexion.php");
 if (isset($_POST['login'])){
     $usuario = $_POST['usuario'];//entre [] va el nombre de mi input
     $contraseña = $_POST['contraseña'];
     $log = mysql_query("SELECT * FROM usuario WHERE correo='$usuario' AND clave='$contraseña' ");
     if (mysql_num_rows($log)>0) {
-      /*esto me permite listar a los usuarios*/
+      //esto me permite listar a los usuarios
       $row = mysql_fetch_array($log);
       $_SESSION["correo"]=$row['correo'];
       echo 'Iniciando Sesion para'.$_SESSION['correo'].'<p>';//esta es una variable de session
@@ -138,13 +140,13 @@ if (isset($_POST['login'])){
       echo '<script> alert("Usuario o Contraseña Incorrectos."); </script>';
       echo '<script> window.location="index.php" </script>';//deberia ser index.php
     }
-
-  }
-
+}
 ?>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/inicio.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
 </body>
 </html>

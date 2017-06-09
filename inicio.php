@@ -75,7 +75,6 @@ tr:hover td { background: #d0dafd; color: #339; }
 }
 h2{
   color: orange;
-  background: black;
   width: 30px;
 }
 </style>

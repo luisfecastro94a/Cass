@@ -150,7 +150,7 @@ label {
 <?php
     $id=$_REQUEST['id'];
     include("conexion.php");     
-      $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorRepuesto, cotizacion.valorCotizacion, cotizacion.margen, cotizacion.valorMargen, cotizacion.valorRepuestoProveedor, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo, estado.id_estado, estado.estado FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON cotizacion.id_estado=estado.id_estado WHERE id_cotizacion='$id'")or die(mysql_error());
+      $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorCotizacion, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo, estado.id_estado, estado.estado FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON cotizacion.id_estado=estado.id_estado WHERE id_cotizacion='$id'")or die(mysql_error());
       $reg=mysql_fetch_array($consulta);
   ?>
 <h1>Modificar Cotización</h1>
@@ -204,28 +204,6 @@ label {
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
 <input type="text" class="form-control" name="id_equipo" id="serie_equipo" disabled=""  placeholder="Serie de Equipo" required="" value="<?php echo $reg['serie_equipo'];?>" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Valor Presupuesto</label>
-<input type="text" class="form-control"  name="valorReparacion" disabled="" id="valorReparacion" maxlength="9" placeholder="$ "  required="" value="<?php echo $reg['valorReparacion'];?>" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Repuesto Proveedor</label>
-<input type="text" class="form-control"  disabled="" name="valorRepuestoProveedor" id="valorRepuestoProveedor" maxlength="9" placeholder="$"  required="" value="<?php echo $reg['valorRepuestoProveedor'];?>" ></div>
-
-<div class="col-xs-5" >
-<label for="">Porcentaje %</label>
-<input type="text" class="form-control" disabled="" name="margen" id="margen" maxlength="9"  title="Ingresa solo numero, sin %" required="" value="<?php echo $reg['margen'];?>" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Porcentaje</label>
-<input type="text" class="form-control"  disabled="" name="valormargen" id="valormargen" maxlength="9" placeholder="$"   required="" value="<?php echo $reg['valorMargen'];?>" ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Repuesto</label>
-<input type="text" class="form-control"  disabled="" name="valorRepuesto" id="valorRepuesto" maxlength="9" placeholder="$" 
-  required="" value="<?php echo $reg['valorRepuesto'];?>" ></div>
 
 
 <div class="col-xs-5" >

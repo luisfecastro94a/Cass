@@ -77,6 +77,9 @@ h2{
   color: orange;
   width: 30px;
 }
+.fe{
+ margin: 10px 20px 10px 800px;
+}
 </style>
 </head>
   <nav class="navbar navbar-default">
@@ -153,7 +156,7 @@ h2{
 </nav>
 
 <body>
-<input  type="text"  value="<?php echo date("d/m/Y");?>">
+<label class="fe" left for="">Fecha de HOY: <?php echo date("d/m/Y");?></label>
 <br>
 
 

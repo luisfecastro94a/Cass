@@ -1,8 +1,9 @@
 <?php
 include("conexion.php");
 
+$date = date("d/m/Y");
 
-$consultaa="SELECT id_equipo, id_estado, serie_equipo FROM equipo WHERE id_estado=2 ORDER BY serie_equipo ASC";
+$consultaa="SELECT id_equipo, id_estado, serie_equipo, fecha_creacion FROM equipo WHERE id_estado=2 AND fecha_creacion='$date' ORDER BY serie_equipo ASC";
 echo '<option value="0">---Seleccione Serie de Equipo---</opcion>';
 $asiga=mysql_query($consultaa);
 

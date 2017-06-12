@@ -274,6 +274,8 @@ $resultE=mysql_query($consulta2);
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
+   <div class="col-xs-5">
+  <a href="ot.entrada.php" ><button type="button" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Generar OT</button></a></div>
   
 </div>
 </form>

@@ -6,7 +6,7 @@ require('conexion.php');
 
 $pdf=new FPDF();//llamamos clase fpdf
 $pdf->AddPage();//agregamos a la pagina lo siguiente que se hara
-//$pdf->SetMargins(10, 30, 10);//establece los margenes left(izquier), top(superior), right(derecho)...
+$pdf->SetMargins(10, 20, 10);//establece los margenes left(izquier), top(superior), right(derecho)...
 $pdf->SetFont('Arial','B',9);//setfont sera el tipo de la fuente en el pdf
 $pdf->Image('img/cass_logo.png',10,11,18,20,'PNG');//sirve para traer imagen a nuestro pdf izq, y "X-G" 
 $pdf->Cell(18,10,'',0);//son celda 18 largo 10 de altura, el 0 es el grosor de la celda
@@ -172,14 +172,14 @@ $pdf->AddPage();
 $pdf->SetFont('Arial','B',10);
 $pdf->Cell(25,8,'',0);
 $pdf->Cell(25,8,'CONDICIONES GENERALES APLICABLES AL CONTRATO DE SERVICIO DE REPARACION',0);
-$pdf->Ln(5);
+$pdf->Ln(7);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(25,8,'En Puerto Montt de Chile Carlos Stange domiciliado en Egana 212, en adelante denominada Carlos Stange y el cliente identidicado ',0);
 $pdf->Ln(3);
 $pdf->Cell(25,8,'en el la pagina, anterior de este instrumento, en adelante denominado CLIENTE, se ha convenido en el siguiente Contrato de Servicio ',0);
 $pdf->Ln(3);
 $pdf->Cell(25,8,'de Reparacion:',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'PRIMERO:',0);
 $pdf->SetFont('Arial','',9);
@@ -190,12 +190,12 @@ $pdf->Cell(17,8,'instrumento, la que acepta, conforme a los articulos establecid
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(17,8,'que se encuentra en la pagina anterior.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'SEGUNDO: ',0);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(25,8,' El horario de atencion es de 09:00 a 13:00 y de 15:00 a 19:30 hrs. de Lunes a Viernes, excepto feriados.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'TERCERO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -211,7 +211,7 @@ $pdf->SetFont('Arial','',9);
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'en caso contrario se enviara Presupuesto.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'CUARTO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -222,7 +222,7 @@ $pdf->Cell(25,8,'y ordenes de trabajo anteriores. En ningun caso constituye un c
 $pdf->Ln(4);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'Todo Presupuesto sera avisado via FAX, TELEFONO o CORREO.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'QUINTO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -231,7 +231,7 @@ $pdf->Ln(3);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'un Valor minimo de $10.900 I.V.A. incluido por concepto de Revision y Diagnostico de Falla.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'SEXTO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -242,7 +242,7 @@ $pdf->Cell(25,8,'de repuestos, personal tecnico y ordenes de trabajo anteriores.
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'para Carlos Stange.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'SEPTIMO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -250,7 +250,7 @@ $pdf->Cell(25,8,' Las reparaciones deben ser canceladas en efectivo o cheque al 
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'Carlos Stange se aceptaran ordenes de compra pagaderas contra presentacion de la factura.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'OCTAVO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -270,7 +270,7 @@ $pdf->Cell(25,8,'Carlos Stange, no sera responsable, en caso alguno, de las perd
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'el CLIENTE, incluso lucro cesante, por la falta de operatividad de los equipos materia de este contrato.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'NOVENO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -281,7 +281,7 @@ $pdf->Cell(25,8,'Carlos Stange, presenta nuevamente el servicio sin costo para e
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'y/o repuesto, y su falla no provenga de un uso indebido, o que se haya intervenido por personal ajeno a Carlos Stange. ',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(17,8,'DECIMO: ',0);
 $pdf->SetFont('Arial','',9);
@@ -289,19 +289,63 @@ $pdf->Cell(25,8,' En caso de una prestacion de Servicio por Desinfeccion de VIRU
 $pdf->Ln(3);
 $pdf->Cell(17,8,'',0);
 $pdf->Cell(25,8,'perdidas de informacion producto de la accion de virus, detectada previamente o al desinfectar.',0);
-$pdf->Ln(5);
+$pdf->Ln(10);
 $pdf->SetFont('Arial','B',9);
 $pdf->Cell(30,8,'DECIMO PRIMERO: ',0);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(35,8,' Para todo equipo materia de este contrato, se avisara ya sea por fax, telefono o correo, cuando este ',0);
 $pdf->Ln(3);
-$pdf->Cell(35,8,'',0);
+$pdf->Cell(30,8,'',0);
 $pdf->Cell(25,8,'se encuentre listo para ser retirado. Todo equipo NO RETIRADO en un plazo de 10 dias habiles desde el aviso,  ',0);
 $pdf->Ln(3);
+$pdf->Cell(30,8,'',0);
+$pdf->Cell(28,8,'mencionado, debera cancelar al ser retirado,',0);
+$pdf->SetFont('Arial','B',9);
 $pdf->Cell(35,8,'',0);
-$pdf->Cell(25,8,'siempre que sea por el mismo servicio ',0);
-
-
+$pdf->Cell(30,8,'por concepto de almacenamiento la cantidad de',0);
+$pdf->Ln(3);
+$pdf->Cell(30,8,'',0);
+$pdf->Cell(25,8,'$2.360.- I.V.A. incluido, por cada dia trancurrido.',0);
+$pdf->Ln(8);
+$pdf->SetFont('Arial','',9);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'Transcurridos 60 dias desde el aviso referido y no habiendose aun retirado el equipo, Carlos Stange no se responsabilizara  ',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'por los danos que pueda sufrir este al estar almacenado. El valor en pesos acumulado a la fecha de retiro, debera ser',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'cancelado al contado al momento de retirar el equipo, de lo contrario Carlos Stange podra retener el equipo hasta que',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'esto se cumpla.',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'De acuerdo al articulo 42 de la Ley N 19496, se entenderan abandonados en favor de Carlos Stange y los equipos ',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'materia de este contrato que no hayan sido retirados en el plazo de un ano.',0);
+$pdf->Ln(10);
+$pdf->SetFont('Arial','B',9);
+$pdf->Cell(30,8,'DECIMO SEGUNDO: ',0);
+$pdf->SetFont('Arial','',9);
+$pdf->Cell(35,8,' Queda convenido y expresamente aceptado por el CLIENTE que Carlos Stange no respondera por los equipos  ',0);
+$pdf->Ln(3);
+$pdf->Cell(30,8,'',0);
+$pdf->Cell(25,8,'materia de este contrato, en los casos de dano o perdida por causas fortuitas o causa mayor  no imputables ',0);
+$pdf->Ln(3);
+$pdf->Cell(30,8,'',0);
+$pdf->Cell(25,8,'a Carlos Stange.',0);
+$pdf->Ln(8);
+$pdf->SetFont('Arial','',9);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'Las parte entienden y declaran conocer y aceptar las partes del presente contrato, fijan sus domicilios en la Region de los',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'Lagos, ciudad de Puerto Montt, y se someten desde luego a la jurisdiccion de sus tribunales. Para constancia, suscriben',0);
+$pdf->Ln(3);
+$pdf->Cell(10,8,'',0);
+$pdf->Cell(25,8,'en 2 (dos) ejemplares identicos tenor.',0);
 
 $pdf->Output();
 ?>

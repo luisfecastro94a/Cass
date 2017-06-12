@@ -10,19 +10,65 @@ if (isset($_SESSION['correo'])) {?>
 
 <meta charset="UTF-8">
 
-
 	<title>Orden de Trabajo</title>
-   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="js/bootstrap.min.js">
+  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
   <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
   <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   
+  <script>
+  $( function() {
+    $( "#fecha_creacion" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
+    <script>
+  $( function() {
+    $( "#fecha_plazo_entrega" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
+  <script>
+  $( function() {
+    $( "#fechaPresupuesto" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
+
+	
       <style>
  * {
  
@@ -67,7 +113,7 @@ label {
 
    </style>
 </head>
- <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
@@ -146,17 +192,10 @@ label {
 <a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
-<?php
-    $id=$_REQUEST['id'];
-    include("conexion.php");
-
-  
-      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
-        $reg=mysql_fetch_array($consulta);
-  ?>
+<br><br>
 <h1> Crear Orden de Trabajo</h1>
 
-<form class="form-group" action=""  method="POST" >
+<form class="form-group" action=""  method="POST" onSubmit="return validar()">
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
@@ -174,60 +213,72 @@ label {
 
 <!--INICIO DE TODO FORMULARIO-->
 
-
+<?php
+  //codigo para que muestre el correlativo de mi orden de trabajo
+    $sql = "SELECT MAX(correlativo_ot) as max FROM orden_trabajo ";
+    $resultado = mysql_query($sql);
+    $row = mysql_fetch_array($resultado);
+    $mensaje =$row["max"]+1;
+?>
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
-<input type="text" class="form-control" id="correlativo_ot" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot"></div>
+<input type="text" class="form-control" id="correlativo_ot" value="<?=$mensaje?>" name="correlativo_ot"  ></div>
 
 <div class="col-xs-2">
 <label for="">Hora Llegada</label>
-<input type="text" class="form-control" id="hora_llegada" value="<?php echo $reg['hora_llegada'];?>" name="hora_llegada"></div>
+<input type="text" class="form-control" id="hora_llegada" value="" name="hora_llegada"  ></div>
 
 <div class="col-xs-2">
 <label for="">Hora Salida</label>
-<input type="text" class="form-control" id="hora_salida" value="<?php echo $reg['hora_salida'];?>" name="hora_salida"></div>
+<input type="text" class="form-control" id="hora_salida" value="" name="hora_salida"  ></div>
 </br>
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Creación<input class="" value="<?php echo $reg['fecha_OT'];?>" type="text" name="fecha_OT" id="fecha_OT"></label></div><!--fecha con jquey-->
+<label class="fe" for="">Fecha Creación<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_OT" id="fecha_OT"></label></div><!--fecha con jquey-->
 
 <?php
 include("conexion.php");
 
-$consulta1="SELECT * FROM usuario ";
+
+$consulta1="SELECT * FROM usuario";
 $asig=mysql_query($consulta1);
 
 ?>
 <div class="col-xs-5" >
 <label for="">Asigar a Técnico</label>
 <select id="id_usuario" class="form-control" name="id_usuario" > 
-<option value="<?php echo $reg['id_usuario'];?>" selected=""><?php echo $reg['nombreUsuario'];?></option>
+<option value="" selected="">---Asignar Técnico---</option>
  <?php
       while($reci=mysql_fetch_array($asig))
   {?>
-      <option value="<?php echo $reci['id_usuario'];?>"><?php echo $reci['3'];?></option>
+      <option value="<?php echo $reci['0']?>"><?php echo $reci['3'];?></option>
   <?php } ?>
 </select>
 </div>
 
 <?php
 include("conexion.php");
+
+
 $consulta2="SELECT * FROM ot_tipo";
 $asig1=mysql_query($consulta2);
+
 ?>
 <div class="col-xs-5" >
 <label for="">Tipo de OT</label>
 <select id="id_ot_tipo" class="form-control" name="id_ot_tipo" > 
-<option value="" selected=""><?php echo $reg['nombreTipo']?></option>
+<option value="" selected="">---Tipo de Orde de Trabajo---</option>
  <?php
       while($f=mysql_fetch_array($asig1))
   {?>
-      <option value="<?php echo $f['0']?>"><?php echo $f['1']?></option>
+      <option value="<?php echo $f['0']?>"><?php echo $f['1'];?></option>
   <?php } ?>
 </select>
 </div>
 
 <?php
 include("conexion.php");
+
+
 $consulta3="SELECT * FROM area";
 $asig2=mysql_query($consulta3);
 
@@ -235,7 +286,7 @@ $asig2=mysql_query($consulta3);
 <div class="col-xs-5" >
 <label for="">Area</label>
 <select id="id_area" class="form-control" name="id_area" > 
-<option value="<?php echo $fi['0']?>" selected=""><?php echo $reg['area']?></option>
+<option value="" selected="">---Area de Trabajo---</option>
  <?php
       while($fi=mysql_fetch_array($asig2))
   {?>
@@ -244,23 +295,28 @@ $asig2=mysql_query($consulta3);
 </select>
 </div>
 
+
 <?php
-$id=$_REQUEST['id'];
 include("conexion.php");
-$consulta4="SELECT * FROM estado WHERE relacion='ot'";
+
+
+$consulta4="SELECT id_estado, estado, relacion FROM estado WHERE Condicion='Eo'";
 $asig3=mysql_query($consulta4);
+
 ?>
 <div class="col-xs-5" >
 <label for="">Estado</label>
 <select id="id_estado" class="form-control" name="id_estado" > 
-<option value="<?php echo $reg['id_estado'];?>" selected=""><?php echo $reg['estado'];?></option>
+<option value="" selected="">---Estado Orden de Trabajo---</option>
  <?php
       while($fil=mysql_fetch_array($asig3))
   {?>
-      <option value="<?php echo $fil['id_estado'];?>"><?php echo $fil['1'];?></option>
+      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
   <?php } ?>
 </select>
 </div>
+
+  
         </div>
     </div>
   </div>
@@ -269,7 +325,7 @@ $asig3=mysql_query($consulta4);
     <div class="panel-heading" role="tab" id="headingTwo">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Datos del Cliente
+          Datos del Equipo
         </a>
       </h4>
     </div>
@@ -277,40 +333,28 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--aqui va formulario de div-->
+
+     <!--Aqui va los datos del EQUIPO-->
 <div class="col-xs-5" >
-<label for="">Cliente</label>
-<input type="text" class="form-control" name="nombre" id="nombre" maxlength="9"  
-  required="" value="<?php echo $reg['nombre'];?>" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="<?php echo $reg['rut'];?>" ></div>
-
+<label for="">Serie del Equipo:</label>
+<select  id="serie_equipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
+<option value="0" >---Selecionar Equipo---</option>
+</select>
+</div> 
 
 <div class="col-xs-5" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="<?php echo $reg['fono'];?>" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="<?php echo $reg['correo'];?>" ></div>
+<label for="">Sintoma del Cliente:</label>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
+</div>
 
 <div class="col-xs-5" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value="<?php echo $reg['direccion'];?>"></div>
+<label for="">Marca:</label>
+<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
 
 <div class="col-xs-5" >
-<label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="nombrec" placeholder="Ciudad" required="" value="<?php echo $reg['nombrec'];?>"></div>
-<!--Consulta para buscar al Encargado del Cliente-->
-
-<div class="col-xs-5" >
-<label for="">Encargado Cliente:</label>
-<input type="text" class="form-control" id="nombreE" name="nombreE"  required="" value="<?php echo $reg['nombreE'];?>"></div>
-
+<label for="">Estado:</label>
+<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
+      
 
       </div>
     </div>
@@ -320,42 +364,50 @@ $asig3=mysql_query($consulta4);
     <div class="panel-heading" role="tab" id="headingThree">
       <h4 class="panel-title">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Datos del Equipo
+          Datos del Cliente
         </a>
       </h4>
     </div>
     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
       <div class="panel-body">
 
-      <!--Aqui va los datos del EQUIPO-->
 
+<div class="col-xs-5" >
+<label for="">Cliente:</label>
+<input type="text" class="form-control" name="nombre" id="nombre"  placeholder="Cliente" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
-<label for="">Serie del Equipo</label>
-<input type="text" class="form-control" id="serie_equipo" name="serie_equipo"  required="" value="<?php echo $reg['serie_equipo'];?>"></div>
+<label for="">Rut Empresa:</label>
+<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
 
 
 <div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"><?php echo $reg['sintoma_cliente'];?></textarea>
-</div>
+<label for="">Fono/Fax Empresa:</label>
+<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+  required="" value="" ></div>
+
+<div class="col-xs-5" >
+<label for="">Correo:</label>
+<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+
+<div class="col-xs-5" >
+<label for="">Direccion:</label>
+<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
 
 
 <div class="col-xs-5" >
-<label for="">Marca</label>
-<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value="<?php echo $reg['marca'];?>"></div>
+<label for="">Encargado Cliente:</label>
+<input type="text" class="form-control" id="nombreE" name="nombreE" placeholder="Cliente encargado" required="" value=""></div>
 
 <div class="col-xs-5" >
-<label for="">Estado</label>
-<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value="<?php echo $reg['estado'];?>"></div>
+<label for="">ID</label>
+<input type="text" class="form-control" name="id_cliente" id="id_cliente"  placeholder="ID" required="" value="" ></div>
 
 
       </div>
     </div>
   </div>
-
-
 
 
     <div class="panel panel-default">
@@ -371,11 +423,11 @@ $asig3=mysql_query($consulta4);
      
 <div class="col-xs-5" >
 <label for="">Motivo</label>
-<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita"  value="<?php echo $reg['motivo'];?>"></div>
+<input type="text" class="form-control" id="motivo" name="motivo" placeholder="Motivo de la Visita"  value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Comentario</label>
-<textarea name="comentario" id="comentario" cols="53"  rows="4"><?php echo $reg['comentario'];?></textarea>
+<textarea name="comentario" id="comentario" cols="53"  rows="4"></textarea>
 </div>
       </div>
     </div>
@@ -395,11 +447,10 @@ $asig3=mysql_query($consulta4);
 
         <div class="col-xs-5" >
           <label for="">Valor por Reparación</label>
-          <input type="text" class="form-control" id="valorReparacion" required="" value="<?php echo $reg['valorReparacion'];?>" onKeyPress="return SoloNumeros(event)
-          " name="valorReparacion" ></div>
+          <input type="text" class="form-control" id="valorReparacion" value="11900" minlength="5" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
 
-<div class="col-xs-5">
-<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y");?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
+          <div class="col-xs-5">
+<label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
 
       </div>
     </div>
@@ -415,26 +466,11 @@ $asig3=mysql_query($consulta4);
     </div>
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
-
-<?php
-    $id=$_REQUEST['id'];
-    include("conexion.php");
-
-      $consulta=mysql_query("SELECT * FROM cotizacion WHERE  id_orden_trabajo='$id' AND id_estado=5")or die(mysql_error());
-        $co=mysql_fetch_array($consulta);
-?>
-
-<div class="col-xs-5" >
-          <label for="">Numero de Cotización</label>
-          <input type="text" class="form-control" id="correlativo_cotizacion" value="<?php echo $co['correlativo_cotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="correlativo_cotizacion" ></div>
-
-         <div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo $co['fecha_cotizacion'];?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div><!--fecha con jquey-->
- 
- <div class="col-xs-5" >
-          <label for="">Valor Total Cotización</label>
-          <input type="text" class="form-control" id="valorCotizacionOT" value="<?php echo $co['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacionOT" ></div>
-
+        <div class="alert alert-danger" role="alert">
+        Debe Generar 
+  <a href="cotizacion.php" class="alert-link">Cotización</a>
+        a una OT...
+        </div><!--mensaje color danger-->
       </div>
     </div>
   </div>
@@ -442,10 +478,10 @@ $asig3=mysql_query($consulta4);
 </div><!--el segundo div del acordion-->
 </div><!--el primer div del acordion-->
 
-  <div class="col-xs-5">
-  <button type="submit" id="enviar" onclick="alert('¡Modificación realizada con Exito :) !!')" name="enviar" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <div class="col-xs-6">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk"></span> Guardar</button></div>
+  <div class="col-xs-6">
+  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove"></span> Cancelar</button>
   </div>
   <br>
   <br>
@@ -457,37 +493,56 @@ $asig3=mysql_query($consulta4);
 </div>
     
 <?php
+if
+    (isset($_POST['correlativo_ot']) && !empty($_POST['correlativo_ot']))
+  {
+
+      $correlativo_ot = $_POST['correlativo_ot']; 
+      $id_usuario = $_POST['id_usuario'];
+      $id_cliente = $_POST['id_cliente'];
+      $id_ot_tipo = $_POST['id_ot_tipo'];
+      $id_area = $_POST['id_area'];
+      $id_estado = $_POST['id_estado'];
+      $id_equipo = $_POST['id_equipo'];
+      //cuando se quiera modificar se agrega el id_cotizacion
+      $fecha_OT = $_POST['fecha_OT'];
+      $motivo = $_POST['motivo'];
+      $comentario = $_POST['comentario'];
+      $valorReparacion = $_POST['valorReparacion'];
+      $fecha_presupuesto = $_POST['fechaPresupuesto'];
+      $hora_llegada = $_POST['hora_llegada'];
+      $hora_salida = $_POST['hora_salida'];
+
+    // conexión a la base de datos de
+$dbhandle = mysql_connect($hostname, $username, $password) 
+ or die("No se pudo Contactar a Base de Datos MySQL");
+
+
+// seleccionar una base de datos para trabajar con
+$selected = mysql_select_db("bdcass",$dbhandle) 
+  or die("No se pudo seleccionar la base de datos CASS");
+
+// ============================================== 
+// Comprobamos si el rut esta registrado 
 include("conexion.php");
 
-      $id=$_REQUEST['id'];  
-   /*   
-   esto igual funciona 
-      $id_usuario = @$_POST['id_usuario']; 
-      $id_estado = @$_POST['id_estado']; 
-      $correlativo_cotizacion = @$_POST['correlativo_cotizacion']; 
-      $valorReparacion = @$_POST['valorReparacion']; 
-      $fechaPresupuesto = @$_POST['fechaPresupuesto']; 
-      $valorRepuestoOT = @$_POST['valorRepuestoOT']; 
-      $valorCotizacionOT = @$_POST['valorCotizacionOT'];*/
+$nuevo_correlativo=mysql_query("SELECT correlativo_ot FROM orden_trabajo WHERE correlativo_ot='$correlativo_ot'"); 
+if(mysql_num_rows($nuevo_correlativo)>0) 
+{ 
+echo " 
+<script> alert('El Numero de OT ya se encuentra registrado') </script>; 
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+"; 
+}
+//aqui ira otro else para preguntar si el equipo seleccionado ya esta con un OT asociado.
+else{
+  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_OT, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_OT','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
+ echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';
+  }
 
-      $id_usuario = isset($_POST['id_usuario']) ? $_POST['id_usuario']: ''; 
-      $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: '';    
-      $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
-      $fechaPresupuesto = isset($_POST['fechaPresupuesto']) ? $_POST['fechaPresupuesto']: '';
-      $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: '';
-      $valorCotizacionOT = isset($_POST['valorCotizacionOT']) ? $_POST['valorCotizacionOT']: '';
-      
-
-  $sql=mysql_query("UPDATE orden_trabajo SET id_usuario='$id_usuario', id_estado='$id_estado', valorReparacion='$valorReparacion', fechaPresupuesto='$fechaPresupuesto', correlativo_cotizacion='$correlativo_cotizacion', valorCotizacionOT='$valorCotizacionOT'  WHERE id_orden_trabajo = '$id' ");
-
-  /*mysql_query("UPDATE equipo SET id_cliente='$Cliente', sintoma_tecnico='$sintoma_tecnico', id_estado='$id_estado'WHERE id_equipo='$id'")or die(mysql_error());*/
-
+}//SE CAMBIO ID_EQUIPO EN TABLA ORDEN_TRABAJO A id_equipoOT
 ?>
 
-<?php
-// close connection; 
-mysql_close();
-?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -502,8 +557,8 @@ mysql_close();
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
     <script src="js/autollenado.js" ></script>
-    <script src="listarencargado.js"></script>
-    <script src="listaequipos.js"></script>
+    <!--<script src="listarencargado.js"></script>-->
+    <script src="listaequipoOT.js"></script>
     <script src="js/autollenadoequipo.js"></script>
 
 <footer></footer><!--antes de que se cierre el body se agrega el footer o pie de pagina-->

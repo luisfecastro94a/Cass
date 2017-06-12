@@ -94,7 +94,7 @@ $pdf->Ln(8);
 $pdf->SetFont('Arial','',8);
 //Consulta SQL
 $id=$_REQUEST['id'];
-$productos=mysql_query("SELECT cotizacion.valorCotizacion, cotizacion.venta_repuesto, cotizacion.venta_repuesto_uno, cotizacion.venta_repuesto_dos, cotizacion.venta_repuesto_tres, cotizacion.venta_repuesto_cuatro, cotizacion.venta_repuesto_cinco, orden_trabajo.valorReparacion, orden_trabajo.repuesto, orden_trabajo.repuesto_uno, orden_trabajo.repuesto_dos, orden_trabajo.repuesto_tres, orden_trabajo.repuesto_cuatro, orden_trabajo.repuesto_cinco FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo WHERE id_cotizacion='$id' ");
+$productos=mysql_query("SELECT cotizacion.valorCotizacion, cotizacion.venta_repuesto, cotizacion.venta_repuesto_uno, cotizacion.venta_repuesto_dos, cotizacion.venta_repuesto_tres, cotizacion.venta_repuesto_cuatro, cotizacion.venta_repuesto_cinco, cotizacion.disponibilidad, orden_trabajo.valorReparacion, orden_trabajo.repuesto, orden_trabajo.repuesto_uno, orden_trabajo.repuesto_dos, orden_trabajo.repuesto_tres, orden_trabajo.repuesto_cuatro, orden_trabajo.repuesto_cinco FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo WHERE id_cotizacion='$id' ");
 $item=0;
 while ($productos2=mysql_fetch_array($productos)) {
 	$pdf->Cell(20,8,'',1);
@@ -146,8 +146,11 @@ while ($productos2=mysql_fetch_array($productos)) {
 	$pdf->Cell(110,6,'',0);
 	$pdf->Cell(20,6,'Total',1);
 	$pdf->Cell(25,6,$productos2['valorCotizacion'],1);
+	$pdf->Ln(6);
+	$pdf->Cell(20,6,'Disponibilidad:',1);
+	$pdf->Cell(25,6,$productos2['disponibilidad'],1);
+	
 }
-
 
 $pdf->Output();
 ?>

@@ -338,7 +338,6 @@ $asig3=mysql_query($consulta4);
 <div class="col-xs-5" >
 <label for="">Serie del Equipo:</label>
 <select  id="serie_equipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
-<option value="0" >---Selecionar Equipo---</option>
 </select>
 </div> 
 
@@ -354,7 +353,7 @@ $asig3=mysql_query($consulta4);
 <div class="col-xs-5" >
 <label for="">Estado:</label>
 <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
-      
+
 
       </div>
     </div>
@@ -373,36 +372,32 @@ $asig3=mysql_query($consulta4);
 
 
 <div class="col-xs-5" >
+<label for="">ID:</label>
+<input type="text" class="form-control"  id="nombre" name="id_cliente" maxlength="9" placeholder="ID" required="" value="" ></div>
+
+
+<div class="col-xs-5" >
 <label for="">Cliente:</label>
-<input type="text" class="form-control" name="nombre" id="nombre"  placeholder="Cliente" required="" value="" ></div>
+<input type="text" class="form-control" id="rut" name="nombre"  placeholder="Cliente"   value="" ></div>
 
 
 <div class="col-xs-5" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<label for="">Rut:</label>
+<input type="text" class="form-control"  id="fono" name="rut" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="" ></div>
+
+
+<div class="col-xs-5" >
+<label for="">Fono:</label>
+<input type="text" class="form-control" id="correo" name="fono"   placeholder="Fono" required="" value="" ></div>
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
-
+<input type="text" class="form-control" id="direccion" name="correo" placeholder="Correo" required="" value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>
 <input type="text" class="form-control" id="nombreE" name="nombreE" placeholder="Cliente encargado" required="" value=""></div>
-
-<div class="col-xs-5" >
-<label for="">ID</label>
-<input type="text" class="form-control" name="id_cliente" id="id_cliente"  placeholder="ID" required="" value="" ></div>
 
 
       </div>
@@ -499,7 +494,7 @@ if
 
       $correlativo_ot = $_POST['correlativo_ot']; 
       $id_usuario = $_POST['id_usuario'];
-      $id_cliente = $_POST['id_cliente'];
+      $cliente = $_POST['id_cliente'];
       $id_ot_tipo = $_POST['id_ot_tipo'];
       $id_area = $_POST['id_area'];
       $id_estado = $_POST['id_estado'];
@@ -536,7 +531,7 @@ echo "
 }
 //aqui ira otro else para preguntar si el equipo seleccionado ya esta con un OT asociado.
 else{
-  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_OT, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$id_cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_OT','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO orden_trabajo (correlativo_ot, id_usuario, id_cliente, id_ot_tipo, id_area, id_estado,  id_equipo, fecha_OT, motivo, comentario, valorReparacion, fechaPresupuesto, hora_llegada, hora_salida) VALUES ('$correlativo_ot', '$id_usuario','$cliente','$id_ot_tipo','$id_area','$id_estado', '$id_equipo','$fecha_OT','$motivo','$comentario' ,'$valorReparacion' ,'$fecha_presupuesto','$hora_llegada','$hora_salida')") or die(mysql_errno());
  echo '<script> alert("Orden de Trabajo Creada con Exito")</script>';
   }
 

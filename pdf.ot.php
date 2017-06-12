@@ -33,13 +33,12 @@ $pdf->Cell(150,10,'www.cass.cl',0);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(50,10,'Fecha:'.date('d-m-Y').'',0);
 $pdf->Ln(15);//ln es un saldo de linea () le doy el valor
-$pdf->SetFont('Arial','B',11);
+$pdf->SetFont('Arial','B',15);
 $pdf->Cell(70,8,'',0);
 $pdf->Cell(100,8,'Orden de Trabajo',0);
-$pdf->Ln(20);
+$pdf->Ln(15);
 
-$pdf->SetFont('Arial','B',8);
-//$pdf->Cell(15,8,'Item',0);//tiene 15 de largo y ocho de alto se llama item borde 0
+$pdf->SetFont('Arial','B',10);
 $pdf->Cell(50,8,'Numero Orden de Trabajo',0);
 $pdf->Cell(40,8,'Fecha de Creacion',0);
 $pdf->Cell(40,8,'Tecnico a Cargo',0);
@@ -119,29 +118,53 @@ $item=0;
 while ($productos2=mysql_fetch_array($productos)) {
 	$pdf->Cell(30,16,$productos2['motivo'],1);
 	$pdf->Cell(150,16,$productos2['comentario'],1);
-	$pdf->Ln(20); 
+	$pdf->Ln(16); 
 }
 
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(25,8,'Costos:',0);
-$pdf->Ln(8);
-$pdf->Cell(30,8,'Valor Revision',1);
-$pdf->Cell(30,8,'Valor reparacion',1);
-$pdf->Cell(60,8,'Valor Repuesto',1);
-$pdf->Cell(40,8,'Total',1);
-$pdf->Ln(8);
+$pdf->Ln(6);
+$pdf->Cell(30,6,'Valores Repuestos',1);
+$pdf->Cell(25,6,'Total',1);
+$pdf->Ln(6);
 $pdf->SetFont('Arial','',8);
+
 //Consulta SQL
 $id=$_REQUEST['id'];
-$productos=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.direccion, ciudad.nombrec, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, equipo.tipo_ingreso, marca.marca FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca WHERE id_orden_trabajo='$id' ");
+$productos=mysql_query("SELECT cotizacion.venta_repuesto, cotizacion.venta_repuesto_uno, cotizacion.venta_repuesto_dos, cotizacion.venta_repuesto_tres, cotizacion.venta_repuesto_cuatro, cotizacion.venta_repuesto_cinco, cotizacion.valorCotizacion FROM cotizacion WHERE id_orden_trabajo='$id' ");
 $item=0;
-while ($productos2=mysql_fetch_array($productos)) {
-	$pdf->Cell(30,8,'$'.$productos2['valorReparacion'],1);
-	$pdf->Cell(30,8,'$'.$productos2['valorReparacion'],1);
-	$pdf->Cell(60,8,'$'.$productos2['valorRepuestoOT'],1);
-	$pdf->Cell(40,8,'$'.$productos2['valorCotizacionOT'],1);
-	$pdf->Ln(30); 
+while ($productos2=mysql_fetch_array($productos)) {	
+	$pdf->Cell(30,8,$productos2['venta_repuesto'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto'],1);
+	$pdf->Ln(8);
+	$pdf->Cell(30,8,$productos2['venta_repuesto_uno'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto_uno'],1); 
+    $pdf->Ln(8);
+	$pdf->Cell(30,8,$productos2['venta_repuesto_dos'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto_dos'],1);
+	$pdf->Ln(8);
+	$pdf->Cell(30,8,$productos2['venta_repuesto_tres'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto_tres'],1);
+	$pdf->Ln(8);
+	$pdf->Cell(30,8,$productos2['venta_repuesto_cuatro'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto_cuatro'],1);
+	$pdf->Ln(8);
+	$pdf->Cell(30,8,$productos2['venta_repuesto_cinco'],1);
+	$pdf->Cell(25,8,$productos2['venta_repuesto_cinco'],1);	
+	$pdf->Ln(8);
+	$pdf->Cell(30,6,'SubTotal',1);
+	$pdf->Cell(25,6,$productos2['valorCotizacion'],1);	
+	$pdf->Ln(6);
+	$pdf->Cell(30,6,'Iva 19%',1);
+	$pdf->Cell(25,6,$productos2['valorCotizacion'],1);
+	$pdf->Ln(6);
+	$pdf->Cell(30,6,'Total',1);
+	$pdf->Cell(25,6,$productos2['valorCotizacion'],1);
+	$pdf->Ln(6);
+	
 }
+
+
 
 $pdf->SetFont('Arial','B',8);
 $pdf->Cell(25,8,'ADVERTENCIA PREVIA A REALIZAR TRABAJO:',0);
@@ -158,7 +181,7 @@ $pdf->Ln(3);
 $pdf->Cell(100,8,'informacion antes de requerir servicios de reparacion.',0);
 $pdf->Cell(40,8,'',0);
 $pdf->Cell(40,8,'Huella y Firma Cliente',0);
-$pdf->Ln(40);
+$pdf->Ln(10);
 $pdf->Cell(90,8,'Firma del cliente (encargado, usuario o persona que retira)',0);
 $pdf->Cell(40,8,'________________________',0);
 $pdf->Cell(40,8,'_______________________________',0);
@@ -166,9 +189,9 @@ $pdf->Ln(3);
 $pdf->Cell(100,8,'conforme por servicio solicitado.',0);
 $pdf->Cell(40,8,'Firma Cass',0);
 $pdf->Cell(40,8,'Huella y Firma Cliente',0);
-$pdf->Ln(3);
+$pdf->Ln(20);
 
-$pdf->AddPage();
+//$pdf->AddPage();
 $pdf->SetFont('Arial','B',10);
 $pdf->Cell(25,8,'',0);
 $pdf->Cell(25,8,'CONDICIONES GENERALES APLICABLES AL CONTRATO DE SERVICIO DE REPARACION',0);

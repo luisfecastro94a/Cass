@@ -374,28 +374,28 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
 <div class="col-xs-5" >
+<label for="">ID:</label>
+<input type="text" class="form-control"  id="nombre" name="id_cliente" maxlength="9" placeholder="ID" required="" value="" ></div>
+
+
+<div class="col-xs-5" >
 <label for="">Cliente:</label>
-<input type="text" class="form-control" name="id_cliente" id="nombre" maxlength="9" placeholder="Cliente" required="" value="" ></div>
+<input type="text" class="form-control" id="rut" name="nombre"  placeholder="Cliente"   value="" ></div>
 
 
 <div class="col-xs-5" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<label for="">Rut:</label>
+<input type="text" class="form-control"  id="fono" name="rut" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="" ></div>
 
 
 <div class="col-xs-5" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" ></div>
+<label for="">Fono:</label>
+<input type="text" class="form-control" id="correo" name="fono"   placeholder="Fono" required="" value="" ></div>
 
 <div class="col-xs-5" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value=""></div>
+<label for="">Correo:</label>
+<input type="text" class="form-control" id="direccion" name="correo" placeholder="Correo" required="" value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>
@@ -446,7 +446,7 @@ $asig3=mysql_query($consulta4);
 
         <div class="col-xs-5" >
           <label for="">Valor por Reparación</label>
-          <input type="text" class="form-control" id="valorReparacion" value="15000" minlength="5" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
+          <input type="text" class="form-control" id="valorReparacion" value="11900" minlength="5" onKeyPress="return SoloNumeros(event)" name="valorReparacion" ></div>
 
           <div class="col-xs-5">
 <label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y"); ?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->

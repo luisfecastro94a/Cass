@@ -75,7 +75,8 @@ tr:hover td { background: #d0dafd; color: #339; }
 }
 h2{
   color: orange;
-  width: 30px;
+  width: 100%;
+
 }
 .fe{
  margin: 10px 20px 10px 800px;
@@ -161,32 +162,32 @@ h2{
 
 
 
-<h2>Sin Reparar</h2>
+<h2 class="hsinreparar">Sin Reparar</h2>
 <div id="datos" class="uno table-responsive" > 
 
 </div>
 
-<h2>Equipos Reparados</h2>
+<h2 class="hreparado">Equipos Reparados</h2>
 <div  id="datos1" class="dos table-responsive">     
 </div>
 
-<h2> Esperando Respuesta</h2>
+<h2 class="hesperando"> Esperando Respuesta</h2>
 <div  id="datos2" class="tres table-responsive">  
 </div>
 
-<h2>Equipos Cass</h2>
+<h2 class="hcass">Equipos Cass</h2>
 <div  id="dato" class="cuatro table-responsive">      
 </div>
 
-<h2>No reparados por Cliente</h2>
+<h2 class="hcliente">No reparados por Cliente</h2>
 <div  id="datos3" class="cinco table-responsive">     
 </div>
 
-<h2>Equipos Avisados</h2>
+<h2 class="havisados">Equipos Avisados</h2>
 <div  id="datos4" class="seis table-responsive">     
 </div>
 
-<h2>Equipos En Proceso</h2>
+<h2 class="hproc">Equipos En Proceso</h2>
 <div  id="datos5" class="siete table-responsive">     
 </div>
 

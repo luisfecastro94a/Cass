@@ -2,6 +2,7 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +20,6 @@ if (isset($_SESSION['correo'])) {?>
     //clona la fila 
     $("#adicional").on('click', function(){
       $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo('#tabla');
-    });
-    //evento que selecciona la fila y la elimina
-    $(document).on("click", "eliminar", function(){
-      var parent = $(this).parents().get(0);
-      $(parent).remove();
     });
   });
  </script>
@@ -52,6 +48,7 @@ if (isset($_SESSION['correo'])) {?>
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -67,8 +64,14 @@ label {
     width: 60px;
     border: auto;
   }
-
-
+.textareaR {
+  width:350px;
+  height:70px;
+  max-width: 400px;
+  max-height: 80px;
+  border: 2px 
+  solid #990000;
+}
 </style>
 </head>
   <nav class="navbar navbar-default">
@@ -161,18 +164,14 @@ label {
 <form class="" role="form" action=""  method="POST">
 
 <div class="container"">
-
 <div  class="form-group" >
 <label class="fe" for="">Fecha Creación</label>
 <input  class="fecha" type="text" name="fecha_creacion" value="<?php echo $reg['fecha_creacion'];?>" id="fecha_creacion" disabled></div>
-
 <div class="form-group" >
 <label class="fe" for="">Fecha Modificación</label>
 <input class="fecha" type="text" name="fechaPresupuesto" value="<?php echo date("d/m/Y");?>" id="fechaPresupuesto" ></div>
-
 <?php
 include("conexion.php");
-
 $consulta2="SELECT * FROM cliente ORDER BY nombre ASC ";
 $resultE=mysql_query($consulta2);
 ?>
@@ -187,53 +186,141 @@ $resultE=mysql_query($consulta2);
   <?php } ?>
 </select>
 </div>
-
 <div class="col-xs-5" >
 <label for="">Sintoma del Cliente</label>
 <textarea rows="4" cols="53" name="sintoma_cliente" id="sintoma_cliente" value="" disabled><?php echo $reg['sintoma_cliente'];?></textarea>
 </div>
-
 <div class="col-xs-5" >
 <label for="">Serie de Equipo</label>
 <input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" required="" disabled></div>
-
 <div class="col-xs-5" >
 <label for="">Marca</label>
 <input type="text" class="form-control" name="id_marca" id="id_marca" value="<?php echo $reg['marca'];?>" placeholder="Serie del Equipo" required="" disabled></div>
-
-
 <div class="col-xs-5" >
 <label for="">Modelo del Equipo</label>
 <input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required="" disabled></div>
-
-
 <div class="col-xs-5" >
 <label for="">Tipo de Ingreso</label>
 <input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
-
-
 <div class="col-xs-5 has-error" >
 <label for="">Mano de Obra</label>
 <input type="text" class="form-control" name="valorReparacion" id="valorReparacion" value="" placeholder="$" required="" onKeyPress="return SoloNumeros(event)" >
 </div>
 
-<div class="col-xs-10  has-error">
+<div class="col-xs-10 has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Agregar Repuesto</h2>
 <table class="table bg-info" id="tabla">
   <tr class="fila-fija">
-    <td><input class="form-control" name="repuesto" id="repuesto" type="text"></td>
-    <td><input class="form-control" name="repuesto_uno" id="repuesto_uno" type="text"></td>
-    <td><input class="form-control" name="repuesto_dos" id="repuesto_dos" type="text"></td>
-    <td><input class="form-control" name="repuesto_tres" id="repuesto_tres" type="text"></td>
-    <td><input class="form-control" name="repuesto_cuatro" id="repuesto_cuatro" type="text"></td>
-    <td><input class="form-control" name="repuesto_cinco" id="repuesto_cinco" type="text"></td>
+  <td>N° 1</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentarioo" id="" cols="30" rows="3" ></textarea>
+    </td>
   </tr>
-  <td> <button id="adicional" name="adicional" type="button" class="btn btn-warning">Mas +</button></td>
+   <tr class="fila-fija">
+   <td>N° 2</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner1" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca1" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario1" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+   <tr class="fila-fija">
+   <td>N° 3</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner2" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca2" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario2" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+   <tr class="fila-fija">
+   <td>N° 4</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner3" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca3" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario3" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+   <tr class="fila-fija">
+   <td>N° 5</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner4" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca4" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario4" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+   <tr class="fila-fija">
+   <td>N° 6</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner5" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca5" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario5" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+   <tr class="fila-fija">
+   <td>N° 7</td>
+    <td>
+    <label for="">N° Parnet</label>
+    <input class="form-control" name="n_partner6" id="" type="text" >
+    </td>
+    <td>
+    <label for="">Marca</label>
+    <input class="form-control" name="marca6" id="" type="text" >
+    </td>
+    <td>
+    <label  for="default">Descripción</label>
+    <textarea class="textareaR" name="comentario6" id="" cols="30" rows="3" ></textarea>
+    </td>
+  </tr>
+<td> <button id="adicional" name="adicional" type="button" class="btn btn-warning">Mas +</button></td>
 </table>
 </div>
 
   <div class="col-xs-5 btn-ber">
-  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block">Cerrar Presupuesto</button></div>
   <div class="col-xs-5">
   <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
@@ -246,38 +333,53 @@ $resultE=mysql_query($consulta2);
 <?php
 include("conexion.php");
 
-      
       $id=$_REQUEST['id'];
 
       $id_equipo=isset($_POST['id_equipo']);
-      $id_ot=isset($_POST['id_orden_trabajo']);
-
+      $id_ot=isset($_POST['id_orden_trabajo']);  
+ 
       $fechaPresupuesto = isset($_POST['fechaPresupuesto'])? $_POST['fechaPresupuesto']:'';
-      $repuesto = isset($_POST['repuesto'])? $_POST['repuesto']:''; 
-      $repuesto_uno = isset($_POST['repuesto_uno'])? $_POST['repuesto_uno']:''; 
-      $repuesto_dos = isset($_POST['repuesto_dos'])? $_POST['repuesto_dos']:''; 
-      $repuesto_tres = isset($_POST['repuesto_tres'])? $_POST['repuesto_tres']:''; 
-      $repuesto_cuatro = isset($_POST['repuesto_cuatro'])? $_POST['repuesto_cuatro']:''; 
-      $repuesto_cinco = isset($_POST['repuesto_cinco'])? $_POST['repuesto_cinco']:'';    
-      $valorReparacion = isset($_POST['valorReparacion'])? $_POST['valorReparacion']:''; 
-        
-    // conexión a la base de datos de
+      $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
+      $partner = isset($_POST['n_partner']) ? $_POST['n_partner']: '';
+      $marca = isset($_POST['marca']) ? $_POST['marca']: '';
+      $comentario = isset($_POST['comentarioo']) ? $_POST['comentarioo']: '';
+      $partner1 = isset($_POST['n_partner1']) ? $_POST['n_partner1']: '';
+      $marca1 = isset($_POST['marca1']) ? $_POST['marca1']: '';
+      $comentario1 = isset($_POST['comentario1']) ? $_POST['comentario1']: '';
+      $partner2 = isset($_POST['n_partner2']) ? $_POST['n_partner2']: '';
+      $marca2 = isset($_POST['marca2']) ? $_POST['marca2']: '';
+      $comentario2 = isset($_POST['comentario2']) ? $_POST['comentario2']: '';
+      $partner3 = isset($_POST['n_partner3']) ? $_POST['n_partner3']: '';
+      $marca3 = isset($_POST['marca3']) ? $_POST['marca3']: '';
+      $comentario3 = isset($_POST['comentario3']) ? $_POST['comentario3']: '';
+      $partner4 = isset($_POST['n_partner4']) ? $_POST['n_partner4']: '';
+      $marca4 = isset($_POST['marca4']) ? $_POST['marca4']: '';
+      $comentario4 = isset($_POST['comentario4']) ? $_POST['comentario4']: '';
+      $partner5 = isset($_POST['n_partner5']) ? $_POST['n_partner5']: '';
+      $marca5 = isset($_POST['marca5']) ? $_POST['marca5']: '';
+      $comentario5 = isset($_POST['comentario5']) ? $_POST['comentario5']: '';
+      $partner6 = isset($_POST['n_partner6']) ? $_POST['n_partner6']: '';
+      $marca6 = isset($_POST['marca6']) ? $_POST['marca6']: '';
+      $comentario6 = isset($_POST['comentario6']) ? $_POST['comentario6']: '';
+
+ // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
-
-
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
-  
 
-  $sql=mysql_query("UPDATE orden_trabajo SET fechaPresupuesto='$fechaPresupuesto',  repuesto='$repuesto', repuesto_uno='$repuesto_uno', repuesto_dos='$repuesto_dos', repuesto_tres='$repuesto_tres', repuesto_cuatro='$repuesto_cuatro', repuesto_cinco='$repuesto_cinco', valorReparacion='$valorReparacion' WHERE id_equipo='$id'")or die(mysql_error());
+  $sql=mysql_query("UPDATE orden_trabajo SET fechaPresupuesto='$fechaPresupuesto', valorReparacion='$valorReparacion', n_partner='$partner', marca='$marca', comentarioo='$comentario', n_partner1='$partner1', marca1='$marca1', comentario1='$comentario1', n_partner2='$partner2', marca2='$marca2', comentario2='$comentario2', n_partner3='$partner3', marca3='$marca3', comentario3='$comentario3', n_partner4='$partner4', marca4='$marca4', comentario4='$comentario4', n_partner5='$partner5', marca5='$marca5', comentario5='$comentario5', n_partner6='$partner6', marca6='$marca6', comentario6='$comentario6' WHERE id_equipo = '$id' ")or die(mysql_error());
+
 
 ?>
+
 <?php
 // close connection; 
 mysql_close();
 ?>
+
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

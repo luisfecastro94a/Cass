@@ -25,8 +25,8 @@ if (isset($_SESSION['correo'])) {?>
     $( "#fecha_respuesta" ).datepicker({
       changeMonth:true,
       changeYear:true,
-      showOn: "button",
-      buttonImage: "css/images/cale.png",
+      showOn: "",
+      buttonImage: "",
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
@@ -65,6 +65,9 @@ if (isset($_SESSION['correo'])) {?>
 }
 label {
   color:#8E8E8E;
+}
+label.coti {
+  color:#515151;
 }
  .cerrar{
     height: 40px;
@@ -153,7 +156,7 @@ label {
       $consulta=mysql_query("SELECT cotizacion.correlativo_cotizacion, cotizacion.fecha_cotizacion, cotizacion.comentario, cotizacion.valorCotizacion, orden_trabajo.correlativo_ot, orden_trabajo.valorReparacion, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ciudad.nombrec, equipo.serie_equipo, estado.id_estado, estado.estado FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON cotizacion.id_estado=estado.id_estado WHERE id_cotizacion='$id'")or die(mysql_error());
       $reg=mysql_fetch_array($consulta);
   ?>
-<h1>Modificar Cotización</h1>
+<h1>Cerrar Cotización</h1>
 <!--Comienzo de Formulario-->
 <form class="form-group" action=""  method="POST">
 
@@ -212,34 +215,34 @@ label {
   required="" value="<?php echo $reg['valorCotizacion'];?>" ></div>
 
 <div class="col-xs-5" >
-<label for="">Descripción de Cotización</label>
+<label class="coti" for="">Descripción de Cotización:s</label>
 <textarea name="comentario" id="comentario"  rows="4" cols="53"><?php echo $reg['comentario'];?></textarea>
 </div>
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Respuesta <input class=""  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
+<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
 
 
-<?php
-include("conexion.php");
-$consulta4="SELECT * FROM estado WHERE relacion='cotizacion'";
-$asig3=mysql_query($consulta4);
-?>
-<div class="col-xs-5" >
-<label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" > 
-<option value="<?php echo $reg['id_estado'];?>" selected=""><?php echo $reg['estado'];?></option>
- <?php
-      while($fil=mysql_fetch_array($asig3))
-  {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
-  <?php } ?>
-</select>
+<div class="col-xs-5 has-error">
+<label class="coti" for="">Estado:</label>
+  <div class="checkbox has-success">
+    <label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5"> Aceptada
+</label>
+  </div>
+   <div class="checkbox has-error">
+    <label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="6"> No Aceptada
+</label>
+  </div>
 </div>
+
+
+
 
   
   <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block">Cerrar Cotización</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
 
@@ -250,14 +253,11 @@ $asig3=mysql_query($consulta4);
 <?php
 include("conexion.php");
  
-
-
       $id=$_REQUEST['id'];  
-      $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: ''; 
+      $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
       $fecha_respuesta = isset($_POST['fecha_respuesta']) ? $_POST['fecha_respuesta']: '';    
       $comentario = isset($_POST['comentario']) ? $_POST['comentario']: ''; 
- 
-     
+
 
    // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 

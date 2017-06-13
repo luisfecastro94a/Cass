@@ -275,7 +275,7 @@ $resultE=mysql_query($consulta2);
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
    <div class="col-xs-5">
-  <a href="ot.entrada.php" ><button type="button" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Generar OT</button></a></div>
+  <a href="ot.entrada.php" ><button type="button" class="btn btn-default btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-paperclip " aria-hidden="true"></span> Generar OT</button></a></div>
   
 </div>
 </form>

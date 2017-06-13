@@ -60,7 +60,7 @@ $pdf->Ln(8);
 $pdf->SetFont('Arial','',8);
 //Consulta SQL
 $id=$_REQUEST['id'];
-$productos=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, cliente.nombre, cliente.rut, cliente.fono, cliente.direccion, ciudad.nombrec FROM proforma INNER JOIN orden_trabajo ON proforma.id_orden_trabajo=orden_trabajo.id_orden_trabajo  INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad   WHERE id_proforma='$id' ");
+$productos=mysql_query("SELECT cliente.nombre, cliente.rut, cliente.fono, cliente.direccion, ciudad.nombrec FROM proforma INNER JOIN orden_trabajo ON proforma.id_orden_trabajo=orden_trabajo.id_orden_trabajo  INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad   WHERE id_proforma='$id' ");
 $item=0;
 while ($productos2=mysql_fetch_array($productos)) {
 	$pdf->Cell(30,8,$productos2['nombre'],1);
@@ -82,8 +82,8 @@ $pdf->Ln(8);
 $pdf->SetFont('Arial','',8);
 //Consulta SQL
 $id=$_REQUEST['id'];
-$productos=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.correlativo_ot, orden_trabajo.fecha_creacion, orden_trabajo.motivo, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, usuario.nombreUsuario, cliente.nombre, cliente.rut, cliente.fono, cliente.direccion, ciudad.nombrec, ot_tipo.nombreTipo, area.area, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, equipo.tipo_ingreso, marca.marca FROM orden_trabajo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN area ON orden_trabajo.id_area=area.id_area INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca WHERE id_orden_trabajo='$id' ");
-$item=0;
+$item=0;$productos=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.valorRepuestoOT, orden_trabajo.valorCotizacionOT, orden_trabajo.valorReparacion  FROM orden_trabajo   WHERE id_orden_trabajo='$id' ");
+
 while ($productos2=mysql_fetch_array($productos)) {
 	$pdf->Cell(20,20,'$'.$productos2['valorReparacion'],1);
 	$pdf->Cell(100,20,'$'.$productos2['valorReparacion'],1);

@@ -1,8 +1,7 @@
-<?php 
+<?php
 //llamamos  la clase del pdf
 require('fpdf/fpdf.php');
 require('conexion.php');
-
 
 $pdf=new FPDF();//llamamos clase fpdf
 $pdf->AddPage();//agregamos a la pagina lo siguiente que se hara
@@ -32,7 +31,7 @@ $pdf->Cell(18,10,'',0);
 $pdf->Cell(150,10,'www.cass.cl',0);
 $pdf->SetFont('Arial','',9);
 $pdf->Cell(50,10,'Fecha:'.date('d-m-Y').'',0);
-$pdf->Ln(15);//ln es un saldo de linea () le doy el valor
+$pdf->Ln(10);//ln es un saldo de linea () le doy el valor
 $pdf->SetFont('Arial','B',15);
 $pdf->Cell(70,8,'',0);
 $pdf->Cell(100,8,'Orden de Trabajo',0);
@@ -180,15 +179,15 @@ $pdf->Cell(40,8,'_______________________________',0);
 $pdf->Ln(3);
 $pdf->Cell(100,8,'informacion antes de requerir servicios de reparacion.',0);
 $pdf->Cell(40,8,'',0);
-$pdf->Cell(40,8,'Huella y Firma Cliente',0);
-$pdf->Ln(10);
+$pdf->Cell(40,8,' FIRMA CLIENTE',0);
+$pdf->Ln(15);
 $pdf->Cell(90,8,'Firma del cliente (encargado, usuario o persona que retira)',0);
 $pdf->Cell(40,8,'________________________',0);
 $pdf->Cell(40,8,'_______________________________',0);
 $pdf->Ln(3);
 $pdf->Cell(100,8,'conforme por servicio solicitado.',0);
-$pdf->Cell(40,8,'Firma Cass',0);
-$pdf->Cell(40,8,'Huella y Firma Cliente',0);
+$pdf->Cell(40,8,' FIRMA CASS',0);
+$pdf->Cell(40,8,' FIRMA CLIENTE',0);
 $pdf->Ln(20);
 
 //$pdf->AddPage();
@@ -372,3 +371,5 @@ $pdf->Cell(25,8,'en 2 (dos) ejemplares identicos tenor.',0);
 
 $pdf->Output();
 ?>
+
+

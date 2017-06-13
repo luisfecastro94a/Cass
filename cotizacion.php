@@ -293,22 +293,14 @@ label {
 <label for="">Disponibilidad</label>
 <input type="text" class="form-control" name="disponibilidad" id="disponibilidad"  placeholder="Días"  required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
 
-<?php
-include("conexion.php");
-$consulta4="SELECT id_estado, estado FROM estado WHERE relacion='cotizacion'";
-$asig3=mysql_query($consulta4);
-
-?>
-<div class="col-xs-5 has-error" >
+<div class="col-xs-5 has-error">
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" > 
-<option value="" selected="">---Estado Orden de Trabajo---</option>
- <?php
-      while($fil=mysql_fetch_array($asig3))
-  {?>
-      <option value="<?php echo $fil['0']?>"><?php echo $fil['1'];?></option>
-  <?php } ?>
-</select>
+  <div class="checkbox has-error">
+    <label>
+      <input type="checkbox" id="" name="id_estado" value="7">
+      <strong> En Espera</strong>
+    </label>
+  </div>
 </div>
 
   <div class="col-xs-5 ">

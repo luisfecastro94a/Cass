@@ -32,8 +32,8 @@ if($resultado->num_rows > 0)
 	 <td>'.$fila["fecha_creacion"].'</td>
 	 <td>'.$fila["sintoma_cliente"].'</td>
    	 <td>'.$fila["estado"].'</td>
-   	 <td>'.'<a href="equipo.cotizacion.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>'.' Presupuesto'.'</a>'.'</td> 
-   	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Cambiar Estado'.'</a>'.'</td>   
+   	 <td>'.'<a href="equipo.cotizacion.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Presupuesto a equipo"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>'.' Presupuesto'.'</a>'.'</td> 
+   	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-warning" title="Cambiar estado"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Cerrar Equipo'.'</a>'.'</td>   
 			</tr>';
 	}
 //<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>

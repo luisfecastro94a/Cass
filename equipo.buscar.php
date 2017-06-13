@@ -197,7 +197,7 @@ if($busca!=""){
    echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary" title="Modificar el equipo"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'.' Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_equipo'].'\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.' Eliminar'.'</button> '.'</td>';
-   echo '<td>'.'<a href="pdf.codigo.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Modificar el equipo"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>'.' Generar Codigo'.'</a>'.'</td>';        
+   echo '<td>'.'<a href="Documentos/Codigos_Barra/pdf.codigo.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Modificar el equipo"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>'.' Generar Codigo'.'</a>'.'</td>';        
 
       
 }

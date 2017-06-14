@@ -9,41 +9,16 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
 
-
-$consulta="SELECT * FROM cliente";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>Cotización</title>
+<title>Cotización</title>
  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/jquery-ui.min.css">
-  <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
-  <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
-<script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
-  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+  <link href="css/jquery-ui.css" type="text/css" rel="stylesheet"/>
   <!--link para el estilo del calendario en jquery-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script>
-  $( function() {
-    $( "#fecha_cotizacion" ).datepicker({
-      changeMonth:true,
-      changeYear:true,
-      showOn: "",
-      buttonImage: "",
-      buttonImageOnly: true,
-      buttonText: "Select date",
-      showButtonPanel:true, 
+  <script src="js/jquery-1.12.4.js"></script>
 
-    });
-  } );
-  </script>
 <script>
   function sumar(){
     a=document.formcotizacion.venta_repuesto.value;
@@ -199,12 +174,12 @@ label {
 <br><br>
 <h1>Crear Cotización</h1>
 
-<form class="form-group" action="cotizacion.php" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
+<form class="form-group" action="cotizacion3.php" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
 
 <div class="container">
 
-<div class="col-xs-5">
-<label class="fe" for="">Fecha Cotización<input class="" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
+<div class="col-xs-5 ui-widget">
+<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
 <?php
   //codigo para que muestre el correlativo de mi orden de trabajo
     $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
@@ -213,132 +188,123 @@ label {
     $mensaje =$row["max"]+1;
 ?>
 <div class="col-xs-5">
-<label for="">Numero de Cotización</label>
-<input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  ></div>
+<label for="">Numero de Cotización: </label>
+<input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  >
+</div>
 
-<div class="col-xs-5" >
-<label for="">N° Orden de Trabajo</label>
-<select  id="correlativo_ot" class="form-control" onchange="cotizacion(this.value)" name="id_orden_trabajo" value=""> 
-<option value="0" >---Selecionar OT---</option>
+
+<?php
+include("conexion.php");
+
+
+$consulta="SELECT * FROM orden_trabajo ";
+$asig=mysql_query($consulta);
+
+?>
+<div class="col-xs-5 ui-widget" >
+<label for="">Orden de Trabajo: </label>
+<select id="combobox" class="form-control" name="filtrarOT" class="form-control" > 
+<option value="" selected="">---Seleccionar Orden de Trabajo---</option>
+ <?php
+      while($row=mysql_fetch_array($asig))
+  {?>
+      <option value="<?php echo $row['0']?>"><?php echo $row['1'];?></option>
+  <?php } ?>
 </select>
-</div> 
+</div>
+<br>
+<div class="col-xs-5">
+ <input type="submit" value="Filtrar Repuestos" class="btn btn-default">
+ </div>
 
-<div class="col-xs-5" >
-<label for="">Cliente</label>
-<input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre Cliente" required="" value="" readonly></div>
-
-
-<div class="col-xs-5" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)" value="" readonly></div>
-
-
-<div class="col-xs-5" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="" readonly></div>
-
-<div class="col-xs-5" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required="" value="" readonly></div>
-
-<div class="col-xs-5" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required="" value="" readonly></div>
-
-<div class="col-xs-5" >
-<label for="">Ciudad:</label>
-<input type="text" class="form-control" id="nombrec" name="id_ciudad" placeholder="Ciudad" required="" value="" readonly></div>
-
-<div class="col-xs-5" >
-<label for="">Serie del Equipo</label>
-<input type="text" class="form-control" name="id_equipo" id="serie_equipo"   placeholder="Serie de Equipo" required="" value="" readonly ></div>
-
-<div class="col-xs-5" >
-<label for="">Valor Presupuesto (mano de obra)</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion"  placeholder="$"  required="" value="" readonly ></div>
 
 </form>
 
-
-
-
-<div class="col-xs-11  has-error">
+<div class="col-xs-10  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
-<table class="table bg-info" id="tabla">
-  <tr class="fila-fija">
-    <td><label >N° Partner</label><input class="form-control" name="n_partner" id="repuesto" type="text"></td>
-    <td><label >Marca</label><input class="form-control" name="" id="repuesto_uno" type="text"></td>
-    <td><label >Comentario</label><input class="form-control" name="" id="repuesto_dos" type="text"></td>
-    <td><label >Valor Repuesto</label><input class="form-control" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" value="0" name="venta_repuesto" id="" type="text"></td>
-  </tr>
-  <tr>
-    <td><input class="form-control" name="" id="repuesto_tres" type="text"></td>
-    <td><input class="form-control" name="" id="repuesto_cuatro" type="text"></td>
-    <td><input class="form-control" name="" id="repuesto_cinco" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_uno" id="" type="text"></td>
-  </tr>
-  <tr>
-    <td><input class="form-control" name="" id="n_partner2" type="text"></td>
-    <td><input class="form-control" name="" id="marca2" type="text"></td>
-    <td><input class="form-control" name="" id="comentario2" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_dos" id="" type="text"></td>
-  <tr>
-    <td><input class="form-control" name="" id="n_partner3" type="text"></td>
-    <td><input class="form-control" name="" id="marca3" type="text"></td>
-    <td><input class="form-control" name="" id="comentario3" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_tres" id="" type="text"></td>
-  </tr>
-  <tr>
-    <td><input class="form-control" name="" id="" type="text"></td>
-    <td><input class="form-control" name="" id="marca4" type="text"></td>
-    <td><input class="form-control" name="" id="comentario4" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cuatro" id="repuesto4" type="text"></td>
-  </tr>
-  <tr>
-    <td><input class="form-control" name="" id="n_partner5" type="text"></td>
-    <td><input class="form-control" name="" id="marca5" type="text"></td>
-    <td><input class="form-control" name="" id="comentario5" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
-  </tr>
-  <tr>
-    <td><input class="form-control" name="" id="n_partner6" type="text"></td>
-    <td><input class="form-control" name="" id="marca6" type="text"></td>
-    <td><input class="form-control" name="" id="comentario6" type="text"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" placeholder="$" onkeyup="sumar()" value="0" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
-  </tr>
+<table class="table bg-info table-responsive" id="tabla">
+    <tbody>
+      <tr>
+        <td><h4>Cliente</h4></td>
+        <td><h4>Orden Trabajo</h4></td>
+        <td><h4>N° Partner</h4></td>
+        <td><h4>Marca</h4></td>
+        <td><h4>Comentario</h4></td>
+        <td><h4>Valor Repuesto</h4></td>
+      </tr>
+<?php
+include("conexion.php");
+$cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
+
+
+  $dbhandle=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.n_partner, orden_trabajo.marca, orden_trabajo.comentarioo, orden_trabajo.n_partner1, orden_trabajo.marca1, orden_trabajo.comentario1 , orden_trabajo.n_partner2, orden_trabajo.marca2, orden_trabajo.comentario2, orden_trabajo.n_partner3, orden_trabajo.marca3, orden_trabajo.comentario3, orden_trabajo.n_partner4, orden_trabajo.marca4, orden_trabajo.comentario4, orden_trabajo.n_partner5, orden_trabajo.marca5, orden_trabajo.comentario5, orden_trabajo.n_partner6, orden_trabajo.marca6, orden_trabajo.comentario6, cliente.nombre FROM orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_orden_trabajo='$cat' ");
+
+   while($muestra=mysql_fetch_array($dbhandle)){
+
+   echo '<tr>';
+   echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['n_partner'].'</td>';
+   echo '<td>'.$muestra['marca'].'</td>';
+   echo '<td>'.$muestra['comentarioo'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner1'].'</td>';
+   echo '<td>'.$muestra['marca1'].'</td>';
+   echo '<td>'.$muestra['comentario1'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner2'].'</td>';
+   echo '<td>'.$muestra['marca2'].'</td>';
+   echo '<td>'.$muestra['comentario2'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner3'].'</td>';
+   echo '<td>'.$muestra['marca3'].'</td>';
+   echo '<td>'.$muestra['comentario3'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner4'].'</td>';
+   echo '<td>'.$muestra['marca4'].'</td>';
+   echo '<td>'.$muestra['comentario4'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name=""  id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner5'].'</td>';
+   echo '<td>'.$muestra['marca5'].'</td>';
+   echo '<td>'.$muestra['comentario5'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+   echo '<td></td>';
+   echo '<td></td>';
+   echo '<td>'.$muestra['n_partner6'].'</td>';
+   echo '<td>'.$muestra['marca6'].'</td>';
+   echo '<td>'.$muestra['comentario6'].'</td>';
+   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<tr>';
+  
+}
+
+
+?> 
+
+<?php
+#Cerramos la conexión con la base de datos
+mysql_close();
+?>
+    </tbody>
 </table>
 </div>
 
-<div class="col-xs-5 has-error" >
-<label for="">Valor Cotización</label>
-<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion"  placeholder="$"  required="" value="" ></div>
-
-<div class="col-xs-5 has-error" >
-<label  for="">Descripción de Cotización</label>
-<textarea  name="comentario" id="comentario"  rows="4" cols="53"></textarea>
-</div>
-
-<div class="col-xs-5 has-error" >
-<label for="">Disponibilidad</label>
-<input type="text" class="form-control" name="disponibilidad" id="disponibilidad"  placeholder="Días"  required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
-
-<div class="col-xs-5 has-error">
-<label for="">Estado</label>
-  <div class="checkbox has-error">
-    <label>
-      <input type="checkbox" id="" name="id_estado" value="7" required="">
-      <strong> En Espera</strong>
-    </label>
-  </div>
-</div>
-
-  <div class="col-xs-5 ">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  </div>
-
-</div>
 </form>
 </div>
 

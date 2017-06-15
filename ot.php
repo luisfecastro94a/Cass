@@ -94,6 +94,7 @@ if (isset($_SESSION['correo'])) {?>
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;

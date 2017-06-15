@@ -2,14 +2,10 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 	<title>Orden de Trabajo</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
@@ -24,8 +20,7 @@ if (isset($_SESSION['correo'])) {?>
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  
-  <script>
+<script>
   $( function() {
     $( "#fecha_creacion" ).datepicker({
       changeMonth:true,
@@ -35,11 +30,10 @@ if (isset($_SESSION['correo'])) {?>
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
-
     });
   } );
-  </script>
-    <script>
+</script>
+<script>
   $( function() {
     $( "#fecha_plazo_entrega" ).datepicker({
       changeMonth:true,
@@ -49,11 +43,10 @@ if (isset($_SESSION['correo'])) {?>
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
-
     });
   } );
-  </script>
-  <script>
+</script>
+<script>
   $( function() {
     $( "#fechaPresupuesto" ).datepicker({
       changeMonth:true,
@@ -63,17 +56,12 @@ if (isset($_SESSION['correo'])) {?>
       buttonImageOnly: true,
       buttonText: "Select date",
       showButtonPanel:true, 
-
     });
   } );
-  </script>
-
-	
-      <style>
- * {
- 
+</script>	
+<style>
+* { 
   font-family: Geneva, Arial, Helvetica, sans-serif;
-
 }
 	body{
   background: #F2F2F2;
@@ -91,9 +79,10 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
   h1{
-    margin: 10px 500px 20px 500px;
+    margin: 10px 500px 20px 450px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -109,8 +98,6 @@ label {
     width: 60px;
     border: auto;
   }
- 
-
    </style>
 </head>
 <nav class="navbar navbar-default">
@@ -124,8 +111,7 @@ label {
         <span class="icon-bar"></span>
       </button>
        <img class="logo" src="img/cass_logo.png" alt="">
-    </div>
-      
+    </div>      
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
@@ -149,12 +135,10 @@ label {
             <li><a href="equipo.salida.php">Salida Equipo</a></li>
           </ul>
         </li>
-
         <li><a  href="#">Contratos</a></li>
         <li><a  href="#">Terreno</a></li>
         <li><a  href="#">Soporte Instalaciones</a></li>
         <li><a  href="repuesto.php">Repuestos</a></li>
-
         <li class="dropdown">
            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orden de Trabajo<span class="caret"></span></a>
                <ul class="dropdown-menu">
@@ -163,7 +147,6 @@ label {
                      <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
                </ul>
         </li>
-
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -187,11 +170,9 @@ label {
 <body>
 	<div class="contenedor">
 
-
 <a href="ot.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
-
 <br><br>
 <h1> Crear Orden de Trabajo</h1>
 
@@ -209,10 +190,8 @@ label {
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
 
-      <div class="container">
-
+    <div class="container">
 <!--INICIO DE TODO FORMULARIO-->
-
 <?php
   //codigo para que muestre el correlativo de mi orden de trabajo
     $sql = "SELECT MAX(correlativo_ot) as max FROM orden_trabajo ";

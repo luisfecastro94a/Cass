@@ -23,7 +23,22 @@ if (isset($_SESSION['correo'])) {?>
     });
   });
  </script>
-      <style>
+ <script>
+  function sumar(){
+    a=document.presupuesto.valor_mano.value;
+    b=document.presupuesto.valor_mano1.value;
+    c=document.presupuesto.valor_mano2.value;
+    d=document.presupuesto.valor_mano3.value;
+    e=document.presupuesto.valor_mano4.value;
+    f=document.presupuesto.valor_mano5.value;
+    g=document.presupuesto.valor_mano6.value;
+    h=document.presupuesto.valorReparacion.value;
+
+    h=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(g);
+    document.presupuesto.valorReparacion.value=h;
+  }
+</script> 
+<style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -161,7 +176,7 @@ label {
   ?>
 <h1>Reparación de Equipo</h1>
 
-<form class="" role="form" action=""  method="POST">
+<form class="" role="form" action="" name="presupuesto" method="POST">
 
 <div class="container"">
 <div  class="form-group" >
@@ -202,9 +217,91 @@ $resultE=mysql_query($consulta2);
 <div class="col-xs-5" >
 <label for="">Tipo de Ingreso</label>
 <input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
+
+
+
+<div class="col-xs-5">
+<label for="">Ingreso Mano de Obra</label>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ingresar Mano de Obra</button></div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Mano de Obra</h4>
+      </div>
+      <div class="modal-body">
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano" name="valor_mano" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra1">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano1" name="valor_mano1" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra2">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano2" name="valor_mano2" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra3">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano3" name="valor_mano3" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra4">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano4" name="valor_mano4" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra5">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano5" name="valor_mano5" value="0">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="form-control" id="" name="manoObra6">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano6" name="valor_mano6" value="0">
+          </div>                                               
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="col-xs-5 has-error" >
-<label for="">Mano de Obra</label>
-<input type="text" class="form-control" name="valorReparacion" id="valorReparacion" value="" placeholder="$" required="" onKeyPress="return SoloNumeros(event)" >
+<label for="">Valor de Reparación</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion" value="" placeholder="$" required="" onKeyPress="return SoloNumeros(event)" readonly="">
 </div>
 
 <div class="col-xs-10 has-error">
@@ -361,6 +458,22 @@ include("conexion.php");
       $partner6 = isset($_POST['n_partner6']) ? $_POST['n_partner6']: '';
       $marca6 = isset($_POST['marca6']) ? $_POST['marca6']: '';
       $comentario6 = isset($_POST['comentario6']) ? $_POST['comentario6']: '';
+      $manoObra = isset($_POST['manoObra']) ? $_POST['manoObra']: '';
+      $valor_mano = isset($_POST['valor_mano']) ? $_POST['valor_mano']: '';
+      $manoObra1 = isset($_POST['manoObra1']) ? $_POST['manoObra1']: '';
+      $valor_mano1 = isset($_POST['valor_mano1']) ? $_POST['valor_mano1']: '';
+      $manoObra2 = isset($_POST['manoObra2']) ? $_POST['manoObra2']: '';
+      $valor_mano2 = isset($_POST['valor_mano2']) ? $_POST['valor_mano2']: '';
+      $manoObra3 = isset($_POST['manoObra3']) ? $_POST['manoObra3']: '';
+      $valor_mano3 = isset($_POST['valor_mano3']) ? $_POST['valor_mano3']: '';
+      $manoObra4 = isset($_POST['manoObra4']) ? $_POST['manoObra4']: '';
+      $valor_mano4 = isset($_POST['valor_mano4']) ? $_POST['valor_mano4']: '';
+      $manoObra5 = isset($_POST['manoObra5']) ? $_POST['manoObra5']: '';
+      $valor_mano5 = isset($_POST['valor_mano5']) ? $_POST['valor_mano5']: '';
+      $manoObra6 = isset($_POST['manoObra6']) ? $_POST['manoObra6']: '';
+      $valor_mano6 = isset($_POST['valor_mano6']) ? $_POST['valor_mano6']: '';
+
+
 
  // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -369,7 +482,7 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-  $sql=mysql_query("UPDATE orden_trabajo SET fechaPresupuesto='$fechaPresupuesto', valorReparacion='$valorReparacion', n_partner='$partner', marca='$marca', comentarioo='$comentario', n_partner1='$partner1', marca1='$marca1', comentario1='$comentario1', n_partner2='$partner2', marca2='$marca2', comentario2='$comentario2', n_partner3='$partner3', marca3='$marca3', comentario3='$comentario3', n_partner4='$partner4', marca4='$marca4', comentario4='$comentario4', n_partner5='$partner5', marca5='$marca5', comentario5='$comentario5', n_partner6='$partner6', marca6='$marca6', comentario6='$comentario6' WHERE id_equipo = '$id' ")or die(mysql_error());
+  $sql=mysql_query("UPDATE orden_trabajo SET fechaPresupuesto='$fechaPresupuesto', valorReparacion='$valorReparacion', n_partner='$partner', marca='$marca', comentarioo='$comentario', n_partner1='$partner1', marca1='$marca1', comentario1='$comentario1', n_partner2='$partner2', marca2='$marca2', comentario2='$comentario2', n_partner3='$partner3', marca3='$marca3', comentario3='$comentario3', n_partner4='$partner4', marca4='$marca4', comentario4='$comentario4', n_partner5='$partner5', marca5='$marca5', comentario5='$comentario5', n_partner6='$partner6', marca6='$marca6', comentario6='$comentario6', manoObra='$manoObra', valor_mano='$valor_mano', manoObra1='$manoObra1', valor_mano1='$valor_mano1', manoObra2='$manoObra2', valor_mano2='$valor_mano2', manoObra3='$manoObra3', valor_mano3='$valor_mano3', manoObra4='$manoObra4', valor_mano4='$valor_mano4', manoObra5='$manoObra5', valor_mano5='$valor_mano5', manoObra6='$manoObra6', valor_mano6='$valor_mano6' WHERE id_equipo = '$id' ")or die(mysql_error());
 
 
 ?>

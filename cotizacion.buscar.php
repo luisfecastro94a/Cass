@@ -14,7 +14,6 @@ if (isset($_SESSION['correo'])) {?>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
   <link rel="stylesheet" href="fonts.css">
-  
 
 
 	  <style>

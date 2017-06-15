@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('https://i.icomoon.io/public/temp/447f46edd5/UntitledProject/icomoon.eot?cl07c0');
-  src:  url('https://i.icomoon.io/public/temp/447f46edd5/UntitledProject/icomoon.eot?cl07c0#iefix') format('embedded-opentype'),
-    url('https://i.icomoon.io/public/temp/447f46edd5/UntitledProject/icomoon.ttf?cl07c0') format('truetype'),
-    url('https://i.icomoon.io/public/temp/447f46edd5/UntitledProject/icomoon.woff?cl07c0') format('woff'),
-    url('https://i.icomoon.io/public/temp/447f46edd5/UntitledProject/icomoon.svg?cl07c0#icomoon') format('svg');
+  src:  url('fonts2/icomoon.eot?cl07c0');
+  src:  url('fonts2/icomoon.eot?cl07c0#iefix') format('embedded-opentype'),
+    url('fonts2/icomoon.ttf?cl07c0') format('truetype'),
+    url('fonts2/icomoon.woff?cl07c0') format('woff'),
+    url('fonts2/icomoon.svg?cl07c0#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,5 +25,5 @@
 }
 
 .icon-file-pdf:before {
-  content: "\eadf";
+  content: "\1f32e";
 }

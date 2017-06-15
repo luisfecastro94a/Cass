@@ -49,9 +49,10 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
   h1{
-    margin: 10px 500px 20px 500px;
+    margin: 10px 500px 20px 400px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -211,34 +212,34 @@ $resultE=mysql_query($consulta2);
 <label for="">Tipo de Ingreso</label>
 <input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
 
-<?php
-include("conexion.php");
-
-$consulta2="SELECT id_estado, estado, Inicio FROM estado WHERE Inicio=2 ORDER BY estado ASC ";
-$resultE=mysql_query($consulta2);
-?>
-<div class="col-xs-5 has-error"  >
-<label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
-<option value="" selected="">---Seleccionar el Estado---</option>
- <?php
-      while($esta=mysql_fetch_array($resultE))
-  {?>
-      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
-  <?php } ?>
-</select>
+<div class="col-xs-5 ">
+<label class="coti" for="">Estado:</label>
+  <div class="checkbox has-success">
+    <label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5" required=""><strong> Reparado</strong>
+</label>
+  </div>
+   <div class="checkbox has-error">
+    <label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="6" required=""><strong> En Proceso</strong>
+</label>
+  </div>
+  <div class="checkbox ">
+    <label class="radio-inline">
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="10" required=""><strong> Rechazado</strong>
+</label>
+  </div>
 </div>
 
 <div class="col-xs-5 has-error" >
 <label for="" class="has-error">Sintoma del Técnico</label>
-<textarea class="has-error" rows="4" cols="53" name="sintoma_tecnico" title="¡hee Técnico, Ingresa tu sintoma!" ></textarea>
+<textarea class="has-error" rows="4" cols="53" name="sintoma_tecnico" autofocus="" title="¡hee Técnico, Ingresa tu sintoma!" required=""></textarea>
 </div>
 
 
   <div class="col-xs-5 btn-ber">
-  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block">Modificar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Reparación</button>
+  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
   </div>
 
 </div>
@@ -252,7 +253,7 @@ include("conexion.php");
       
       $id=$_REQUEST['id'];
 
-      $id_estado = isset($_POST['id_estado'])? $_POST['id_estado']:''; 
+      $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
       $sintoma_tecnico = isset($_POST['sintoma_tecnico'])? $_POST['sintoma_tecnico']:'';
      
      
@@ -268,7 +269,6 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   
 
   $sql=mysql_query("UPDATE equipo SET id_estado='$id_estado', sintoma_tecnico='$sintoma_tecnico' WHERE id_equipo='$id'")or die(mysql_error());
-
 ?>
 <?php
 // close connection; 

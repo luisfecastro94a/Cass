@@ -215,7 +215,7 @@ label.coti {
   required="" value="<?php echo $reg['valorCotizacion'];?>" ></div>
 
 <div class="col-xs-5" >
-<label class="coti" for="">Descripción de Cotización:s</label>
+<label class="coti" for="">Descripción de Cotización:</label>
 <textarea name="comentario" id="comentario"  rows="4" cols="53"><?php echo $reg['comentario'];?></textarea>
 </div>
 
@@ -242,9 +242,9 @@ label.coti {
 
   
   <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Cerrar Cotización</button></div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
   <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
+  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
 </div>
 </form>

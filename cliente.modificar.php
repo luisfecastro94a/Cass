@@ -145,7 +145,7 @@ label {
 
 <a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
-<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
+<a href="cliente.buscar.php"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button></a>
 
 <br><br>
 <?php
@@ -217,9 +217,9 @@ label {
 </div>
   
   <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
+  <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modificar</button></div>
   <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
+  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
 </div>
 </form>

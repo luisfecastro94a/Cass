@@ -6,7 +6,7 @@ if (isset($_SESSION['correo'])) {?>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Modificar Cotización</title>
+	<title>Cerrar Cotización</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
@@ -169,9 +169,6 @@ label.coti {
 <textarea name="comentario" id="comentario"  rows="4" cols="53"></textarea>
 </div>
 
-
-
-
 <div class="col-xs-5 has-error">
 <label class="coti" for="">Estado:</label>
   <div class="checkbox has-success">
@@ -186,182 +183,156 @@ label.coti {
   </div>
 </div>
 
-<div class="col-xs-10  has-error">
+<?php
+include("conexion.php");
+   $id=$_REQUEST['id'];
+
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.venta_repuesto, cotizacion.venta_repuesto_uno, cotizacion.venta_repuesto_dos, cotizacion.venta_repuesto_tres, cotizacion.venta_repuesto_cuatro, cotizacion.venta_repuesto_cinco, cotizacion.venta_repuesto_seis, orden_trabajo.correlativo_ot, orden_trabajo.n_partner, orden_trabajo.marca, orden_trabajo.comentarioo, orden_trabajo.n_partner1, orden_trabajo.marca1, orden_trabajo.comentario1 , orden_trabajo.n_partner2, orden_trabajo.marca2, orden_trabajo.comentario2, orden_trabajo.n_partner3, orden_trabajo.marca3, orden_trabajo.comentario3, orden_trabajo.n_partner4, orden_trabajo.marca4, orden_trabajo.comentario4, orden_trabajo.n_partner5, orden_trabajo.marca5, orden_trabajo.comentario5, orden_trabajo.n_partner6, orden_trabajo.marca6, orden_trabajo.comentario6, cliente.nombre FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_cotizacion='$id' ")or die(mysql_error());
+    $row=mysql_fetch_array($dbhandle);
+?> 
+
+<div class="col-xs-11  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
-<table class="table bg-info table-responsive" id="tabla">
-    <tbody>
-      <tr>
-       <td><h4>Seleccionar</h4></td>
-        <td><h4>Cliente</h4></td>
-        <td><h4>Orden Trabajo</h4></td>
-        <td><h4>N° Partner</h4></td>
-        <td><h4>Marca</h4></td>
-        <td><h4>Comentario</h4></td>
-        <td><h4>Valor Repuesto</h4></td>
-      </tr>
+<table class="table bg-info" id="tabla">
+  <tr class="fila-fija">
+    <td><label >Seleccionar</label></td>
+    <td><label >Cliente</label></td>
+    <td><label >N° Partner</label></td>
+    <td><label >Marca</label></td>
+    <td><label >Comentario</label></td>
+    <td><label >Valor Repuesto</label></td>
+  </tr>
+  <tr class="fila-fija">
+    <td><input type="checkbox"></td>
+    <td><input class="form-control" name="" id="" type="text" value="<?php echo $row['nombre'];?>"></td>
+    <td><input class="form-control" name="n_partner" id="repuesto" type="text" value="<?php echo $row['n_partner'];?>"></td>
+    <td><input class="form-control" name="marca" id="repuesto_uno" type="text" value="<?php echo $row['marca'];?>"></td>
+    <td><input class="form-control" name="comentarioo" id="repuesto_dos" type="text" value="<?php echo $row['comentarioo'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)" value="<?php echo $row['venta_repuesto'];?>" name="venta_repuesto" id="" type="text"></td>
+  </tr>
+
+  <tr>
+    <td><input type="checkbox"></td>
+    <td></td>
+    <td><input class="form-control" name="" id="repuesto_tres" type="text" value="<?php echo $row['n_partner1'];?>"></td>
+    <td><input class="form-control" name="" id="repuesto_cuatro" type="text" value="<?php echo $row['marca1'];?>"></td>
+    <td><input class="form-control" name="" id="repuesto_cinco" type="text" value="<?php echo $row['comentario1'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_uno'];?>" name="venta_repuesto_uno" id="" type="text"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner2" type="text" value="<?php echo $row['n_partner2'];?>"></td>
+    <td><input class="form-control" name="" id="marca2" type="text" value="<?php echo $row['marca2'];?>"></td>
+    <td><input class="form-control" name="" id="comentario2" type="text" value="<?php echo $row['comentario2'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_dos'];?>" name="venta_repuesto_dos" id="" type="text"></td>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner3" type="text" value="<?php echo $row['n_partner3'];?>"></td>
+    <td><input class="form-control" name="" id="marca3" type="text" value="<?php echo $row['marca3'];?>"></td>
+    <td><input class="form-control" name="" id="comentario3" type="text" value="<?php echo $row['comentario3'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_tres'];?>" name="venta_repuesto_tres" id="" type="text"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+    <td></td>
+    <td><input class="form-control" name="" id="n_partner4" type="text" value="<?php echo $row['n_partner4'];?>"></td>
+    <td><input class="form-control" name="" id="marca4" type="text" value="<?php echo $row['marca4'];?>"></td>
+    <td><input class="form-control" name="" id="comentario4" type="text" value="<?php echo $row['comentario4'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_cuatro'];?>" name="venta_repuesto_cuatro" id="" type="text"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner5" type="text" value="<?php echo $row['n_partner5'];?>"></td>
+    <td><input class="form-control" name="" id="marca5" type="text" value="<?php echo $row['marca5'];?>"></td>
+    <td><input class="form-control" name="" id="comentario5" type="text" value="<?php echo $row['comentario5'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_cinco'];?>" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner6" type="text" value="<?php echo $row['n_partner6'];?>"></td>
+    <td><input class="form-control" name="" id="marca6" type="text" value="<?php echo $row['marca6'];?>"></td>
+    <td><input class="form-control" name="" id="comentario6" type="text" value="<?php echo $row['comentario6'];?>"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_seis'];?>" name="venta_repuesto_seis" id="repuesto4" type="text"></td>
+  </tr>
+</table>
+</div>
+
 <?php
 include("conexion.php");
    $id=$_REQUEST['id'];
 
-  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, cotizacion.venta_repuesto, cotizacion.venta_repuesto_uno, cotizacion.venta_repuesto_dos, cotizacion.venta_repuesto_tres, cotizacion.venta_repuesto_cuatro, cotizacion.venta_repuesto_cinco, cotizacion.venta_repuesto_seis, orden_trabajo.correlativo_ot, orden_trabajo.n_partner, orden_trabajo.marca, orden_trabajo.comentarioo, orden_trabajo.n_partner1, orden_trabajo.marca1, orden_trabajo.comentario1 , orden_trabajo.n_partner2, orden_trabajo.marca2, orden_trabajo.comentario2, orden_trabajo.n_partner3, orden_trabajo.marca3, orden_trabajo.comentario3, orden_trabajo.n_partner4, orden_trabajo.marca4, orden_trabajo.comentario4, orden_trabajo.n_partner5, orden_trabajo.marca5, orden_trabajo.comentario5, orden_trabajo.n_partner6, orden_trabajo.marca6, orden_trabajo.comentario6, cliente.nombre FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_cotizacion='$id' ");
-
-   while($muestra=mysql_fetch_array($dbhandle)){
-
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox" name="" id="" value="' . $muestra["venta_repuesto"] . '">'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['n_partner'].'</td>';
-   echo '<td>'.$muestra['marca'].'</td>';
-   echo '<td>'.$muestra['comentarioo'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner1'].'</td>';
-   echo '<td>'.$muestra['marca1'].'</td>';
-   echo '<td>'.$muestra['comentario1'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_uno'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner2'].'</td>';
-   echo '<td>'.$muestra['marca2'].'</td>';
-   echo '<td>'.$muestra['comentario2'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_dos'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner3'].'</td>';
-   echo '<td>'.$muestra['marca3'].'</td>';
-   echo '<td>'.$muestra['comentario3'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_tres'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner4'].'</td>';
-   echo '<td>'.$muestra['marca4'].'</td>';
-   echo '<td>'.$muestra['comentario4'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_cuatro'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner5'].'</td>';
-   echo '<td>'.$muestra['marca5'].'</td>';
-   echo '<td>'.$muestra['comentario5'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_cinco'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['n_partner6'].'</td>';
-   echo '<td>'.$muestra['marca6'].'</td>';
-   echo '<td>'.$muestra['comentario6'].'</td>';
-   echo '<td>'.$muestra['venta_repuesto_seis'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';  
-}
-?> 
-<?php
-#Cerramos la conexión con la base de datos
-mysql_close();
+  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, orden_trabajo.correlativo_ot, orden_trabajo.manoObra, orden_trabajo.manoObra1, orden_trabajo.manoObra2, orden_trabajo.manoObra3, orden_trabajo.manoObra4, orden_trabajo.manoObra5, orden_trabajo.manoObra6, orden_trabajo.valor_mano, orden_trabajo.valor_mano1, orden_trabajo.valor_mano2, orden_trabajo.valor_mano3, orden_trabajo.valor_mano4, orden_trabajo.valor_mano5, orden_trabajo.valor_mano6, cliente.nombre FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_cotizacion='$id' ")or die(mysql_error());
+    $reg=mysql_fetch_array($dbhandle);
 ?>
-
-
-    </tbody>
-</table>
-</div>
-
-<div class="col-xs-10  has-error">
+<div class="col-xs-11  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Mano de Obra Requerida</h2>
-<table class="table bg-info table-responsive" id="tabla">
-    <tbody>
-      <tr>
-       <td><h4>Seleccionar</h4></td>
-        <td><h4>Cliente</h4></td>
-        <td><h4>Orden Trabajo</h4></td>
-        <td><h4>Mano Obra</h4></td>
-        <td><h4>Valor Mano Obra</h4></td>
-      </tr>
-<?php
-include("conexion.php");
-   $id=$_REQUEST['id'];
-
-  $dbhandle=mysql_query("SELECT cotizacion.id_cotizacion, orden_trabajo.correlativo_ot, orden_trabajo.manoObra, orden_trabajo.manoObra1, orden_trabajo.manoObra2, orden_trabajo.manoObra3, orden_trabajo.manoObra4, orden_trabajo.manoObra5, orden_trabajo.manoObra6, orden_trabajo.valor_mano, orden_trabajo.valor_mano1, orden_trabajo.valor_mano2, orden_trabajo.valor_mano3, orden_trabajo.valor_mano4, orden_trabajo.valor_mano5, orden_trabajo.valor_mano6, cliente.nombre FROM cotizacion INNER JOIN orden_trabajo ON cotizacion.id_orden_trabajo=orden_trabajo.id_orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_cotizacion='$id' ");
-
-   while($muestra=mysql_fetch_array($dbhandle)){
-
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox" name="" id="">'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
-   echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['manoObra'].'</td>';
-   echo '<td>'.$muestra['valor_mano'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra1'].'</td>';
-   echo '<td>'.$muestra['valor_mano1'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra2'].'</td>';
-   echo '<td>'.$muestra['valor_mano2'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra3'].'</td>';
-   echo '<td>'.$muestra['valor_mano3'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra4'].'</td>';
-   echo '<td>'.$muestra['valor_mano4'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra5'].'</td>';
-   echo '<td>'.$muestra['valor_mano5'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';
-   echo '<td>'.'<input class="" type="checkbox"  name="" id="">'.'</td>';
-   echo '<td></td>';
-   echo '<td></td>';
-   echo '<td>'.$muestra['manoObra6'].'</td>';
-   echo '<td>'.$muestra['valor_mano6'].'</td>';
-   echo '<td></td>';
-   echo '<tr>';  
-}
-?> 
+<table class="table bg-info" id="tabla">
+  <tr class="fila-fija">
+    <td><label >Seleccionar</label></td>
+    <td><label >Cliente</label></td>
+    <td><label >Orden de Trabajo</label></td>
+    <td><label >Mano Obra</label></td>
+    <td><label >Valor Mano Obra</label></td>
+  </tr>
+  <tr class="fila-fija">
+    <td><input type="checkbox"></td>
+    <td><input class="form-control" name="" id="" type="text" value="<?php echo $reg['nombre'];?>"></td>
+    <td><input class="form-control" name="n_partner" id="repuesto" type="text" value="<?php echo $reg['correlativo_ot'];?>"></td>
+    <td><input class="form-control" name="marca" id="repuesto_uno" type="text" value="<?php echo $reg['manoObra'];?>"></td>
+    <td><input class="form-control" name="comentarioo" id="repuesto_dos" type="text" value="<?php echo $reg['valor_mano'];?>"></td>
+  </tr>
+  <tr>
+    <td><input type="checkbox"></td>
+    <td></td>
+    <td></td>
+    <td><input class="form-control" name="" id="repuesto_tres" type="text" value="<?php echo $reg['manoObra1'];?>"></td>
+    <td><input class="form-control" name="" id="repuesto_cuatro" type="text" value="<?php echo $reg['valor_mano1'];?>"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner2" type="text" value="<?php echo $reg['manoObra2'];?>"></td>
+    <td><input class="form-control" name="" id="marca2" type="text" value="<?php echo $reg['valor_mano2'];?>"></td>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner3" type="text" value="<?php echo $reg['manoObra3'];?>"></td>
+    <td><input class="form-control" name="" id="marca3" type="text" value="<?php echo $reg['valor_mano3'];?>"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+    <td></td>
+    <td></td>
+    <td><input class="form-control" name="" id="n_partner4" type="text" value="<?php echo $reg['manoObra4'];?>"></td>
+    <td><input class="form-control" name="" id="marca4" type="text" value="<?php echo $reg['valor_mano4'];?>"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner5" type="text" value="<?php echo $reg['manoObra5'];?>"></td>
+    <td><input class="form-control" name="" id="marca5" type="text" value="<?php echo $reg['valor_mano5'];?>"></td>
+  </tr>
+  <tr>
+  <td><input type="checkbox"></td>
+  <td></td>
+  <td></td>
+    <td><input class="form-control" name="" id="n_partner6" type="text" value="<?php echo $reg['manoObra6'];?>"></td>
+    <td><input class="form-control" name="" id="marca6" type="text" value="<?php echo $reg['valor_mano6'];?>"></td>
+  </tr>
+</table>
+</div>
 <?php
 #Cerramos la conexión con la base de datos
 mysql_close();
 ?>
-    </tbody>
-</table>
-</div>
-
+   
   <div class="col-xs-5">
   <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
   <div class="col-xs-5">

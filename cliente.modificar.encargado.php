@@ -46,6 +46,7 @@ $result=mysql_query($consulta);
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -153,7 +154,7 @@ label {
     $id=$_REQUEST['id'];
     include("conexion.php");
       
-      $pedir=mysql_query("SELECT * FROM cliente_encargado WHERE id_cliente_encargado='$id' ")or die(mysql_error());
+      $pedir=mysql_query("SELECT cliente_encargado.nombreE, cliente_encargado.rut, cliente_encargado.fono, cliente_encargado.correo, cliente.id_cliente, cliente.nombre FROM cliente_encargado INNER JOIN cliente ON cliente_encargado.id_cliente=cliente.id_cliente WHERE id_cliente_encargado='$id' ")or die(mysql_error());
       $reg=mysql_fetch_array($pedir);
   ?>
 <h1>Modificar Cliente Encargado</h1>
@@ -165,7 +166,7 @@ label {
 <div class="col-xs-5" >
 <label for="">Cliente a asociar</label>
 <select id="id_cliente" class="form-control" name="id_cliente" autofocus> 
-<option value="<?php echo $fila['id_cliente']?>">---Seleccionar Cliente---</option>
+<option value="<?php echo $reg['id_cliente']?>"><?php echo $reg['nombre'];?></option>
 <?php
       while($fila=mysql_fetch_array($result))
   {?>
@@ -193,11 +194,11 @@ label {
 <div class="col-xs-5" >
 <label for="">correo</label>
 <input type="email" class="form-control" name="correo" id="correo"   required="" value="<?php echo $reg['correo'];?>"></div>
-
+ 
+ <div class="col-xs-5">
+  <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modificar</button></div>
   <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Modificar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button></div>
+  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
 </div>
 </form>

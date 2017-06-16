@@ -241,22 +241,15 @@ $resultM=mysql_query($consulta1);
   <option value="GARANTIA ACER">GARANTIA ACER</option>
 </select>
 </div>
-<?php
-include("conexion.php");
 
-$consulta2="SELECT id_estado, estado FROM estado WHERE estado='Sin reparar' ORDER BY estado ASC ";
-$resultE=mysql_query($consulta2);
-?>
-<div class="col-xs-5" >
+<div class="col-xs-5 has-error">
 <label for="">Estado</label>
-<select id="id_estado" class="form-control" name="id_estado" title="Seleccione un estado" > 
-<option value="" selected="">---Seleccionar el Estado---</option>
- <?php
-      while($esta=mysql_fetch_array($resultE))
-  {?>
-      <option value="<?php echo $esta['0']?>"><?php echo $esta['1'];?></option>
-  <?php } ?>
-</select>
+  <div class="checkbox has-error">
+    <label>
+      <input type="checkbox" id="" name="id_estado" value="2" required="">
+      <strong> Sin Reparar</strong>
+    </label>
+  </div>
 </div>
 
 <div class="col-xs-5" >
@@ -273,9 +266,10 @@ $resultE=mysql_query($consulta2);
   <div class="col-xs-5">
   <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
   <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro">Cancelar</button></div>
-   <div class="col-xs-5">
-  <a href="ot.entrada.php" ><button type="button" class="btn btn-default btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-paperclip " aria-hidden="true"></span> Generar OT</button></a></div>
+  <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
+  <div class="col-xs-5">
+  <div class="alert alert-danger" role="alert">Al ingresar Equipo,<strong> Crea tu Orden de Trabajo</strong></div>
+  <a href="ot.entrada.php" ><button type="button" class="btn btn-warning btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-paperclip " aria-hidden="true"></span> Generar OT</button></a></div>
   
 </div>
 </form>

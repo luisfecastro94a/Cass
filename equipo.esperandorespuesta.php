@@ -33,7 +33,7 @@ if($resultado->num_rows > 0)
    	 <td>'.$fila["modelo"].'</td>
    	 <td>'.$fila["serie_equipo"].'</td>
    	 <td>'.$fila["estado"].'</td>
-   	 <td>'.'<a href="cotizacion.modificar.php?id='.$fila["id_cotizacion"].'" class="btn btn-primary" title="Cerrar Cotización"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Cerrar Cotización'.'</a>'.'</td>    
+   	 <td>'.'<a href="cotizacion.cerrar1.php?id='.$fila["id_cotizacion"].'" class="btn btn-primary" title="Cerrar Cotización"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Cerrar Cotización'.'</a>'.'</td>    
 			</tr>';
 	}
 

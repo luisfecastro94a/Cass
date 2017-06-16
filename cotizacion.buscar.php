@@ -202,8 +202,7 @@ if($busca!=""){
    echo '<td>'.$muestra['valorReparacion'].'</td>';
    echo '<td>'.$muestra['valorCotizacion'].'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
-   echo '<td>'.$muestra['comentario'].'</td>';
-   echo '<td>'.'<a href="cotizacion.modificar.php?id='.$muestra['id_cotizacion'].'" class="btn btn-primary" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-pencil"></span>'.' Modificar'.'</a>'.'</td>';   
+   echo '<td>'.$muestra['comentario'].'</td>'; 
    echo '<td>'.'<a href="Documentos/Cotizacion/pdf.cotizacion.php?id='.$muestra['id_cotizacion'].'" class="btn btn-danger" title="Modificar Orden de Trabajo"><span class="icon-file-pdf"></span>'.' PDF'.'</a>'.'</td>'; 
    echo '</tr>';  
 }

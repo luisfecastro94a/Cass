@@ -27,11 +27,8 @@ if($resultado->num_rows > 0)
 	 <td>'.'<strong>'.$fila["serie_equipo"].'</strong>'.'</td>
 	 <td>'.$fila["fecha_creacion"].'</td>
    	 <td>'.$fila["estado"].'</td>
-   	
-   	 <td>'.'<a href="equipo.modificar.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>    
-
-
-			</tr>';
+   	 <td></td>
+	 </tr>';
 	}
 
 	$salida.="</tbody></table>";

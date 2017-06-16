@@ -216,12 +216,12 @@ $resultE=mysql_query($consulta2);
 <label class="coti" for="">Estado:</label>
   <div class="checkbox has-success">
     <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5" required=""><strong> Reparado</strong>
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" required=""><strong> Reparado</strong>
 </label>
   </div>
    <div class="checkbox has-error">
     <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="6" required=""><strong> En Proceso</strong>
+  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="12" required=""><strong> En Proceso</strong>
 </label>
   </div>
   <div class="checkbox ">

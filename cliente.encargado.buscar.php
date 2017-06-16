@@ -207,8 +207,8 @@ if($busca!=""){
    echo '<td>'.$fila['fono'].'</td>';
    echo '<td>'.$fila['correo'].'</td>';
    echo '<td>'.'<a href="cliente.modificar.encargado.php?id='.$fila['id_cliente_encargado'].'" 
-   class="btn btn-primary">'.'Modificar'.'</a>'.'</td>';
-   echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger">'.'Eliminar'.'</a>'.'</td>';   
+   class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'.' Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<a href="eliminar.cliente.php" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.' Eliminar'.'</a>'.'</td>';   
 }
 }
 ?>  

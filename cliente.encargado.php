@@ -184,9 +184,11 @@ label {
 <label for="">correo</label>
 <input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
 
-  <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block">Guardar</button>
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
+<div class="col-xs-5 ">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" title="Crear Cotización"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+  </div>
+   <div class="col-xs-5 ">
+  <button type="reset" class="btn btn-default btn-lg btn-block" data-toggle="tooltip" title="Cancelar Cotización"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
   </div>
 </div>
 </form>

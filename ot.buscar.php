@@ -13,7 +13,7 @@ if (isset($_SESSION['correo'])) {?>
   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-   <link rel="stylesheet" href="fonts.css">
+   <link rel="stylesheet" href="css/icomoon/style.css">
 
 	  <style>
  * {
@@ -185,7 +185,7 @@ label {
         <td><h4>Fecha de Presupuesto</h4></td>
         <td><h4>Valor Repuesto</h4></td>
         <td><h4>Total</h4></td>
-        <td colspan="2"><h4>Operaciones</h4></td>
+        <td colspan="3"><h4>Operaciones</h4></td>
       </tr>
 
 <?php
@@ -204,14 +204,15 @@ if($busca!=""){
    echo '<td>'.$muestra['nombre'].'</td>';
    echo '<td>'.$muestra['nombreTipo'].'</td>';
    echo '<td>'.$muestra['area'].'</td>';
-   echo '<td>'.$muestra['estado'].'</td>';
+   echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
    echo '<td>'.$muestra['serie_equipo'].'</td>';
    echo '<td>'.$muestra['motivo'].'</td>';
    echo '<td>'.$muestra['valorReparacion'].'</td>';
    echo '<td>'.$muestra['fechaPresupuesto'].'</td>';
    echo '<td>'.$muestra['valorRepuestoOT'].'</td>';
    echo '<td>'.$muestra['valorCotizacionOT'].'</td>';
-   echo '<td>'.'<a href="ot.modificar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar"><span class="glyphicon glyphicon-pencil"></span>'.' Modificar'.'</a>'.'</td>';   
+   echo '<td>'.'<a href="ot.modifica.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Cambio Usuario y Cambio Area"><span class="glyphicon glyphicon-pencil"></span>'.' Modificar'.'</a>'.'</td>';
+      echo '<td>'.'<a href="ot.cerrar.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-primary" title="Debes tener una cotización para Modificar"><span class="glyphicon glyphicon-ok"></span>'.' Cerrar'.'</a>'.'</td>';   
    echo '<td>'.'<a href="Documentos/OT/pdf.ot.php?id='.$muestra['id_orden_trabajo'].'" class="btn btn-danger" ><span class="icon-file-pdf"></span>'.' PDF'.'</a>'.'</td>'; 
    echo '</tr>';  
 }

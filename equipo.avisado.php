@@ -4,7 +4,11 @@ $selected= new mysqli("localhost","root","","bdcass");
 
 $salida= "";
 //esta consulta es la que hace que se muestren todos los datos en la tabla sin poner nada
-$query= "SELECT equipo_aviso.fecha_aviso, equipo_aviso.medio_aviso,  equipo.serie_equipo, estado.id_estado, estado.estado FROM equipo_aviso INNER JOIN equipo ON equipo_aviso.id_equipo.equipo.id_equipo INNER JOIN estado ON equipo.id_estado=estado.estado WHERE estado='reparado' ";
+$query= "SELECT  equipo_aviso.id_equipo_aviso, equipo_aviso.fecha_aviso, equipo_aviso.medio_aviso, 
+				 equipo.serie_equipo
+		FROM equipo_aviso
+    INNER JOIN equipo ON equipo_aviso.id_equipo.equipo.id_equipo 
+	WHERE id_equipo_aviso=5 ";
 
 $resultado=$selected->query($query);
 if($resultado->num_rows > 0) 
@@ -24,16 +28,14 @@ if($resultado->num_rows > 0)
 			<tbody>';
 
 	while ($fila = $resultado->fetch_assoc()) {
-		$salida.='<tr>
+		$salida.=
+	'<tr>
 	 <td>'.'<strong>'.$fila["serie_equipo"].'</strong>'.'</td>
    	 <td>'.$fila["estado"].'</td>
    	 <td>'.$fila["fecha_aviso"].'</td>
    	 <td>'.$fila["medio_aviso"].'</td>
-   	
    	 <td>'.'<a href="equipo.aviso.php?id='.$fila["id_equipo_aviso"].'" class="btn btn-primary" title="Modificar Orden de Trabajo">'.'Modificar'.'</a>'.'</td>    
-
-
-			</tr>';
+	</tr>';
 	}
 
 	$salida.="</tbody></table>";

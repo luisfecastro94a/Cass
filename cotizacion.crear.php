@@ -27,10 +27,11 @@ if (isset($_SESSION['correo'])) {?>
     d=document.formcotizacion.venta_repuesto_tres.value;
     e=document.formcotizacion.venta_repuesto_cuatro.value;
     f=document.formcotizacion.venta_repuesto_cinco.value;
+    i=document.formcotizacion.venta_repuesto_seis.value;
     g=document.formcotizacion.valorReparacion.value;
     h=document.formcotizacion.valorCotizacion.value;
 
-    h=parseInt(g)+parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f);
+    h=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(i)+parseInt(g);
     document.formcotizacion.valorCotizacion.value=h;
   }
 </script>	
@@ -169,17 +170,29 @@ label {
 
 <a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
-<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
+<a href="cotizacion.php"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button></a>
 
 <br><br>
 <h1>Crear Cotización</h1>
 
-<form class="form-group" action="cotizacion.crear.php" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
+<form class="form-group" action="" name="formcotizacion" id="cotizacion" method="POST" onSubmit="return validar()">
 
 <div class="container">
 
+<?php
+include("conexion.php");
+$cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
+
+
+ $consulta1=mysql_query("SELECT  id_orden_trabajo FROM orden_trabajo  WHERE id_orden_trabajo='$cat' ");
+ $reg1=mysql_fetch_array($consulta1);
+
+?>
+
 <div class="col-xs-5 ui-widget">
-<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
+<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
+<input type="text" class="form-control" readonly="" name="id_orden_trabajo" id="id_orden_trabajo" value="<?php echo$reg1['id_orden_trabajo'];?>">
+</div>
 <?php
   //codigo para que muestre el correlativo de mi orden de trabajo
     $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
@@ -191,34 +204,6 @@ label {
 <label for="">Numero de Cotización: </label>
 <input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  >
 </div>
-
-
-<?php
-include("conexion.php");
-
-
-$consulta="SELECT id_orden_trabajo, correlativo_ot FROM orden_trabajo WHERE correlativo_cotizacion<1 ";
-$asig=mysql_query($consulta);
-
-?>
-<div class="col-xs-5 ui-widget" >
-<label for="">Orden de Trabajo: </label>
-<select id="combobox" class="form-control" name="filtrarOT" class="form-control" > 
-<option value="" selected="">---Seleccionar Orden de Trabajo---</option>
- <?php
-      while($row=mysql_fetch_array($asig))
-  {?>
-      <option value="<?php echo $row['0']?>"><?php echo $row['1'];?></option>
-  <?php } ?>
-</select>
-</div>
-<br>
-<div class="col-xs-5">
- <input type="submit" value="Filtrar Repuestos" class="btn btn-default">
- </div>
-
-
-</form>
 
 <div class="col-xs-10  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
@@ -237,7 +222,7 @@ include("conexion.php");
 $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
 
 
-  $dbhandle=mysql_query("SELECT  orden_trabajo.correlativo_ot, orden_trabajo.n_partner, orden_trabajo.marca, orden_trabajo.comentarioo, orden_trabajo.n_partner1, orden_trabajo.marca1, orden_trabajo.comentario1 , orden_trabajo.n_partner2, orden_trabajo.marca2, orden_trabajo.comentario2, orden_trabajo.n_partner3, orden_trabajo.marca3, orden_trabajo.comentario3, orden_trabajo.n_partner4, orden_trabajo.marca4, orden_trabajo.comentario4, orden_trabajo.n_partner5, orden_trabajo.marca5, orden_trabajo.comentario5, orden_trabajo.n_partner6, orden_trabajo.marca6, orden_trabajo.comentario6, cliente.nombre FROM orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_orden_trabajo='$cat' ");
+  $dbhandle=mysql_query("SELECT orden_trabajo.valorReparacion, orden_trabajo.correlativo_ot, orden_trabajo.n_partner, orden_trabajo.marca, orden_trabajo.comentarioo, orden_trabajo.n_partner1, orden_trabajo.marca1, orden_trabajo.comentario1 , orden_trabajo.n_partner2, orden_trabajo.marca2, orden_trabajo.comentario2, orden_trabajo.n_partner3, orden_trabajo.marca3, orden_trabajo.comentario3, orden_trabajo.n_partner4, orden_trabajo.marca4, orden_trabajo.comentario4, orden_trabajo.n_partner5, orden_trabajo.marca5, orden_trabajo.comentario5, orden_trabajo.n_partner6, orden_trabajo.marca6, orden_trabajo.comentario6, cliente.nombre FROM orden_trabajo INNER JOIN  cliente ON orden_trabajo.id_cliente=cliente.id_cliente  WHERE id_orden_trabajo='$cat' ");
 
    while($muestra=mysql_fetch_array($dbhandle)){
 
@@ -247,53 +232,51 @@ $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
    echo '<td>'.$muestra['n_partner'].'</td>';
    echo '<td>'.$muestra['marca'].'</td>';
    echo '<td>'.$muestra['comentarioo'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto" id="venta_repuesto" onkeyup="sumar()" onKeyPress="return SoloNumeros(event)" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner1'].'</td>';
    echo '<td>'.$muestra['marca1'].'</td>';
    echo '<td>'.$muestra['comentario1'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_uno" id="venta_repuesto_uno" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner2'].'</td>';
    echo '<td>'.$muestra['marca2'].'</td>';
    echo '<td>'.$muestra['comentario2'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_dos" id="venta_repuesto_dos" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner3'].'</td>';
    echo '<td>'.$muestra['marca3'].'</td>';
    echo '<td>'.$muestra['comentario3'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_tres" id="venta_repuesto_tres" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner4'].'</td>';
    echo '<td>'.$muestra['marca4'].'</td>';
    echo '<td>'.$muestra['comentario4'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name=""  id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_cuatro"  id="venta_repuesto_cuatro" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner5'].'</td>';
    echo '<td>'.$muestra['marca5'].'</td>';
    echo '<td>'.$muestra['comentario5'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_cinco" id="venta_repuesto_cinco" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
    echo '<tr>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner6'].'</td>';
    echo '<td>'.$muestra['marca6'].'</td>';
    echo '<td>'.$muestra['comentario6'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" name="" id="" placeholder="$" >'.'</td>';
-   echo '<tr>';
-  
+   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_seis" id="venta_repuesto_seis" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<tr>';  
 }
-
 
 ?> 
 
@@ -304,6 +287,46 @@ mysql_close();
     </tbody>
 </table>
 </div>
+<?php
+include("conexion.php");
+$cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
+
+
+ $consulta=mysql_query("SELECT  valorReparacion FROM orden_trabajo  WHERE id_orden_trabajo='$cat' ");
+ $reg=mysql_fetch_array($consulta);
+
+?>
+<div class="col-xs-5 has-error" >
+<label for="">Valor Reparacion (Mano de Obra)</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorReparacion" id="valorReparacion"  placeholder="$"  required="" value="<?php echo $reg['valorReparacion'];?>" >
+<label for="">Valor Cotización</label>
+<input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion"  placeholder="$"  required="" value="" >
+</div>
+
+<div class="col-xs-5 has-error" >
+<label  for="">Descripción de Cotización</label>
+<textarea  name="comentario" id="comentario"  rows="4" cols="53"></textarea>
+</div>
+
+<div class="col-xs-5 has-error" >
+<label for="">Disponibilidad</label>
+<input type="text" class="form-control" name="disponibilidad" id="disponibilidad"  placeholder="Días"  required="" value="" onKeyPress="return SoloNumeros(event)" ></div>
+
+<div class="col-xs-5 has-error">
+<label for="">Estado</label>
+  <div class="checkbox has-error">
+    <label>
+      <input type="checkbox" id="" name="id_estado" value="7" required="">
+      <strong> En Espera</strong>
+    </label>
+  </div>
+</div>
+
+  <div class="col-xs-5 ">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" title="Crear Cotización"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+  <button type="reset" class="btn btn-default btn-lg btn-block" data-toggle="tooltip" title="Cancelar Cotización"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
+  </div>
+
 
 </form>
 </div>
@@ -328,6 +351,7 @@ if
       $venta_repuesto_tres = $_POST['venta_repuesto_tres'];
       $venta_repuesto_cuatro = $_POST['venta_repuesto_cuatro'];
       $venta_repuesto_cinco = $_POST['venta_repuesto_cinco'];
+      $venta_repuesto_seis = $_POST['venta_repuesto_seis'];
       $disponibilidad = $_POST['disponibilidad']; 
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -343,12 +367,12 @@ $nuevo_id=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_tr
 if(mysql_num_rows($nuevo_id)>0) 
 { 
 echo " 
-<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script> 
+<script> alert('¡¡Cierra la OT, ya tiene una cotizacion!! '); </script> 
 <p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
 "; 
 }
 else{
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario,  valorCotizacion, venta_repuesto, venta_repuesto_uno, venta_repuesto_dos, venta_repuesto_tres, venta_repuesto_cuatro, venta_repuesto_cinco, disponibilidad ) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorCotizacion', '$venta_repuesto', '$venta_repuesto_uno', '$venta_repuesto_dos', '$venta_repuesto_tres', '$venta_repuesto_cuatro', '$venta_repuesto_cinco', '$disponibilidad')") or die(mysql_errno()); 
+  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario,  valorCotizacion, venta_repuesto, venta_repuesto_uno, venta_repuesto_dos, venta_repuesto_tres, venta_repuesto_cuatro, venta_repuesto_cinco, venta_repuesto_seis, disponibilidad ) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorCotizacion', '$venta_repuesto', '$venta_repuesto_uno', '$venta_repuesto_dos', '$venta_repuesto_tres', '$venta_repuesto_cuatro', '$venta_repuesto_cinco', '$venta_repuesto_seis', '$disponibilidad')") or die(mysql_errno()); 
     echo '<script> alert("Cotización Creada con Exito."); </script>';
 }
 }

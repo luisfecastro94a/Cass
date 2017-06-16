@@ -247,7 +247,7 @@ $asig=mysql_query($consulta1);
 <div class="col-xs-5" >
 <label for="">Asigar a Técnico</label>
 <select id="id_usuario" class="form-control" name="id_usuario" > 
-<option value="" selected="">---Asignar Técnico---</option>
+<option value="" selected="">---Asignar a Técnico---</option>
  <?php
       while($reci=mysql_fetch_array($asig))
   {?>

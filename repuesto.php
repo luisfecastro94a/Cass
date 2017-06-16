@@ -9,22 +9,17 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
-<?php
-include("conexion.php");
-
-
-$consulta="SELECT * FROM ciudad";
-$result=mysql_query($consulta);
-
-
-?>
-	<title>cliente</title>
+	<title>Repuestos</title>
    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
+  <link rel="stylesheet" href="css/jquery-ui.css">
+  <script src="js/jquery-1.12.4.js"></script>
+  <script src="js/jquery-ui.js"></script>
+  <script src="js/buscaot.js"></script>
+  <script src="js/buscaproveedor.js"></script>
 
-	
-      <style>
+<style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -64,8 +59,36 @@ label {
     width: 60px;
     border: auto;
   }
- 
-
+ .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
+   .custom-combobox1 {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox1-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox1-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
    </style>
 </head>
   <nav class="navbar navbar-default">
@@ -148,70 +171,135 @@ label {
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
-<h1>Crear Cliente</h1>
+<h1>Ingresar Repuesto</h1>
 
 <form class="form-group" action=""  method="POST" onSubmit="return validar()">
 
 <div class="container">
 
-
-<div class="col-xs-5" >
-<label for="">Nombre Empresa:</label>
-<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Empresa"  required=""></div>
-<div class="col-xs-5" >
-<label for="">Rut Empresa:</label>
-<input type="text" class="form-control" id="rut" name="rut"  placeholder="Rut"  required oninput="checkRut(this)"></div>
+<?php
+include("conexion.php");
 
 
-<div class="col-xs-5" >
-<label for="">Fono/Fax Empresa:</label>
-<input type="text" class="form-control" name="fono" id="fono" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required=""></div>
+$consulta="SELECT id_orden_trabajo, correlativo_ot FROM orden_trabajo  ";
+$asig=mysql_query($consulta);
 
-
-<div class="col-xs-5" >
-<label for="">Correo:</label>
-<input type="email" class="form-control" name="correo" id="correo"   placeholder="E-mail" required=""></div>
-<div class="col-xs-5" >
-<label for="">Giro:</label>
-<input type="text" class="form-control" name="giro" placeholder="Giro" onKeyPress="return soloLetras(event)" required=""></div>
-<div class="col-xs-5" >
-<label for="">Direccion:</label>
-<input type="text" class="form-control" name="direccion" placeholder="Direccion" required=""></div>
-
-<div class="col-xs-5" >
-<label for="">Ciudad:</label>
-<select id="id_ciudad" class="form-control" name="id_ciudad" > 
-<option value="" selected="">Seleccionar Ciudad</option>
+?>
+<div class="col-xs-5 ui-widget" >
+<label for="">Orden de Trabajo: </label>
+<select id="combobox" class="form-control" name="filtrarOT" class="form-control" > 
+<option value="" selected="">---Seleccionar Orden de Trabajo---</option>
  <?php
-      while($fila=mysql_fetch_array($result))
+      while($row=mysql_fetch_array($asig))
   {?>
-      <option value="<?php echo $fila['0']?>"><?php echo $fila['1'];?></option>
+      <option value="<?php echo $row['0']?>"><?php echo $row['1'];?></option>
   <?php } ?>
 </select>
 </div>
+
+
+<div class="col-xs-5 ui-widget" >
+<label for="">Proveedor:</label>
+<select  id="razonSocial" class="form-control" onchange="repuesto(this.value)" name="id_proveedor" value=""> 
+<option value="0" >---Selecionar Proveedor---</option>
+</select>
+</div> 
+
+<div class="col-xs-5" >
+<label for="">Razon Social:</label>
+<input type="text" class="form-control" name="razon_social" id="razon_social"   placeholder="Razon Social" required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Direccion:</label>
+<input type="text" class="form-control" name="direccion" id="direccion"   placeholder="Direccion" required=""></div>
+<div class="col-xs-5" >
+<label for="">Fono:</label>
+<input type="text" class="form-control" name="fono" id="fono"   placeholder="Fono" required=""></div>
 <div class="col-xs-5" >
 <label for="">Nombre Contacto:</label>
-<input type="text" class="form-control" name="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
+<input type="text" class="form-control" name="nombre_contacto" id="nombre_contacto" placeholder="Nombre Contacto" onKeyPress="return soloLetras(event)" required=""></div>
 <div class="col-xs-5" >
 <label for="">Fono Contacto:</label>
-<input type="text" class="form-control" name="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required=""></div>
-<div class="col-xs-5" >
-<label for="">Correo Contacto:</label>
-<input type="email" class="form-control" name="correo_contacto" placeholder="Correo Contacto" required=""></div>
+<input type="text" class="form-control" name="fono_contacto" id="fono_contacto" placeholder="Fono Contacto" onKeyPress="return SoloNumeros(event)" required=""></div>
 <div class="col-xs-5" >
 <label for="">Cargo Contacto:</label>
-<input type="text" class="form-control" name="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
+<input type="text" class="form-control" name="cargo_contacto" id="cargo_contacto" placeholder="Cargo Contacto" onKeyPress="return soloLetras(event)" required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Codigo Repuesto</label>
+<input type="text" class="form-control" name="codigo_repuesto" id="codigo_repuesto"  placeholder="Codigo Repuesto" 
+  required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Nombre Producto</label>
+<input type="text" class="form-control" name="nombre" id="nombre"  placeholder="Nombre Repuesto" 
+  required=""></div>
+
+<?php
+include("conexion.php");
+
+
+$consulta="SELECT * FROM marca  ";
+$asig=mysql_query($consulta);
+
+?>
+<div class="col-xs-5 ui-widget" >
+<label for="">Marca: </label>
+<select id="combobox" class="form-control" name="id_marca" class="form-control" > 
+<option value="" selected="">---Seleccionar Marca---</option>
+ <?php
+      while($row=mysql_fetch_array($asig))
+  {?>
+      <option value="<?php echo $row['0']?>"><?php echo $row['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+<?php
+include("conexion.php");
+
+
+$con="SELECT * FROM area  ";
+$mos=mysql_query($con);
+
+?>
+<div class="col-xs-5 ui-widget" >
+<label for="">Area: </label>
+<select id="combobox" class="form-control" name="id_area" class="form-control" > 
+<option value="" selected="">---Seleccionar Area---</option>
+ <?php
+      while($row1=mysql_fetch_array($mos))
+  {?>
+      <option value="<?php echo $row1['0']?>"><?php echo $row1['1'];?></option>
+  <?php } ?>
+</select>
+</div>
+
+<div class="col-xs-5" >
+<label for="">Modelo:</label>
+<input type="text" class="form-control" name="modelo" placeholder="Modelo Repuesto" onKeyPress="return soloLetras(event)" required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Año:</label>
+<input type="text" class="form-control" name="ano" maxlength="4" minlength="4" placeholder="Año del Repuesto" required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Duración:</label>
+<input type="text" class="form-control" name="duracion" maxlength="3" placeholder="Duracion del Repuesto" required=""></div>
+
+<div class="col-xs-5" >
+<label for="">Valor Repuesto:</label>
+<input type="text" class="form-control" name="valor_total" placeholder="Valor de Repuesto" onKeyPress="return SoloNumeros(event)" required=""></div>
 
 <div class="col-xs-5">
-<label for="">Condición de Pago:</label>
-<select class="form-control" name="condicion_pago">
-<option value="" selected="">--Selecciona Condicion de Pago--</option>
-  <option value="EFECTIVO">EFECTIVO</option>
-  <option value="CREDITO 30 DÍAS">CREDITO 30 DÍAS</option>
-  <option value="CREDITO 60 DÍAS">CREDITO 60 DÍAS</option>
-  <option value="CREDITO 90 DÍAS">CREDITO 90 DÍAS</option>
-</select>
+<label class="coti" for="">Fecha Solicitud: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_" id="fecha_respuesta"></label></div>
+
+<div class="col-xs-5">
+<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_ingreso" id="fecha_ingreso"></label></div>
+
+<div class="col-xs-5">
+  <label for="">Descripción</label>
+  <textarea name="descripcion" id="descripcion" rows="4" cols="53"></textarea>
 </div>
   
  <div class="col-xs-5 ">
@@ -227,58 +315,48 @@ label {
 
 <?php
 if
-    (isset($_POST['id_ciudad']) && !empty($_POST['id_ciudad']) &&
+    (isset($_POST['id_proveedor']) && !empty($_POST['id_proveedor']) &&
+     isset($_POST['id_marca']) && !empty($_POST['id_marca']) &&
+     isset($_POST['id_area']) && !empty($_POST['id_area']) &&
      isset($_POST['nombre']) && !empty($_POST['nombre']) &&
-     isset($_POST['rut']) && !empty($_POST['rut']) &&
-     isset($_POST['fono']) && !empty($_POST['fono']) &&
-     isset($_POST['correo']) && !empty($_POST['correo']) &&
-     isset($_POST['giro']) && !empty($_POST['giro']) &&
-     isset($_POST['direccion']) && !empty($_POST['direccion']) &&
-     isset($_POST['nombre_contacto']) && !empty($_POST['nombre_contacto']) &&
-     isset($_POST['fono_contacto']) && !empty($_POST['fono_contacto']) &&
-     isset($_POST['correo_contacto']) && !empty($_POST['correo_contacto']) &&
-     isset($_POST['cargo_contacto']) && !empty($_POST['cargo_contacto']) &&
-     isset($_POST['condicion_pago']) && !empty($_POST['condicion_pago']))
+     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
+     isset($_POST['valor_total']) && !empty($_POST['valor_total']) &&
+     isset($_POST['fecha_ingreso']) && !empty($_POST['fecha_ingreso']))
   {
-
-      $Ciudad = $_POST['id_ciudad']; 
-      $Nombre = $_POST['nombre'];
-      $Rut = $_POST['rut'];
-      $Fono = $_POST['fono'];
-      $Correo = $_POST['correo'];
-      $Giro = $_POST['giro'];
-      $Direccion = $_POST['direccion'];
-      $Nombre_contacto = $_POST['nombre_contacto'];
-      $Fono_contacto = $_POST['fono_contacto'];
-      $Correo_contacto = $_POST['correo_contacto'];
-      $Cargo_contacto = $_POST['cargo_contacto'];
-      $Condicion_pago = $_POST['condicion_pago'];
-
+      $id_proveedor = $_POST['id_proveedor']; 
+      $id_marca = $_POST['id_marca'];
+      $codigo_repuesto = $_POST['codigo_repuesto']; 
+      $id_area = $_POST['id_area'];
+      $nombre = $_POST['nombre'];
+      $modelo = $_POST['modelo'];
+      $valor_total = $_POST['valor_total'];
+      $fecha_ingreso = $_POST['fecha_ingreso'];
+      $descripcion = $_POST['descripcion'];
+      $ano = $_POST['ano'];
+      $duracion = $_POST['duracion'];
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
-
 
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-// ============================================== 
-// Comprobamos si el rut esta registrado 
+
 include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT rut FROM cliente WHERE rut='$Rut'"); 
+$nuevo_rut=mysql_query("SELECT codigo_repuesto FROM repuesto WHERE codigo_repuesto='$codigo_repuesto'"); 
 if(mysql_num_rows($nuevo_rut)>0) 
 { 
 echo " 
-<script> alert('Cliente ya se encuentra registrado'); </script> 
+<script> alert('Repuesto ya se encuentra registrado'); </script> 
 <p class='avisos'><a href='javascript:history.go(-1)' class='btn btn-danger clase1'>Volver atrás</a></p> 
 "; 
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cliente (id_ciudad, nombre, rut, fono, correo, giro, direccion, nombre_contacto, fono_contacto, correo_contacto, cargo_contacto, condicion_pago) VALUES ('$Ciudad', '$Nombre','$Rut','$Fono','$Correo','$Giro', '$Direccion',  '$Nombre_contacto','$Fono_contacto','$Correo_contacto','$Cargo_contacto','$Condicion_pago')") or die(mysql_errno());
- echo '<script> alert("Cliente Creado con Exito."); </script>';
+  $consulta=mysql_query("INSERT INTO cliente (id_proveedor, id_marca, codigo_repuesto, id_area, nombre, modelo, valor_total, fecha_ingreso, descripcion, ano. duracion) VALUES ('$id_proveedor', '$id_marca','$codigo_repuesto','$id_area','$nombre','$modelo', '$valor_total', '$fecha_ingreso','$descripcion','$ano','$duracion')") or die(mysql_errno());
+ echo '<script> alert("Repuesto Creado con Exito."); </script>';
 
 }
 
@@ -294,7 +372,9 @@ else{
     <script src="js/jquery-ui.js"></script>
     <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
+    <script src="validanumeros.js"></script> 
+    <script src="js/autollenado.repuesto.js"></script>   
+    <script src="js/listaProveedor.js"></script>
 </body>
 <footer> </footer>
 </html>

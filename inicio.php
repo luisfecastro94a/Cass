@@ -160,15 +160,9 @@ h2{
 <label class="fe" left for="">Fecha de HOY: <?php echo date("d/m/Y");?></label>
 <br>
 
-
-
 <h2 class="hsinreparar">Sin Reparar</h2>
 <div id="datos" class="uno table-responsive" > 
 
-</div>
-
-<h2 class="hreparado">Equipos Reparados</h2>
-<div  id="datos1" class="dos table-responsive">     
 </div>
 
 <h2 class="hesperando"> Esperando Respuesta</h2>
@@ -183,17 +177,13 @@ h2{
 <div  id="datos3" class="cinco table-responsive">     
 </div>
 
-<h2 class="havisados">Equipos Avisados</h2>
-<div  id="datos4" class="seis table-responsive">     
-</div>
-
 <h2 class="hproc">Equipos En Proceso</h2>
 <div  id="datos5" class="siete table-responsive">     
 </div>
 
-
-
-
+<h2 class="havisados">Equipos Avisados</h2>
+<div  id="datos4" class="seis table-responsive">     
+</div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

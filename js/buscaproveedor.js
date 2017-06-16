@@ -1,8 +1,8 @@
   $( function() {
-    $.widget( "custom.combobox", {
+    $.widget( "custom.combobox1", {
       _create: function() {
         this.wrapper = $( "<span>" )
-          .addClass( "custom-combobox" )
+          .addClass( "custom-combobox1" )
           .insertAfter( this.element );
  
         this.element.hide();
@@ -18,7 +18,7 @@
           .appendTo( this.wrapper )
           .val( value )
           .attr( "title", "" )
-          .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
+          .addClass( "custom-combobox1-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
           .autocomplete({
             delay: 0,
             minLength: 0,
@@ -48,7 +48,7 @@
  
         $( "<a>" )
           .attr( "tabIndex", -1 )
-          .attr( "title", "Mostras todas las Orden de Trabajo" )
+          .attr( "title", "Mostras todas los Proveedores" )
           .tooltip()
           .appendTo( this.wrapper )
           .button({
@@ -58,7 +58,7 @@
             text: false
           })
           .removeClass( "ui-corner-all" )
-          .addClass( "custom-combobox-toggle ui-corner-right" )
+          .addClass( "custom-combobox1-toggle ui-corner-right" )
           .on( "mousedown", function() {
             wasOpen = input.autocomplete( "widget" ).is( ":visible" );
           })
@@ -129,8 +129,8 @@
       }
     });
  
-    $( "#combobox" ).combobox();
+    $( "#combobox1" ).combobox1();
     $( "#toggle" ).on( "click", function() {
-      $( "#combobox" ).toggle();
+      $( "#combobox1" ).toggle();
     });
   } );

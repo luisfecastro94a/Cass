@@ -9,6 +9,9 @@ if (isset($_SESSION['correo'])) {?>
 <head>
 
 	<meta charset="UTF-8">
+  <?php
+  //var_dump($_POST);
+  ?>
 	<title>Repuestos</title>
    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -166,8 +169,8 @@ label {
 	<div class="contenedor">
 
 
-<a href="cliente.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
-<a href="cliente.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<a href="repuesto.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="repuesto.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
 <br><br>
@@ -230,10 +233,6 @@ $asig=mysql_query($consulta);
 <input type="text" class="form-control" name="codigo_repuesto" id="codigo_repuesto"  placeholder="Codigo Repuesto" 
   required=""></div>
 
-<div class="col-xs-5" >
-<label for="">Nombre Producto</label>
-<input type="text" class="form-control" name="nombre" id="nombre"  placeholder="Nombre Repuesto" 
-  required=""></div>
 
 <?php
 include("conexion.php");
@@ -275,6 +274,8 @@ $mos=mysql_query($con);
 </select>
 </div>
 
+
+
 <div class="col-xs-5" >
 <label for="">Modelo:</label>
 <input type="text" class="form-control" name="modelo" placeholder="Modelo Repuesto" onKeyPress="return soloLetras(event)" required=""></div>
@@ -285,17 +286,17 @@ $mos=mysql_query($con);
 
 <div class="col-xs-5" >
 <label for="">Duración:</label>
-<input type="text" class="form-control" name="duracion" maxlength="3" placeholder="Duracion del Repuesto" required=""></div>
+<input type="text" class="form-control" name="duracion" maxlength="10" placeholder="Duracion del Repuesto" required=""></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Repuesto:</label>
 <input type="text" class="form-control" name="valor_total" placeholder="Valor de Repuesto" onKeyPress="return SoloNumeros(event)" required=""></div>
 
 <div class="col-xs-5">
-<label class="coti" for="">Fecha Solicitud: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_" id="fecha_respuesta"></label></div>
+<label class="coti" for="">Fecha Solicitud: <input class=""  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_solicitud" id="fecha_respuesta"></label></div>
 
 <div class="col-xs-5">
-<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_ingreso" id="fecha_ingreso"></label></div>
+<label class="coti" for="">Fecha Respuesta: <input class=""  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_ingreso" id="fecha_ingreso"></label></div>
 
 <div class="col-xs-5">
   <label for="">Descripción</label>
@@ -321,16 +322,16 @@ if
      isset($_POST['nombre']) && !empty($_POST['nombre']) &&
      isset($_POST['modelo']) && !empty($_POST['modelo']) &&
      isset($_POST['valor_total']) && !empty($_POST['valor_total']) &&
-     isset($_POST['fecha_ingreso']) && !empty($_POST['fecha_ingreso']))
+     isset($_POST['fecha_solicitud']) && !empty($_POST['fecha_solicitud']))
   {
       $id_proveedor = $_POST['id_proveedor']; 
       $id_marca = $_POST['id_marca'];
-      $codigo_repuesto = $_POST['codigo_repuesto']; 
       $id_area = $_POST['id_area'];
+      $codigo_repuesto = $_POST['codigo_repuesto']; 
       $nombre = $_POST['nombre'];
       $modelo = $_POST['modelo'];
       $valor_total = $_POST['valor_total'];
-      $fecha_ingreso = $_POST['fecha_ingreso'];
+      $fecha_solicitud = $_POST['fecha_solicitud'];
       $descripcion = $_POST['descripcion'];
       $ano = $_POST['ano'];
       $duracion = $_POST['duracion'];
@@ -355,7 +356,7 @@ echo "
 }
 else{
   
-  $consulta=mysql_query("INSERT INTO cliente (id_proveedor, id_marca, codigo_repuesto, id_area, nombre, modelo, valor_total, fecha_ingreso, descripcion, ano. duracion) VALUES ('$id_proveedor', '$id_marca','$codigo_repuesto','$id_area','$nombre','$modelo', '$valor_total', '$fecha_ingreso','$descripcion','$ano','$duracion')") or die(mysql_errno());
+  $consulta=mysql_query("INSERT INTO repuesto (id_proveedor, id_marca, codigo_repuesto, id_area, nombre, modelo, valor_total, fecha_solicitud, descripcion, ano, duracion) VALUES ('$id_proveedor', '$id_marca','$codigo_repuesto','$id_area','$nombre','$modelo', '$valor_total', '$fecha_solicitud','$descripcion','$ano','$duracion')") or die(mysql_errno());
  echo '<script> alert("Repuesto Creado con Exito."); </script>';
 
 }

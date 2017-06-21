@@ -59,9 +59,10 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
   h1{
-    margin: 10px 500px 20px 500px;
+    margin: 10px 500px 20px 450px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -77,7 +78,21 @@ label {
     width: 60px;
     border: auto;
   }
- 
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
 
    </style>
 </head>
@@ -156,93 +171,65 @@ label {
 <body>
 	<div class="contenedor">
 
-
 <a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
-<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
+<a href="equipo.reingreso.php"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button></a>
 
 <br><br>
-<h1>Entrada de Equipo</h1>
+<h1>Reingreso de Equipo</h1>
 
 <form class="form-group" action=""  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
 
 <div class="container">
 
-<?php
-  //codigo para que muestre el correlativo de mi orden de trabajo
-    $sql = "SELECT MAX(id_equipo) as max FROM equipo ";
-    $resultado = mysql_query($sql);
-    $row = mysql_fetch_array($resultado);
-    $mensajeE =$row["max"];
-//agregar el "+" para que me muestre la id que sigue
-?>
-
-<div class="col-xs-5" >
+<div class="col-xs-5">
 <label class="fe" for="">Fecha Creación</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>">
-<div class="col-xs-5" >
-<label for="">ID equipo</label>
-<input type="text" class="form-control" title="ID de OT" value="<?=$mensajeE?>" name="id_equipo" id="id_equipo" placeholder="Orden de Trabajo" required=""></div>
-</div>
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
 
-<?php
-  //codigo para que muestre el correlativo de mi orden de trabajo
-    $sql = "SELECT MAX(id_cliente) as max FROM equipo WHERE id_equipo='$mensajeE'";
-    $resultado = mysql_query($sql);
-    $row = mysql_fetch_array($resultado);
-    $idcliente =$row["max"];
-//agregar el "+" para que me muestre la id que sigue
-?>
-<div class="col-xs-5" >
-<label for="">ID Cliente</label>
-<input type="text" class="form-control" title="ID de OT" value="<?=$idcliente?>" name="id_cliente" id="id_cliente" placeholder="ID cliente"></div>
-
-<div class="col-xs-5" >
-<label for="">Cliente</label>
-<select id="nombreCliente" class="form-control" name="id_cliente"  value="" > 
-<option value="0">---Selecionar Cliente---</option>
-</select>
-</div>
-
-<div class="col-xs-5" >
-<label for="">Encargado Cliente:</label>
-<select  class="form-control" id="nombreE" name="id_cliente_encargado" value=""> 
-<option value="0" ></option>
-</select>
-</div> 
-
-
-<div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" required="" name="sintoma_cliente"></textarea>
-</div>
-
-<div class="col-xs-5" >
-<label for="">Serie de Equipo</label>
-<input type="text" class="form-control" title="Numero de Serie" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
 
 <?php
 include("conexion.php");
+$equi=isset($_POST['Filtraequipo'])?$_POST['Filtraequipo']: NULL;
 
-$consulta1="SELECT * FROM marca ORDER BY marca ASC";
-$resultM=mysql_query($consulta1);
+
+ $consult=mysql_query("SELECT equipo.id_equipo,  equipo.serie_equipo, equipo.modelo, cliente.id_cliente, cliente.nombre, cliente_encargado.nombreE, marca.marca FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca WHERE id_equipo='$equi' ");
+ $reg=mysql_fetch_array($consult);
 
 ?>
 <div class="col-xs-5" >
-<label for="">Marca</label>
-<select id="id_marca" class="form-control" name="id_marca" title="Seleccionar Marca del equipo" > 
-<option value="" selected="">---Seleccionar la Marca---</option>
- <?php
-      while($marca=mysql_fetch_array($resultM))
-  {?>
-      <option value="<?php echo $marca['0']?>"><?php echo $marca['1'];?></option>
-  <?php } ?>
-</select>
+<label for="">Serie Equipo</label>
+<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" title="Nombre del Cliente" value="<?php echo $reg['serie_equipo'];?>"  placeholder="Nombre del Cliente" ></d
+
+<div class="col-xs-5">
+<div class="col-xs-5" >
+<label for="">ID equipo</label>
+<input type="text" class="form-control" title="ID de OT" value="<?php echo $reg['id_equipo'];?>" name="id_equipo" id="id_equipo" placeholder="ID equipo" required=""></div>
+<div class="col-xs-5">
+<label for="">ID Cliente</label>
+<input type="text" class="form-control" title="ID de OT" value="<?php echo $reg['id_cliente'];?>" name="id_cliente" id="id_cliente" placeholder="ID cliente"></div>
 </div>
 
 <div class="col-xs-5" >
+<label for="">Cliente</label>
+<input type="text" class="form-control" name="nombre" id="nombre" title="Nombre del Cliente" value="<?php echo $reg['nombre'];?>"  placeholder="Nombre del Cliente" ></div>
+
+<div class="col-xs-5" >
+<label for="">Encargado Cliente</label>
+<input type="text" class="form-control" name="nombreE" id="nombreE" value="<?php echo $reg['nombreE'];?>" title="Encargado del Equipo"  placeholder="Encargado del Equipo" ></div>
+
+<div class="col-xs-5" >
+<label for="">Marca</label>
+<input type="text" class="form-control" name="marca" id="marca" title="Marca del equipo" value="<?php echo $reg['marca'];?>"  placeholder="Marca del Equipo" ></div>
+
+
+<div class="col-xs-5" >
 <label for="">Modelo del Equipo</label>
-<input type="text" class="form-control" name="modelo" id="modelo" title="Modelo del equipo"  placeholder="Modelo del Equipo" required=""></div>
+<input type="text" class="form-control" name="modelo" id="modelo" title="Modelo del equipo" value="<?php echo $reg['modelo'];?>"  placeholder="Modelo del Equipo" required=""></div>
+
+<div class="col-xs-5 has-error" >
+<label for="">Sintoma del Cliente</label>
+<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" required="" name="sintoma_cliente"></textarea>
+</div>
 
 <div class="col-xs-5">
 <label for="">Tipo de Ingreso</label>
@@ -278,8 +265,7 @@ $resultM=mysql_query($consulta1);
 </div>
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button></div>
-  <div class="col-xs-5">
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
   <div class="col-xs-5">
@@ -349,13 +335,13 @@ echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";//esto
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>   
     <script src="js/jquery.js"></script>   
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script> 
     <script src="listarencargado.js"></script>
+    <script src="js/buscaEquipoReingreso.js"></script>
+    <script src="js/autollenadoReIngresoEquipo.js"></script>
 </body>
 <footer></footer>
 </html>

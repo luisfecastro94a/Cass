@@ -343,7 +343,6 @@ else{
     <script src="js/datepicker-es.js"></script> 
     <script src="js/listaequiposAviso.js"></script>
     <script src="js/autollenado.aviso.js"></script>
-    <script src="js/listaProveedor.js"></script>
     <script src="js/autollenado.repuesto.js"></script>
 </body>
 <footer></footer>

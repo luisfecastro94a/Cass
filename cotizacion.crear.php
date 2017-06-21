@@ -303,6 +303,7 @@ $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
 <input type="text" class="form-control" onkeyup="sumar()" name="valorCotizacion" id="valorCotizacion"  placeholder="$"  required="" value="" >
 </div>
 
+
 <div class="col-xs-5 has-error" >
 <label  for="">Descripción de Cotización</label>
 <textarea  name="comentario" id="comentario"  rows="4" cols="53"></textarea>

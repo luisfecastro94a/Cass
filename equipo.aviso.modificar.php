@@ -49,9 +49,10 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
   h1{
-    margin: 10px 500px 20px 500px;
+    margin: 10px 500px 20px 400px;
     color: orange;
     border-top: 30px;
+    width: 100%;
   }
   .contenedor {
     width: 1300px;
@@ -217,7 +218,7 @@ label {
 <input class="fecha" type="text" name="fecha_aviso" id="fecha_aviso" value="<?php echo $reg['fecha_aviso'];?>" disabled>
 <br>
 <label for="">Medio de Aviso</label>
-<select class="form-control" name="medio_aviso" id="medio_aviso" value="" >
+<select class="form-control" name="medio_aviso" id="medio_aviso" value="" disabled>
 <option value="<?php echo $reg['medio_aviso'];?>"><?php echo $reg['medio_aviso'];?></option>
   <option value="TELEFONO">TELEFONO</option>
   <option value="CORREO">CORREO</option>
@@ -240,10 +241,10 @@ label {
 
 <div class="col-xs-5" >
 <label class="fe" for="">Fecha Aviso 3</label>
-<input class="fecha" type="text" name="fecha_aviso2" id="fecha_aviso2" value="<?php echo date("d/m/Y"); ?>" disabled>
+<input class="fecha" type="text" name="fecha_aviso2" id="fecha_aviso2" value="<?php echo date("d/m/Y"); ?>" >
 <br>
 <label for="">Medio de Aviso</label>
-<select class="form-control" name="medio_aviso2" id="medio_aviso2" disabled>
+<select class="form-control" name="medio_aviso2" id="medio_aviso2">
 <option value="">---Selecionar Medio de Aviso---</option>
   <option value="TELEFONO">TELEFONO</option>
   <option value="CORREO">CORREO</option>
@@ -276,8 +277,22 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
+
   
-  mysql_query("UPDATE equipo_aviso SET fecha_aviso1='$fecha_aviso1', medio_aviso1='$medio_aviso1' WHERE id_equipo_aviso='$id'")or die(mysql_error());
+$sql=mysql_query("SELECT fecha_aviso2 FROM equipo_aviso WHERE fecha_aviso2>0");
+if(mysql_num_rows($sql)>0) 
+{ 
+echo " 
+<script> alert('Ya se Aviso demasiadas Veces!!') </script>
+<p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
+"; 
+}
+else
+{
+$consulta=mysql_query("UPDATE equipo_aviso SET fecha_aviso1='$fecha_aviso1', medio_aviso1='$medio_aviso1' WHERE id_equipo_aviso='$id'")or die(mysql_errno());
+ echo '<script> alert("Aviso Registrado Exitosamente"); </script>';
+}
+
 
 ?>
 <?php

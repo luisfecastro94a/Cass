@@ -473,8 +473,6 @@ include("conexion.php");
       $manoObra6 = isset($_POST['manoObra6']) ? $_POST['manoObra6']: '';
       $valor_mano6 = isset($_POST['valor_mano6']) ? $_POST['valor_mano6']: '';
 
-
-
  // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
@@ -483,8 +481,6 @@ $selected = mysql_select_db("bdcass",$dbhandle)
   or die("No se pudo seleccionar la base de datos CASS");
 
   $sql=mysql_query("UPDATE orden_trabajo SET fechaPresupuesto='$fechaPresupuesto', valorReparacion='$valorReparacion', n_partner='$partner', marca='$marca', comentarioo='$comentario', n_partner1='$partner1', marca1='$marca1', comentario1='$comentario1', n_partner2='$partner2', marca2='$marca2', comentario2='$comentario2', n_partner3='$partner3', marca3='$marca3', comentario3='$comentario3', n_partner4='$partner4', marca4='$marca4', comentario4='$comentario4', n_partner5='$partner5', marca5='$marca5', comentario5='$comentario5', n_partner6='$partner6', marca6='$marca6', comentario6='$comentario6', manoObra='$manoObra', valor_mano='$valor_mano', manoObra1='$manoObra1', valor_mano1='$valor_mano1', manoObra2='$manoObra2', valor_mano2='$valor_mano2', manoObra3='$manoObra3', valor_mano3='$valor_mano3', manoObra4='$manoObra4', valor_mano4='$valor_mano4', manoObra5='$manoObra5', valor_mano5='$valor_mano5', manoObra6='$manoObra6', valor_mano6='$valor_mano6' WHERE id_equipo = '$id' ")or die(mysql_error());
-
-
 ?>
 
 <?php

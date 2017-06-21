@@ -128,19 +128,33 @@ include("conexion.php");
 if (isset($_POST['login'])){
     $usuario = $_POST['usuario'];//entre [] va el nombre de mi input
     $contraseña = $_POST['contraseña'];
-    $log = mysql_query("SELECT * FROM usuario WHERE correo='$usuario' AND clave='$contraseña' ");
+    $log = mysql_query("SELECT correo, clave, nivel FROM usuario WHERE correo='$usuario' AND clave='$contraseña' AND nivel='Gerente' ");
+
     if (mysql_num_rows($log)>0) {
       //esto me permite listar a los usuarios
       $row = mysql_fetch_array($log);
       $_SESSION["correo"]=$row['correo'];
       echo 'Iniciando Sesion para'.$_SESSION['correo'].'<p>';//esta es una variable de session
-      echo '<script> window.location="inicio.php"; </script>';
+      echo '<script> window.location="app/Admin/adminLaboratorio.php"; </script>';
 
-    }else{
+    }
+     $log1 = mysql_query("SELECT correo, clave, nivel FROM usuario WHERE correo='$usuario' AND clave='$contraseña' AND nivel='Laboratorio' ");
+     if (mysql_num_rows($log1)>0) {
+      $row1 = mysql_fetch_array($log1);
+      $_SESSION["correo"]=$row1['correo'];
+      echo 'Iniciando Sesion para'.$_SESSION['correo'].'<p>';//esta es una variable de session
+      echo '<script> window.location="app/Laboratorio/iniciotecnico.php"; </script>';
+     }
+    else{
       echo '<script> alert("Usuario o Contraseña Incorrectos."); </script>';
       echo '<script> window.location="index.php" </script>';//deberia ser index.php
     }
+
+
+
 }
+
+
 ?>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

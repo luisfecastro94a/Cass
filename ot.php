@@ -376,27 +376,27 @@ $asig3=mysql_query($consulta4);
 
 <div class="col-xs-5" >
 <label for="">ID:</label>
-<input type="text" class="form-control"  id="nombre" name="id_cliente" maxlength="9" placeholder="ID" required="" value="" ></div>
+<input type="text" class="form-control"  id="id_cliente" name="id_cliente" maxlength="9" placeholder="ID" required="" value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Cliente:</label>
-<input type="text" class="form-control" id="rut" name="nombre"  placeholder="Cliente"   value="" ></div>
+<input type="text" class="form-control" id="nombre" name="nombre"  placeholder="Cliente"   value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Rut:</label>
-<input type="text" class="form-control"  id="fono" name="rut" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
+<input type="text" class="form-control"  id="rut" name="rut" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
   required="" value="" ></div>
 
 
 <div class="col-xs-5" >
 <label for="">Fono:</label>
-<input type="text" class="form-control" id="correo" name="fono"   placeholder="Fono" required="" value="" ></div>
+<input type="text" class="form-control" id="fono" name="fono"   placeholder="Fono" required="" value="" ></div>
 
 <div class="col-xs-5" >
 <label for="">Correo:</label>
-<input type="text" class="form-control" id="direccion" name="correo" placeholder="Correo" required="" value=""></div>
+<input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" required="" value=""></div>
 
 <div class="col-xs-5" >
 <label for="">Encargado Cliente:</label>

@@ -22,7 +22,7 @@ if (isset($_SESSION['correo'])) {?>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script>
   function sumar(){
-    a=document.formcotizacion.valorReparacion.value;
+    a=document.formcotizacion.totalRepuesto.value;
     b=document.formcotizacion.valorMano.value;
     c=document.formcotizacion.valorCotizacion.value;
 
@@ -324,7 +324,7 @@ mysql_close();
  
  <div class="col-xs-5" >
 <label for="">Valor Repuesto</label>
-<input type="text" class="form-control" name="valorReparacion"  id="can" required="" value="0" ></div>
+<input type="text" class="form-control" name="totalRepuesto"  id="can" required="" value="0" ></div>
 
 <div class="col-xs-5" >
 <label for="">Valor Mano Obra</label>
@@ -352,7 +352,8 @@ include("conexion.php");
       $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
       $fecha_respuesta = isset($_POST['fecha_respuesta']) ? $_POST['fecha_respuesta']: '';    
       $comentario = isset($_POST['comentario']) ? $_POST['comentario']: ''; 
-      $valorCotizacion = isset($_POST['valorCotizacion']) ? $_POST['valorCotizacion']: ''; 
+      $valorCotizacion = isset($_POST['valorCotizacion']) ? $_POST['valorCotizacion']: '';
+      $totalRepuesto = isset($_POST['totalRepuesto']) ? $_POST['totalRepuesto']: ''; 
    // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
@@ -360,7 +361,7 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-  mysql_query("UPDATE cotizacion SET id_estado='$id_estado', fecha_respuesta='$fecha_respuesta', comentario='$comentario', valorCotizacion='$valorCotizacion'  WHERE id_cotizacion='$id'");
+  mysql_query("UPDATE cotizacion SET id_estado='$id_estado', fecha_respuesta='$fecha_respuesta', comentario='$comentario', totalRepuesto='$totalRepuesto', valorCotizacion='$valorCotizacion'  WHERE id_cotizacion='$id'");
  
 ?>
 

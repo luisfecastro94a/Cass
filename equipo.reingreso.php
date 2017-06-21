@@ -2,46 +2,56 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+<!--HTTP-EQUIV="REFRESH" CONTENT="1;URL=equipo.entrada.php esto sirve para refrescar la pagina-->
+	<meta charset="UTF-8" ">
 
-  <meta charset="UTF-8">
-
-  <title>Reparación de Equipo</title>
+	<title>Equipo</title>
+    <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
   <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script>
- <script>
-  $(function(){
-    //clona la fila 
-    $("#adicional").on('click', function(){
-      $("#tabla tbody tr:eq(0)").clone().removeClass('fila-fija').appendTo('#tabla');
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script>
+  $( function() {
+    $( "#fecha_creacion" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
     });
-    //evento que selecciona la fila y la elimina
-    $(document).on("click", "eliminar", function(){
-      var parent = $(this).parents().get(0);
-      $(parent).remove();
-    });
-  });
- </script>
+  } );
+  </script>
+	
       <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
 
 }
-  body{
+	body{
   background: #F2F2F2;
 }
-     nav ul ul.dropdown-menu li a:hover {
-  background: #CCCCCC;
-  }
-   nav ul li:hover {
-  background: #CCCCCC;
-  }
+   	 nav ul ul.dropdown-menu li a:hover {
+	background: #CCCCCC;
+ 	}
+ 	 nav ul li:hover {
+	background: #CCCCCC;
+ 	}
   img.logo {
     height: 50px;
     margin: auto;
@@ -49,7 +59,7 @@ if (isset($_SESSION['correo'])) {?>
     border: auto;
   }
   h1{
-    margin: 10px 500px 20px 400px;
+    margin: 10px 500px 20px 450px;
     color: orange;
     border-top: 30px;
     width: 100%;
@@ -68,9 +78,23 @@ label {
     width: 60px;
     border: auto;
   }
+  .custom-combobox {
+    position: relative;
+    display: inline-block;
+  }
+  .custom-combobox-toggle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-left: -1px;
+    padding: 0;
+  }
+  .custom-combobox-input {
+    margin: 0;
+    padding: 5px 10px;
+  }
 
-
-</style>
+   </style>
 </head>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -145,149 +169,121 @@ label {
 </nav>
 
 <body>
-  <div class="contenedor">
+	<div class="contenedor">
 
 <a href="equipo.entrada.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="equipo.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
-<?php
-    $id=$_REQUEST['id'];
-    include("conexion.php");
-      
-      $pedir=mysql_query("SELECT equipo.fecha_creacion, equipo.modelo, equipo.tipo_ingreso, equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, cliente.nombre, cliente.id_cliente FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE id_equipo='$id' ")or die(mysql_error());
-      $reg=mysql_fetch_array($pedir);
-  ?>
-<h1>Reparación de Equipo</h1>
 
-<form class="" role="form" action=""  method="POST">
+<br><br>
+<h1>Reingreso de Equipo</h1>
 
-<div class="container"">
+<form class="form-group" action="equipo.reingreso.crea.php"  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
 
-<div  class="form-group" >
+<div class="container">
+
+<div class="col-xs-5">
 <label class="fe" for="">Fecha Creación</label>
-<input  class="fecha" type="text" name="fecha_creacion" value="<?php echo $reg['fecha_creacion'];?>" id="fecha_creacion" disabled></div>
-
-<div class="form-group" >
-<label class="fe" for="">Fecha Modificación</label>
-<input class="fecha" type="text" name="fechaPresupuesto" value="<?php echo date("d/m/Y");?>" id="fechaPresupuesto" ></div>
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
 
 <?php
 include("conexion.php");
-
-$consulta2="SELECT * FROM cliente ORDER BY nombre ASC ";
+$consulta2="SELECT id_equipo, serie_equipo FROM equipo";
 $resultE=mysql_query($consulta2);
 ?>
-<div class="col-xs-5" >
-<label for="">Cliente</label>
-<select class="form-control" name="id_cliente" id="id_cliente" disabled="">
-  <option value="<?php echo $reg['id_cliente'];?>"><?php echo $reg['nombre'];?></option>
+<div class="col-xs-5 ui-widget" >
+<label for="">Serie Equipo</label>
+<select id="combobox" class="form-control"  name="Filtraequipo" class="form-control" > 
+<option value="" selected=""></option>
  <?php
-      while($c=mysql_fetch_array($resultE))
+      while($result=mysql_fetch_array($resultE))
   {?>
-      <option value="<?php echo $c['0']?>"><?php echo $c['2'];?></option>
+      <option value="<?php echo $result['0']?>"><?php echo $result['serie_equipo'];?></option>
   <?php } ?>
 </select>
 </div>
-
-<div class="col-xs-5" >
-<label for="">Sintoma del Cliente</label>
-<textarea rows="4" cols="53" name="sintoma_cliente" id="sintoma_cliente" value="" disabled><?php echo $reg['sintoma_cliente'];?></textarea>
+<br>
+<div class="col-xs-5">
+ <input type="submit" value="Filtrar Equipo" class="btn btn-default">
 </div>
-
-<div class="col-xs-5" >
-<label for="">Serie de Equipo</label>
-<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" required="" disabled></div>
-
-<div class="col-xs-5" >
-<label for="">Marca</label>
-<input type="text" class="form-control" name="id_marca" id="id_marca" value="<?php echo $reg['marca'];?>" placeholder="Serie del Equipo" required="" disabled></div>
-
-
-<div class="col-xs-5" >
-<label for="">Modelo del Equipo</label>
-<input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required="" disabled></div>
-
-
-<div class="col-xs-5" >
-<label for="">Tipo de Ingreso</label>
-<input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
-
-<div class="col-xs-5 ">
-<label class="coti" for="">Estado:</label>
-  <div class="checkbox has-success">
-    <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1" required=""><strong> Reparado</strong>
-</label>
-  </div>
-   <div class="checkbox has-error">
-    <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="12" required=""><strong> En Proceso</strong>
-</label>
-  </div>
-  <div class="checkbox ">
-    <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="10" required=""><strong> Rechazado</strong>
-</label>
-  </div>
-</div>
-
-<div class="col-xs-5 has-error" >
-<label for="" class="has-error">Sintoma del Técnico</label>
-<textarea class="has-error" rows="4" cols="53" name="sintoma_tecnico" autofocus="" title="¡hee Técnico, Ingresa tu sintoma!" required=""></textarea>
-</div>
-
-
-  <div class="col-xs-5 btn-ber">
-  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Reparación</button>
-  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
-  </div>
-
-</div>
+  
 </div>
 </form>
 </div>
-
 <?php
 include("conexion.php");
-      
-      $id=$_REQUEST['id'];
 
-      $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
-      $sintoma_tecnico = isset($_POST['sintoma_tecnico'])? $_POST['sintoma_tecnico']:'';   
-    // conexión a la base de datos de
+if
+    (isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
+     isset($_POST['id_marca']) && !empty($_POST['id_marca']) &&
+     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
+     isset($_POST['fecha_creacion']) && !empty($_POST['fecha_creacion']) &&
+     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
+     isset($_POST['tipo_ingreso']) && !empty($_POST['tipo_ingreso']) &&
+     isset($_POST['serie_equipo']) && !empty($_POST['serie_equipo']) &&
+     isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
+     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen'])&&
+     isset($_POST['id_equipo']) && !empty($_POST['id_equipo']))
+  {
+      $id_cliente = $_POST['id_cliente']; 
+      $id_marca = $_POST['id_marca'];
+      $id_estado = $_POST['id_estado'];
+      $fecha_creacion = $_POST['fecha_creacion'];
+      $modelo = $_POST['modelo'];
+      $tipo_ingreso = $_POST['tipo_ingreso'];
+      $serie_equipo = $_POST['serie_equipo'];
+      $sintoma_cliente = $_POST['sintoma_cliente'];
+      $sintoma_tecnico = $_POST['sintoma_tecnico'];
+      $nombreImagen = $_POST['nombreImagen'];
+      $imagen = (addslashes(file_get_contents($_FILES['imagen']['tmp_name'])));//aqui guardo los bits en la variable
+      $id_cliente_encargado = $_POST['id_cliente_encargado'];
+// conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
+// Comprobamos si la serie_equipo esta registrado 
+include("conexion.php");
 
-  $sql=mysql_query("UPDATE equipo SET id_estado='$id_estado', sintoma_tecnico='$sintoma_tecnico' WHERE id_equipo='$id'")or die(mysql_error());
-
+$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo' "); 
+if(mysql_num_rows($nuevo_rut)>0) 
+{ 
+echo " 
+  <script> alert('El Equipo ya esta registrado'); </script>
+<p class='avisos'><a href='javascript:history.go(-1)' class='btn btn-danger clase1'>Volver atrás</a></p> 
+"; 
+}
+else{
+  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen, id_cliente_encargado) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$id_cliente_encargado')") or die(mysql_errno());
+  //$consulta2=mysql_query("INSERT INTO orden_trabajo (id_equipo) VALUES ('$id_equipo')")or die(mysql_errno());
+ echo '<script> alert("Equipo Creado con Exito."); </script>';
+echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";//esto hace que luego de insertar se actualize la pagina
+}
+}
+;
 ?>
-<?php
-// close connection; 
-mysql_close();
-?>
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="validarrut.js"></script>
     <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>
-    <script src="validaremail.js"></script>
-    <script src="validartelefono.js"></script>
-  
+    <script src="js/jquery.js"></script>   
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/datepicker-es.js"></script> 
+    <script src="listarencargado.js"></script>
+    <script src="js/buscaEquipoReingreso.js"></script>
+    <script src="js/autollenadoReIngresoEquipo.js"></script>
 </body>
-<footer> </footer>
+<footer></footer>
 </html>
 <?php
 }else{
-  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
+  echo '<script> window.location="index.php";</script>';
 }
 
 ?>
+

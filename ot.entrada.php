@@ -295,10 +295,23 @@ $asig3=mysql_query($consulta4);
 </select>
 </div>
 
+<?php
+  //codigo para que muestre el correlativo de mi orden de trabajo
+    $sql = "SELECT MAX(id_orden_trabajo) as max FROM orden_trabajo ";
+    $resultado = mysql_query($sql);
+    $row = mysql_fetch_array($resultado);
+    $mensaje =$row["max"];
+?>
+
+<div class="col-xs-5">
+<label for="">ID</label>
+<input type="text" class="form-control" id="id_orden_trabajo" value="<?=$mensaje?>" name="id_orden_trabajo"></div>
+
   
         </div>
     </div>
   </div>
+
 <!--DATOS DEL CLIENTE-->
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingTwo">
@@ -312,26 +325,23 @@ $asig3=mysql_query($consulta4);
       <div class="panel-body">
 
       <!--aqui va formulario de div-->
+<?php
 
-     <!--Aqui va los datos del EQUIPO-->
-<div class="col-xs-5" >
-<label for="">Serie del Equipo:</label>
-<select  id="serie_equipo" class="form-control" onchange="listaequipo(this.value)" name="id_equipo" value=""> 
-</select>
-</div> 
+$equipo=$_REQUEST['equipo'];
+$cliente=$_REQUEST['idcliente'];
 
-<div class="col-xs-5" >
-<label for="">Sintoma del Cliente:</label>
-<textarea rows="4" cols="53" title="Ingresar el sintoma del cliente" id="sintoma_cliente" name="sintoma_cliente"></textarea>
-</div>
 
-<div class="col-xs-5" >
-<label for="">Marca:</label>
-<input type="text" class="form-control" id="marca" name="marca" placeholder="Marca" required="" value=""></div>
+/*
+$consulta = mysql_query("SELECT  equipo.serie_equipo, equipo.sintoma_cliente, marca.marca, estado.estado, equipo.id_cliente, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente_encargado.nombreE FROM equipo  INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON equipo.id_cliente_encargado=cliente_encargado.id_cliente_encargado  WHERE id_equipo='$mensaje1' ")or die(mysql_error());
+$reg = mysql_fetch_object($consulta);
+*/
+
+?>
+<!--Aqui va los datos del EQUIPO-->
 
 <div class="col-xs-5" >
-<label for="">Estado:</label>
-<input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value=""></div>
+<label for="">ID equipo</label>
+<input type="text" class="form-control" id="id_equipo" name="id_equipo" placeholder="ID" required="" value="<?php echo $equipo?>"></div>
 
 
       </div>
@@ -352,31 +362,8 @@ $asig3=mysql_query($consulta4);
 
 <div class="col-xs-5" >
 <label for="">ID:</label>
-<input type="text" class="form-control"  id="id_cliente" name="id_cliente"  placeholder="ID" required="" value="" ></div>
+<input type="text" class="form-control"  id="id_cliente" name="id_cliente"  placeholder="ID" required="" value="<?php echo $cliente?>" ></div>
 
-
-<div class="col-xs-5" >
-<label for="">Cliente:</label>
-<input type="text" class="form-control" id="nombre" name="nombre"  placeholder="Cliente"   value="" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Rut:</label>
-<input type="text" class="form-control"  id="rut" name="rut" maxlength="9" placeholder="Fono/Fax" onKeyPress="return SoloNumeros(event)"
-  required="" value="" ></div>
-
-
-<div class="col-xs-5" >
-<label for="">Fono:</label>
-<input type="text" class="form-control" id="fono" name="fono"   placeholder="Fono" required="" value="" ></div>
-
-<div class="col-xs-5" >
-<label for="">Correo:</label>
-<input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" required="" value=""></div>
-
-<div class="col-xs-5" >
-<label for="">Encargado Cliente:</label>
-<input type="text" class="form-control" id="nombreE" name="nombreE" placeholder="Cliente encargado" required="" value=""></div>
 
 
       </div>
@@ -504,8 +491,8 @@ $nuevo_correlativo=mysql_query("SELECT correlativo_ot FROM orden_trabajo WHERE c
 if(mysql_num_rows($nuevo_correlativo)>0) 
 { 
 echo " 
-<script> alert('El Numero de OT ya se encuentra registrado') </script>; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
+<script> alert('El Numero de OT ya se encuentra registrado') </script>
+<p class='avisos'><a href='javascript:history.go(-1)' class='btn btn-danger clase1'>Volver atrás</a></p> 
 "; 
 }
 //aqui ira otro else para preguntar si el equipo seleccionado ya esta con un OT asociado.

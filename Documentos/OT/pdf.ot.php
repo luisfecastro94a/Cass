@@ -190,7 +190,7 @@ $pdf->Cell(40,8,' FIRMA CASS',0);
 $pdf->Cell(40,8,' FIRMA CLIENTE',0);
 $pdf->Ln(20);
 
-//$pdf->AddPage();
+$pdf->AddPage();
 $pdf->SetFont('Arial','B',10);
 $pdf->Cell(25,8,'',0);
 $pdf->Cell(25,8,'CONDICIONES GENERALES APLICABLES AL CONTRATO DE SERVICIO DE REPARACION',0);

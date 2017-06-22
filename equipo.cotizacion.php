@@ -38,6 +38,50 @@ if (isset($_SESSION['correo'])) {?>
     document.presupuesto.valorReparacion.value=h;
   }
 </script> 
+<script >
+    function habilita(){
+        $(".inputText").removeAttr("disabled");
+    }
+    function deshabilita(){
+        $(".inputText").attr("disabled","disabled");
+    }
+        function habilitar(){
+        $(".inputText1").removeAttr("disabled");
+    }
+    function deshabilitar(){
+        $(".inputText1").attr("disabled","disabled");
+    }
+    function habilitar1(){
+        $(".inputText2").removeAttr("disabled");
+    }
+    function deshabilitar1(){
+        $(".inputText2").attr("disabled","disabled");
+    }
+    function habilitar2(){
+        $(".inputText3").removeAttr("disabled");
+    }
+    function deshabilitar2(){
+        $(".inputText3").attr("disabled","disabled");
+    }
+    function habilitar3(){
+        $(".inputText4").removeAttr("disabled");
+    }
+    function deshabilitar3(){
+        $(".inputText4").attr("disabled","disabled");
+    }
+    function habilitar4(){
+        $(".inputText5").removeAttr("disabled");
+    }
+    function deshabilitar4(){
+        $(".inputText5").attr("disabled","disabled");
+    }
+    function habilitar5(){
+        $(".inputText6").removeAttr("disabled");
+    }
+    function deshabilitar5(){
+        $(".inputText6").attr("disabled","disabled");
+    }
+</script>
 <style>
  * {
  
@@ -86,6 +130,9 @@ label {
   max-height: 80px;
   border: 2px 
   solid #990000;
+}
+.lahade {
+  color: #D23F61;
 }
 </style>
 </head>
@@ -218,8 +265,6 @@ $resultE=mysql_query($consulta2);
 <label for="">Tipo de Ingreso</label>
 <input type="text" class="form-control" name="tipo_ingreso" id="tipo_ingreso" value="<?php echo $reg['tipo_ingreso'];?>"  required="" disabled></div>
 
-
-
 <div class="col-xs-5">
 <label for="">Ingreso Mano de Obra</label>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ingresar Mano de Obra</button></div>
@@ -231,14 +276,15 @@ $resultE=mysql_query($consulta2);
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">Mano de Obra</h4>
       </div>
-      <div class="modal-body">
-          <div class="col-xs-5">
+      <div class="modal-body">  
+          <div class="col-xs-5">      
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra">
+             <input type="radio" name="rad" value="O" onclick="habilita()">
+            <input type="text" class="inputText form-control" disabled id="" name="manoObra">
           </div>
-            <div class="col-xs-5">
+          <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano" name="valor_mano" value="0">
+            <input type="text" class="inputText form-control" disabled onkeyup="sumar()" id="valor_mano" name="valor_mano" value="0">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
@@ -287,17 +333,14 @@ $resultE=mysql_query($consulta2);
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
             <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano6" name="valor_mano6" value="0">
-          </div>                                               
-
-      </div>
+          </div>  
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+      </div>                                             
       </div>
     </div>
   </div>
 </div>
-
-
 
 <div class="col-xs-5 has-error" >
 <label for="">Valor de Reparación</label>
@@ -309,107 +352,163 @@ $resultE=mysql_query($consulta2);
 <table class="table bg-info" id="tabla">
   <tr class="fila-fija">
   <td>N° 1</td>
+  <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilita()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilita()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText form-control" name="n_partner" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca" id="" type="text" >
+    <input class="inputText form-control" name="marca" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentarioo" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText textareaR" name="comentarioo" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 2</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner1" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText1 form-control" name="n_partner1" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca1" id="" type="text" >
+    <input class="inputText1 form-control" name="marca1" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario1" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText1 textareaR" name="comentario1" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 3</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar1()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar1()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner2" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText2 form-control" name="n_partner2" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca2" id="" type="text" >
+    <input class="inputText2 form-control" name="marca2" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario2" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText2 textareaR" name="comentario2" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 4</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar2()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar2()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner3" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText3 form-control" name="n_partner3" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca3" id="" type="text" >
+    <input class="inputText3 form-control" name="marca3" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario3" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText3 textareaR" name="comentario3" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 5</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar3()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar3()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner4" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText4 form-control" name="n_partner4" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca4" id="" type="text" >
+    <input class="inputText4 form-control" name="marca4" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario4" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText4 textareaR" name="comentario4" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 6</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar4()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar4()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner5" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText5 form-control" name="n_partner5" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca5" id="" type="text" >
+    <input class="inputText5 form-control" name="marca5" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario5" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText5 textareaR" name="comentario5" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
    <tr class="fila-fija">
    <td>N° 7</td>
+     <td>
+    <label for="" class="lahade">Habilitar</label>
+    <input type="radio" name="rad" value="O" onclick="habilitar5()">
+  </td>
+  <td>
+    <label for="" >Desabilitar</label>
+    <input type="radio" name="rad" value="F" onclick="deshabilitar5()">
+  </td>
     <td>
-    <label for="">N° Parnet</label>
-    <input class="form-control" name="n_partner6" id="" type="text" >
+    <label for="">Part Number</label>
+    <input class="inputText6 form-control" name="n_partner6" id="" type="text" disabled>
     </td>
     <td>
     <label for="">Marca</label>
-    <input class="form-control" name="marca6" id="" type="text" >
+    <input class="inputText6 form-control" name="marca6" id="" type="text" disabled>
     </td>
     <td>
     <label  for="default">Descripción</label>
-    <textarea class="textareaR" name="comentario6" id="" cols="30" rows="3" ></textarea>
+    <textarea class="inputText6 textareaR" name="comentario6" id="" cols="30" rows="3" disabled></textarea>
     </td>
   </tr>
 <td> <button id="adicional" name="adicional" type="button" class="btn btn-warning">Mas +</button></td>

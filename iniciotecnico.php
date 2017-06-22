@@ -168,14 +168,6 @@ h1{
 <div  id="datos5" class="siete table-responsive">     
 </div>
 
-<h2 class="hcass">Equipos Cass</h2>
-<div  id="dato" class="cuatro table-responsive">      
-</div>
-
-<h2 class="hcliente">No reparados por Cliente</h2>
-<div  id="datos3" class="cinco table-responsive">     
-</div>
-
 <h2 class="havisados">Orden de Trabajo Pendiente</h2>
 <div  id="muestraOT" class="seis table-responsive">     
 </div>
@@ -184,17 +176,12 @@ h1{
 <div  id="muestraOTCe" class="seis table-responsive">     
 </div>
 
-
-
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script src="js/mostrar.sinreparar.js"></script>
     <script src="js/mostrar.reparado.js"></script>
-    <script src="js/mostrar.sinsolucioncass.js"></script>
-    <script src="js/mostrar.sinsolucioncliente.js"></script>
     <script src="js/mostrar.equipoProceso.js"></script>
     <script src="js/mostrar.otTecnico.js"></script>
     <script src="js/mostrar.otTecnicoCerrada.js"></script>

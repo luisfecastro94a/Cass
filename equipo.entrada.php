@@ -337,7 +337,7 @@ else{
   $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen, id_cliente_encargado) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$id_cliente_encargado')") or die(mysql_errno());
   //$consulta2=mysql_query("INSERT INTO orden_trabajo (id_equipo) VALUES ('$id_equipo')")or die(mysql_errno());
  echo '<script> alert("Equipo Creado con Exito."); </script>';
-echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";//esto hace que luego de insertar se actualize la pagina
+ echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";//esto hace que luego de insertar se actualize la pagina
 }
 }
 ;

@@ -207,7 +207,7 @@ $resultE=mysql_query($consulta2);
 </div>
 <div class="col-xs-5" >
 <label for="">Serie de Equipo</label>
-<input type="text" class="form-control" name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" required="" disabled></div>
+<input type="text" class="form-control"  name="serie_equipo" id="serie_equipo" value="<?php echo $reg['serie_equipo'];?>" required="" disabled></div>
 <div class="col-xs-5" >
 <label for="">Marca</label>
 <input type="text" class="form-control" name="id_marca" id="id_marca" value="<?php echo $reg['marca'];?>" placeholder="Serie del Equipo" required="" disabled></div>
@@ -222,7 +222,7 @@ $resultE=mysql_query($consulta2);
 
 <div class="col-xs-5">
 <label for="">Ingreso Mano de Obra</label>
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Ingresar Mano de Obra</button></div>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ingresar Mano de Obra</button></div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
@@ -417,10 +417,12 @@ $resultE=mysql_query($consulta2);
 </div>
 
   <div class="col-xs-5 btn-ber">
-  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block">Cerrar Presupuesto</button></div>
+  <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Presupuesto</button></div>
   <div class="col-xs-5">
-  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block">Cancelar</button>
+  <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
   </div>
+
+
 
 </div>
 </div>

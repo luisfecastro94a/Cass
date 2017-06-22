@@ -122,7 +122,6 @@ label {
                      <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
                </ul>
         </li>
-
          <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mantenedor<span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -169,7 +168,7 @@ label {
 
 <div class="form-group" >
 <label class="fe" for="">Fecha Modificación</label>
-<input class="fecha" type="text" name="fechaPresupuesto" value="<?php echo date("d/m/Y");?>" id="fechaPresupuesto" ></div>
+<input class="fecha" type="text" name="fecha_modificacion" value="<?php echo date("d/m/Y");?>" id="fecha_modificacion" ></div>
 
 <?php
 include("conexion.php");
@@ -202,11 +201,9 @@ $resultE=mysql_query($consulta2);
 <label for="">Marca</label>
 <input type="text" class="form-control" name="id_marca" id="id_marca" value="<?php echo $reg['marca'];?>" placeholder="Serie del Equipo" required="" disabled></div>
 
-
 <div class="col-xs-5" >
 <label for="">Modelo del Equipo</label>
 <input type="text" class="form-control" name="modelo" id="modelo" value="<?php echo $reg['modelo'];?>" placeholder="Modelo del Equipo" required="" disabled></div>
-
 
 <div class="col-xs-5" >
 <label for="">Tipo de Ingreso</label>
@@ -236,7 +233,6 @@ $resultE=mysql_query($consulta2);
 <textarea class="has-error" rows="4" cols="53" name="sintoma_tecnico" autofocus="" title="¡hee Técnico, Ingresa tu sintoma!" required=""></textarea>
 </div>
 
-
   <div class="col-xs-5 btn-ber">
   <button type="submit" title="Modificar Equipo" class=" btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar Reparación</button>
   <button type="reset" title="Cancelar Ingreso" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button>
@@ -246,13 +242,13 @@ $resultE=mysql_query($consulta2);
 </div>
 </form>
 </div>
-
 <?php
 include("conexion.php");
       
       $id=$_REQUEST['id'];
 
       $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
+      $fecha_modificacion = isset($_POST['fecha_modificacion'])? $_POST['fecha_modificacion']:'';   
       $sintoma_tecnico = isset($_POST['sintoma_tecnico'])? $_POST['sintoma_tecnico']:'';   
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
@@ -261,8 +257,7 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-  $sql=mysql_query("UPDATE equipo SET id_estado='$id_estado', sintoma_tecnico='$sintoma_tecnico' WHERE id_equipo='$id'")or die(mysql_error());
-
+  $sql=mysql_query("UPDATE equipo SET id_estado='$id_estado', fecha_modificacion='$fecha_modificacion', sintoma_tecnico='$sintoma_tecnico' WHERE id_equipo='$id'")or die(mysql_error());
 ?>
 <?php
 // close connection; 

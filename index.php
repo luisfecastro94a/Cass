@@ -135,7 +135,7 @@ if (isset($_POST['login'])){
       $row = mysql_fetch_array($log);
       $_SESSION["correo"]=$row['correo'];
       echo 'Iniciando Sesion para'.$_SESSION['correo'].'<p>';//esta es una variable de session
-      echo '<script> window.location="app/Admin/adminLaboratorio.php"; </script>';
+      echo '<script> window.location="inicio.php"; </script>';
 
     }
      $log1 = mysql_query("SELECT correo, clave, nivel FROM usuario WHERE correo='$usuario' AND clave='$contraseña' AND nivel='Laboratorio' ");
@@ -149,9 +149,6 @@ if (isset($_POST['login'])){
       echo '<script> alert("Usuario o Contraseña Incorrectos."); </script>';
       echo '<script> window.location="index.php" </script>';//deberia ser index.php
     }
-
-
-
 }
 
 

@@ -165,23 +165,14 @@ h2{
 
 <h2 class="hsinreparar">Sin Reparar</h2>
 <div id="datos" class="uno table-responsive" > 
-
 </div>
-
-<h2 class="hesperando"> Esperando Respuesta</h2>
-<div  id="datos2" class="tres table-responsive">  
-</div>
-
-<h2 class="hcass">Equipos Cass</h2>
-<div  id="dato" class="cuatro table-responsive">      
-</div>
-
-<h2 class="hcliente">No reparados por Cliente</h2>
-<div  id="datos3" class="cinco table-responsive">     
-</div>
-
+ 
 <h2 class="hproc">Equipos En Proceso</h2>
 <div  id="datos5" class="siete table-responsive">     
+</div>
+
+<h2 class="hesperando">Cotización Esperando Respuesta</h2>
+<div  id="datos2" class="tres table-responsive">  
 </div>
 
 <h2 class="havisados">Equipos Avisados</h2>
@@ -204,8 +195,6 @@ h2{
     <script src="js/mostrar.sinreparar.js"></script>
     <script src="js/mostrar.reparado.js"></script>
     <script src="js/mostrar.esperandorespuesta.js"></script>
-    <script src="js/mostrar.sinsolucioncass.js"></script>
-    <script src="js/mostrar.sinsolucioncliente.js"></script>
     <script src="js/mostrar.equipoavisado.js"></script>
     <script src="js/mostrar.equipoProceso.js"></script>
     <script src="js/mostrar.otTecnicoC.js"></script>

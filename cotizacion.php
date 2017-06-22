@@ -170,7 +170,6 @@ label {
 <a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
-
 <br><br>
 <h1>Crear Cotización</h1>
 
@@ -178,31 +177,14 @@ label {
 
 <div class="container">
 
-<div class="col-xs-5 ui-widget">
-<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label></div>
-<?php
-  //codigo para que muestre el correlativo de mi orden de trabajo
-    $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
-    $resultado = mysql_query($sql);
-    $row = mysql_fetch_array($resultado);
-    $mensaje =$row["max"]+1;
-?>
-<div class="col-xs-5">
-<label for="">Numero de Cotización: </label>
-<input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  >
-</div>
-
-
 <?php
 include("conexion.php");
 
-
 $consulta="SELECT id_orden_trabajo, correlativo_ot FROM orden_trabajo WHERE correlativo_cotizacion<1 ";
 $asig=mysql_query($consulta);
-
 ?>
 <div class="col-xs-5 ui-widget" >
-<label for="">Orden de Trabajo: </label>
+<label for="">N° Orden de Trabajo: </label>
 <select id="combobox" class="form-control" name="filtrarOT" class="form-control" > 
 <option value="" selected="">---Seleccionar Orden de Trabajo---</option>
  <?php
@@ -211,15 +193,25 @@ $asig=mysql_query($consulta);
       <option value="<?php echo $row['0']?>"><?php echo $row['1'];?></option>
   <?php } ?>
 </select>
-</div>
-<br>
+<br><br><br>
 <div class="col-xs-5">
- <input type="submit" value="Filtrar Repuestos" class="btn btn-default">
+<button type="submit" value="Filtrar Repuestos" class="btn btn-danger">Filtrar Repuestos <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></button></div>
 </div>
-
-
+<?php
+  //codigo para que muestre el correlativo de mi orden de trabajo
+    $sql = "SELECT MAX(correlativo_cotizacion) as max FROM cotizacion ";
+    $resultado = mysql_query($sql);
+    $row = mysql_fetch_array($resultado);
+    $mensaje =$row["max"]+1;
+?>
+<div class="col-xs-5 ui-widget">
+<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
+</div>
+<div class="col-xs-5 ui-widget">
+<label for="">Numero de Cotización: 
+<input type="text" class="form-control" id="correlativo_cotizacion" value="<?=$mensaje?>" name="correlativo_cotizacion"  ></label>
+</div>
 </form>
-
 <div class="col-xs-10  has-error">
 <h2 class="bg-primary text-center pad-basic no-btn">Repuesto Solicitados</h2>
 <table class="table bg-info table-responsive" id="tabla">
@@ -232,57 +224,9 @@ $asig=mysql_query($consulta);
         <td><h4>Comentario</h4></td>
         <td><h4>Valor Repuesto</h4></td>
       </tr>
-
     </tbody>
 </table>
 </div>
-
-
-<?php
-if
-    (isset($_POST['correlativo_cotizacion']) && !empty($_POST['correlativo_cotizacion']) &&
-     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
-     isset($_POST['id_orden_trabajo']) && !empty($_POST['id_orden_trabajo']) &&
-     isset($_POST['fecha_cotizacion']) && !empty($_POST['fecha_cotizacion']) &&
-     isset($_POST['valorCotizacion']) && !empty($_POST['valorCotizacion']))
-  {
-      $correlativo_cotizacion = $_POST['correlativo_cotizacion']; 
-      $id_estado = $_POST['id_estado'];
-      $id_orden_trabajo = $_POST['id_orden_trabajo'];
-      $fecha_cotizacion = $_POST['fecha_cotizacion'];
-      $comentario= $_POST['comentario'];
-      $valorCotizacion = $_POST['valorCotizacion'];
-      $venta_repuesto = $_POST['venta_repuesto'];
-      $venta_repuesto_uno = $_POST['venta_repuesto_uno'];
-      $venta_repuesto_dos = $_POST['venta_repuesto_dos'];
-      $venta_repuesto_tres = $_POST['venta_repuesto_tres'];
-      $venta_repuesto_cuatro = $_POST['venta_repuesto_cuatro'];
-      $venta_repuesto_cinco = $_POST['venta_repuesto_cinco'];
-      $disponibilidad = $_POST['disponibilidad']; 
-    // conexión a la base de datos de
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("No se pudo Contactar a Base de Datos MySQL");
-// seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("bdcass",$dbhandle) 
-  or die("No se pudo seleccionar la base de datos CASS");
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_id=mysql_query("SELECT id_orden_trabajo FROM cotizacion WHERE id_orden_trabajo='$id_orden_trabajo'"); 
-if(mysql_num_rows($nuevo_id)>0) 
-{ 
-echo " 
-<script> alert('Modifica la OT, ya tiene una COTIZACION!! '); </script> 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1 btn btn-danger'>Volver atrás</a></p> 
-"; 
-}
-else{
-  $consulta=mysql_query("INSERT INTO cotizacion (correlativo_cotizacion, id_estado, id_orden_trabajo, fecha_cotizacion, comentario,  valorCotizacion, venta_repuesto, venta_repuesto_uno, venta_repuesto_dos, venta_repuesto_tres, venta_repuesto_cuatro, venta_repuesto_cinco, disponibilidad ) VALUES ('$correlativo_cotizacion', '$id_estado','$id_orden_trabajo','$fecha_cotizacion','$comentario', '$valorCotizacion', '$venta_repuesto', '$venta_repuesto_uno', '$venta_repuesto_dos', '$venta_repuesto_tres', '$venta_repuesto_cuatro', '$venta_repuesto_cinco', '$disponibilidad')") or die(mysql_errno()); 
-    echo '<script> alert("Cotización Creada con Exito."); </script>';
-}
-}
-?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -290,20 +234,12 @@ else{
     <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="validarrut.js"></script>
-    <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
     <script src="js/jquery.js"></script>    
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/datepicker-es.js"></script>
-    <script src="js/autollenado.js" ></script>
-    <script src="js/autollenadoequipo.js"></script>
-    <!--<script src="js/main.js"></script> -->
     <script src="js/jquery-1.12.4.js"></script>
     <script src="js/jquery-ui.js"></script>
     <script src="js/buscaot.js"></script><!--este es el combobox-->  
-    <script src="js/autollenadocotizacion.js"></script>
-    <script src="js/numerosiles.js"></script>
     <script src="listaot.js"></script>
 <footer> </footer>
 </body>

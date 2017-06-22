@@ -21,21 +21,19 @@ if (isset($_SESSION['correo'])) {?>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  
-      <style>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script> 
+<style>
  * {
- 
   font-family: Geneva, Arial, Helvetica, sans-serif;
 
 }
 	body{
   background: #F2F2F2;
 }
-   	 nav ul ul.dropdown-menu li a:hover {
+  nav ul ul.dropdown-menu li a:hover {
 	background: #CCCCCC;
  	}
- 	 nav ul li:hover {
+ 	nav ul li:hover {
 	background: #CCCCCC;
  	}
   img.logo {
@@ -58,14 +56,12 @@ if (isset($_SESSION['correo'])) {?>
 label {
   color:#515151;
 }
- .cerrar{
+.cerrar{
     height: 40px;
     margin: 5px auto;
     width: 60px;
     border: auto;
-  }
- 
-
+}
    </style>
 </head>
  <nav class="navbar navbar-default">
@@ -135,7 +131,6 @@ label {
             <li><a href="area.php">Area</a></li>
           </ul>
         </li>
-      </ul>
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
@@ -146,19 +141,14 @@ label {
 <a href="ot.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="ot.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
-
 <?php
     $id=$_REQUEST['id'];
-    include("conexion.php");
-
-  
-      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.id_cliente, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
+    include("conexion.php");  
+      $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.nombreUsuario, cliente.id_cliente, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.area, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca, estado.estado FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN marca ON equipo.id_marca=marca.id_marca  INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
         $reg=mysql_fetch_array($consulta);
   ?>
 <h1>Cerrar Orden de Trabajo</h1>
-
 <form class="form-group" action=""  method="POST" >
-
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
   <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingOne">
@@ -170,12 +160,8 @@ label {
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-
       <div class="container">
-
 <!--INICIO DE TODO FORMULARIO-->
-
-
 <div class="col-xs-5">
 <label for="">Numero de Orden de Trabajo</label>
 <input type="text" class="form-control" id="correlativo_ot" value="<?php echo $reg['correlativo_ot'];?>" name="correlativo_ot"></div>
@@ -245,7 +231,6 @@ $asig2=mysql_query($consulta3);
   <?php } ?>
 </select>
 </div>
-
 
 <div class="col-xs-5 has-error">
 <label class="coti" for="">Estado</label>
@@ -331,8 +316,6 @@ $asig2=mysql_query($consulta3);
 
       <!--Aqui va los datos del EQUIPO-->
 
-
-
 <div class="col-xs-5" >
 <label for="">Serie del Equipo</label>
 <input type="text" class="form-control" id="serie_equipo" name="serie_equipo"  required="" value="<?php echo $reg['serie_equipo'];?>"></div>
@@ -352,13 +335,9 @@ $asig2=mysql_query($consulta3);
 <label for="">Estado</label>
 <input type="text" class="form-control" id="estado" name="estado" placeholder="Estado" required="" value="<?php echo $reg['estado'];?>"></div>
 
-
       </div>
     </div>
   </div>
-
-
-
 
     <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingFour">
@@ -399,7 +378,6 @@ $asig2=mysql_query($consulta3);
           <label for="">Valor por Reparación</label>
           <input type="text" class="form-control" id="valorReparacion" required="" value="<?php echo $reg['valorReparacion'];?>" onKeyPress="return SoloNumeros(event)
           " name="valorReparacion" ></div>
-
 <div class="col-xs-5 has-error">
 <label class="fe" for="">Fecha Presupuesto<input class="" value="<?php echo date("d/m/Y");?>" type="text" name="fechaPresupuesto" id="fechaPresupuesto"></label></div><!--fecha con jquey-->
 
@@ -417,15 +395,12 @@ $asig2=mysql_query($consulta3);
     </div>
     <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
       <div class="panel-body">
-
 <?php
     $id=$_REQUEST['id'];
     include("conexion.php");
-
       $consulta=mysql_query("SELECT id_orden_trabajo, id_estado, id_cotizacion, fecha_cotizacion, valorCotizacion FROM cotizacion WHERE  id_orden_trabajo='$id' AND id_estado=5")or die(mysql_error());
         $co=mysql_fetch_array($consulta);
 ?>
-
 <div class="col-xs-5 has-error" >
           <label for="">Numero de Cotización</label>
           <input type="text" class="form-control" id="id_cotizacion" value="<?php echo $co['id_cotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="correlativo_cotizacion" required ></div>
@@ -436,33 +411,23 @@ $asig2=mysql_query($consulta3);
  <div class="col-xs-5 has-error" >
           <label for="">Valor Total Cotización</label>
           <input type="text" class="form-control" id="valorCotizacionOT" value="<?php echo $co['valorCotizacion'];?>" onKeyPress="return SoloNumeros(event)" name="valorCotizacionOT" required ></div>
-
       </div>
     </div>
   </div>
-
 </div><!--el segundo div del acordion-->
 </div><!--el primer div del acordion-->
-
   <div class="col-xs-5">
   <button type="submit" id="enviar" name="enviar" class="btn btn-primary btn-lg btn-block">Cerrar Orden de Trabajo</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
   </div>
-  <br>
-  <br>
-  <br>
-
+  <br><br><br>
 </div><!--div contenedor-->
-  
 </form>
-</div>
-    
+</div>  
 <?php
 include("conexion.php");
-
       $id=$_REQUEST['id'];  
-
       $fecha_cierre = isset($_POST['fecha_cierre']) ? $_POST['fecha_cierre']: '';
       $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: '';    
       $valorReparacion = isset($_POST['valorReparacion']) ? $_POST['valorReparacion']: '';
@@ -470,11 +435,8 @@ include("conexion.php");
       $correlativo_cotizacion = isset($_POST['correlativo_cotizacion']) ? $_POST['correlativo_cotizacion']: '';
       $valorCotizacionOT = isset($_POST['valorCotizacionOT']) ? $_POST['valorCotizacionOT']: '';
       
-
   $sql=mysql_query("UPDATE orden_trabajo SET fecha_cierre='$fecha_cierre', id_estado='$id_estado', valorReparacion='$valorReparacion', fechaPresupuesto='$fechaPresupuesto', correlativo_cotizacion='$correlativo_cotizacion', valorCotizacionOT='$valorCotizacionOT'  WHERE id_orden_trabajo = '$id' ");
-
 ?>
-
 <?php
 // close connection; 
 mysql_close();
@@ -496,14 +458,11 @@ mysql_close();
     <script src="listarencargado.js"></script>
     <script src="listaequipos.js"></script>
     <script src="js/autollenadoequipo.js"></script>
-
 <footer></footer><!--antes de que se cierre el body se agrega el footer o pie de pagina-->
 </body>
-
 </html>
 <?php
 }else{
   echo '<script> window.location="index.php";</script>';
 }
-
 ?>

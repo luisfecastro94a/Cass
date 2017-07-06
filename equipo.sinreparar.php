@@ -23,10 +23,10 @@ if($resultado->num_rows > 0)
         <th colspan="2"><h5><strong>Operaciones</strong></h5></th>
 			</tr>
 			</thead>
-			<tbody>';
+			<tbody>';	
 
 	while ($fila = $resultado->fetch_assoc()) {
-		$salida.='<tr>
+		$salida.='<tr class="alerta">
 	 <td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
 	 <td>'.$fila["serie_equipo"].'</td>
 	 <td>'.$fila["fecha_creacion"].'</td>
@@ -35,7 +35,8 @@ if($resultado->num_rows > 0)
    	 <td>'.'<a href="equipo.cotizacion.php?id='.$fila["id_equipo"].'" class="btn btn-primary" title="Presupuesto a equipo"><span class="glyphicon glyphicon-usd" aria-hidden="true"></span>'.' Presupuesto'.'</a>'.'</td> 
    	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-warning" title="Cambiar estado"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Cerrar Equipo'.'</a>'.'</td>   
 			</tr>';
-	}
+
+}
 //<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
 	$salida.="</tbody></table>";
 

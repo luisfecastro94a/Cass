@@ -114,7 +114,7 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.reingreso.php">Re Ingreso Equipo</a></li>
           </ul>
         </li>
 

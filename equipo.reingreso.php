@@ -129,7 +129,7 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.reingreso.php">Re Ingreso Equipo</a></li>
           </ul>
         </li>
 
@@ -178,12 +178,12 @@ label {
 <br><br>
 <h1>Reingreso de Equipo</h1>
 
-<form class="form-group" action="equipo.reingreso.crea.php"  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
+<form class="form-group" action="equipo.reingreso.crea.php?equipo=<?=$result?>"  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
 
 <div class="container">
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Creación</label>
+<label class="fe" for="">Fecha Re-Ingreso</label>
 <input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
 
 <?php
@@ -198,71 +198,28 @@ $resultE=mysql_query($consulta2);
  <?php
       while($result=mysql_fetch_array($resultE))
   {?>
-      <option value="<?php echo $result['0']?>"><?php echo $result['serie_equipo'];?></option>
+      <option value="<?php echo $result['id_equipo']?>"><?php echo $result['serie_equipo'];?></option>
   <?php } ?>
 </select>
+
 </div>
 <br>
+
+<!--mostrar la id seleccionada para pasar la id como variable-->
+
 <div class="col-xs-5">
- <input type="submit" value="Filtrar Equipo" class="btn btn-default">
+<label for="">ID:</label>
+  <input type="text" value="">
+</div>
+<div class="col-xs-5">
+ <input type="submit" value="Filtrar Equipo" class="btn btn-danger">
 </div>
   
 </div>
 </form>
 </div>
-<?php
-include("conexion.php");
 
-if
-    (isset($_POST['id_cliente']) && !empty($_POST['id_cliente']) &&
-     isset($_POST['id_marca']) && !empty($_POST['id_marca']) &&
-     isset($_POST['id_estado']) && !empty($_POST['id_estado']) &&
-     isset($_POST['fecha_creacion']) && !empty($_POST['fecha_creacion']) &&
-     isset($_POST['modelo']) && !empty($_POST['modelo']) &&
-     isset($_POST['tipo_ingreso']) && !empty($_POST['tipo_ingreso']) &&
-     isset($_POST['serie_equipo']) && !empty($_POST['serie_equipo']) &&
-     isset($_POST['sintoma_cliente']) && !empty($_POST['sintoma_cliente']) &&
-     isset($_POST['nombreImagen']) && !empty($_POST['nombreImagen'])&&
-     isset($_POST['id_equipo']) && !empty($_POST['id_equipo']))
-  {
-      $id_cliente = $_POST['id_cliente']; 
-      $id_marca = $_POST['id_marca'];
-      $id_estado = $_POST['id_estado'];
-      $fecha_creacion = $_POST['fecha_creacion'];
-      $modelo = $_POST['modelo'];
-      $tipo_ingreso = $_POST['tipo_ingreso'];
-      $serie_equipo = $_POST['serie_equipo'];
-      $sintoma_cliente = $_POST['sintoma_cliente'];
-      $sintoma_tecnico = $_POST['sintoma_tecnico'];
-      $nombreImagen = $_POST['nombreImagen'];
-      $imagen = (addslashes(file_get_contents($_FILES['imagen']['tmp_name'])));//aqui guardo los bits en la variable
-      $id_cliente_encargado = $_POST['id_cliente_encargado'];
-// conexión a la base de datos de
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("No se pudo Contactar a Base de Datos MySQL");
-// seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("bdcass",$dbhandle) 
-  or die("No se pudo seleccionar la base de datos CASS");
-// Comprobamos si la serie_equipo esta registrado 
-include("conexion.php");
 
-$nuevo_rut=mysql_query("SELECT serie_equipo FROM equipo WHERE serie_equipo='$serie_equipo' "); 
-if(mysql_num_rows($nuevo_rut)>0) 
-{ 
-echo " 
-  <script> alert('El Equipo ya esta registrado'); </script>
-<p class='avisos'><a href='javascript:history.go(-1)' class='btn btn-danger clase1'>Volver atrás</a></p> 
-"; 
-}
-else{
-  $consulta=mysql_query("INSERT INTO equipo (id_cliente, id_marca, id_estado, fecha_creacion, modelo, tipo_ingreso, serie_equipo, sintoma_cliente, sintoma_tecnico, nombreImagen, imagen, id_cliente_encargado) VALUES ('$id_cliente', '$id_marca','$id_estado','$fecha_creacion','$modelo','$tipo_ingreso', '$serie_equipo',  '$sintoma_cliente','$sintoma_tecnico','$nombreImagen','$imagen', '$id_cliente_encargado')") or die(mysql_errno());
-  //$consulta2=mysql_query("INSERT INTO orden_trabajo (id_equipo) VALUES ('$id_equipo')")or die(mysql_errno());
- echo '<script> alert("Equipo Creado con Exito."); </script>';
-echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";//esto hace que luego de insertar se actualize la pagina
-}
-}
-;
-?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

@@ -15,11 +15,12 @@ if (isset($_SESSION['correo'])) {?>
   <link rel="stylesheet" href="css/calendario.css">
   <link rel="stylesheet" href="js/bootstrap.min.js">
   <link href="css/jqueryui.css" type="text/css" rel="stylesheet"/>
-<script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
   <!--link para el estilo del calendario en jquery-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script>
   function sumar(){
     a=document.formcotizacion.totalRepuesto.value;
@@ -29,7 +30,22 @@ if (isset($_SESSION['correo'])) {?>
     c=parseInt(a)+parseInt(b);
     document.formcotizacion.valorCotizacion.value=c;
   }
-</script> 
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#formcotizacion").submit(function () {
+    if($("#valorCotizacion").val().length < 1) {
+      alert("El Valor de la Cotización es obligatorio");
+      return false;
+    }
+    if($("#valorCotizacion").val().length < 2) {
+      alert("La Cotización debe tener como mínimo 2 caracteres");
+      return false;
+    }
+    return false;
+  });
+});
+</script>
       <style>
  * {
  
@@ -150,7 +166,7 @@ label.coti {
 
 <h1>Cerrar Cotización</h1>
 <!--Comienzo de Formulario-->
-<form class="form-group" action="" name="formcotizacion" method="POST">
+<form class="form-group" action="" name="formcotizacion" id="formcotizacion" method="POST">
 
 <div class="col-xs-5">
 <label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
@@ -332,12 +348,12 @@ mysql_close();
 
 <div class="col-xs-5" >
 <label for="">Valor Cotización</label>
-<input type="button" class="btn btn-warning" value="Sumar" onclick="sumar()">
-<input type="text" class="form-control" name="valorCotizacion" id="valorCotizacion" placeholder="$"
-  required="" value="0" ></div>  
+<input type="button" class="btn btn-danger" value="SUMAR + " onclick="sumar()">
+<input type="text" class="form-control" name="valorCotizacion" id="valorCotizacion" placeholder=""
+  required="Debes SUMAR" value="" ></div>  
 
   <div class="col-xs-5">
-  <button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
+  <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
   <div class="col-xs-5">
   <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 

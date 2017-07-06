@@ -81,6 +81,27 @@ if (isset($_SESSION['correo'])) {?>
     function deshabilitar5(){
         $(".inputText6").attr("disabled","disabled");
     }
+        function habilitar6(){
+        $(".inputText7").removeAttr("disabled");
+    }
+        function habilitar7(){
+        $(".inputText8").removeAttr("disabled");
+    }
+        function habilitar8(){
+        $(".inputText9").removeAttr("disabled");
+    }
+        function habilitar9(){
+        $(".inputText10").removeAttr("disabled");
+    }
+        function habilitar10(){
+        $(".inputText11").removeAttr("disabled");
+    }
+        function habilitar11(){
+        $(".inputText12").removeAttr("disabled");
+    }
+        function habilitar12(){
+        $(".inputText13").removeAttr("disabled");
+    }
 </script>
 <style>
  * {
@@ -267,80 +288,110 @@ $resultE=mysql_query($consulta2);
 
 <div class="col-xs-5">
 <label for="">Ingreso Mano de Obra</label>
-<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ingresar Mano de Obra</button></div>
+<!-- Large modal -->
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target=".bs-example-modal-lg"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Ingresar Mano de Obra</button>
+</div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog" role="document">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+        <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel">Mano de Obra</h4>
       </div>
       <div class="modal-body">  
+           <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar6()">
+          </div>
           <div class="col-xs-5">      
             <label for="recipient-name" class="control-label">Glosa</label>
-             <input type="radio" name="rad" value="O" onclick="habilita()">
-            <input type="text" class="inputText form-control" disabled id="" name="manoObra">
+            <input type="text" class="inputText7 form-control" disabled id="" name="manoObra">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="inputText form-control" disabled onkeyup="sumar()" id="valor_mano" name="valor_mano" value="0">
+            <input type="text" class="inputText7 form-control" disabled onkeyup="sumar()" id="valor_mano" name="valor_mano" value="0">
           </div>
-          <div class="col-xs-5">
-            <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra1">
-          </div>
-            <div class="col-xs-5">
-            <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano1" name="valor_mano1" value="0">
+            <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar7()">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra2">
+            <input type="text" class="inputText8 form-control" id="" disabled="" name="manoObra1">
           </div>
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano2" name="valor_mano2" value="0">
+            <input type="text" class="inputText8 form-control" disabled="" onkeyup="sumar()" id="valor_mano1" name="valor_mano1" value="0">
+          </div>
+          <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar8()">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra3">
+            <input type="text" class="inputText9 form-control" id="" disabled="" name="manoObra2">
           </div>
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano3" name="valor_mano3" value="0">
+            <input type="text" class="inputText9 form-control" disabled="" onkeyup="sumar()" id="valor_mano2" name="valor_mano2" value="0">
+          </div>
+          <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar9()">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra4">
+            <input type="text" class="inputText10 form-control" id="" disabled="" name="manoObra3">
           </div>
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano4" name="valor_mano4" value="0">
+            <input type="text" class="inputText10 form-control" disabled="" onkeyup="sumar()" id="valor_mano3" name="valor_mano3" value="0">
+          </div>
+          <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar10()">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra5">
+            <input type="text" class="inputText11 form-control" id="" disabled="" name="manoObra4">
           </div>
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano5" name="valor_mano5" value="0">
+            <input type="text" class="inputText11 form-control" disabled="" onkeyup="sumar()" id="valor_mano4" name="valor_mano4" value="0">
+          </div>
+          <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar11()">
           </div>
           <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Glosa</label>
-            <input type="text" class="form-control" id="" name="manoObra6">
+            <input type="text" class="inputText12 form-control" id="" disabled="" name="manoObra5">
           </div>
             <div class="col-xs-5">
             <label for="recipient-name" class="control-label">Valor </label>
-            <input type="text" class="form-control" onkeyup="sumar()" id="valor_mano6" name="valor_mano6" value="0">
-          </div>  
-      <div class="modal-footer">
+            <input type="text" class="inputText12 form-control"  disabled="" onkeyup="sumar()" id="valor_mano5" name="valor_mano5" value="0">
+          </div>
+          <div class="col-xs-2">      
+            <label for="recipient-name" class="control-label">Habilitar</label>
+             <input type="radio" name="rad" value="O" onclick="habilitar12()">
+          </div>
+          <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Glosa</label>
+            <input type="text" class="inputText13 form-control" id="" disabled="" name="manoObra6">
+          </div>
+            <div class="col-xs-5">
+            <label for="recipient-name" class="control-label">Valor </label>
+            <input type="text" class="inputText13 form-control" disabled="" onkeyup="sumar()" id="valor_mano6" name="valor_mano6" value="0">
+          </div> 
+         <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
-      </div>                                             
+      </div>                                            
       </div>
     </div>
   </div>
 </div>
+
 
 <div class="col-xs-5 has-error" >
 <label for="">Valor de Reparación</label>

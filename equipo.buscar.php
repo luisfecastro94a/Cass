@@ -98,7 +98,7 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.reingreso.php">Re Ingreso Equipo</a></li>
           </ul>
         </li>
 
@@ -153,12 +153,12 @@ label {
 
 <div class="form-group" id="datos">
 <h4><label for="caja_busqueda"><h1>Buscar Equipos</h1></label></h4>
-    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de Serie">
+    <input type="text" name="busca" id="busqueda" class="form-control" required="" placeholder="Ingrese Numero de Serie" title="Buscar Equipo con N° Serie">
     <button type="submit" name="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button>
 
 </div>
 
-<table  class="table table-striped" id="" name="" >
+<table  class="table table-striped table-responsive" id="" name="" >
 <thead>
       <th colspan="1"><a href="equipo.entrada.php" class="btn btn-primary">Nueva Equipo</a></th>
      
@@ -167,7 +167,9 @@ label {
       <tr>
        
         <td><h4>Cliente</h4></td>
+        <td><h4>Cliente Encargado</h4></td>
         <td><h4>Serie del Equipo</h4></td>
+        <td><h4>Modelo</h4></td>
         <td><h4>Fecha de Ingreso</h4></td>
         <td><h4>Fecha de Modificación</h4></td>
         <td><h4>Sintoma Cliente</h4></td>
@@ -184,23 +186,24 @@ $busca="";
 $busca=isset($_POST['busca'])?$_POST['busca']: NULL;  
 include("conexion.php");
 if($busca!=""){
-  $dbhandle=mysql_query("SELECT equipo.id_equipo, equipo.fecha_creacion, equipo.fecha_modificacion, equipo.serie_equipo, equipo.sintoma_cliente, cliente.nombre, marca.marca, estado.estado FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado WHERE serie_equipo like '%".$busca."%' ");
+  $dbhandle=mysql_query("SELECT equipo.id_equipo, equipo.modelo, equipo.fecha_creacion, equipo.fecha_modificacion, equipo.serie_equipo, equipo.sintoma_cliente, cliente.nombre, marca.marca, estado.estado, cliente_encargado.nombreE FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN cliente_encargado ON equipo.id_cliente_encargado=cliente_encargado.id_cliente_encargado WHERE serie_equipo like '%".$busca."%' ");
 
 
    while($muestra=mysql_fetch_array($dbhandle)){
    echo '<tr>';
    echo '<td>'.$muestra['nombre'].'</td>';
+   echo '<td>'.$muestra['nombreE'].'</td>';
    echo '<td>'.'<strong>'.$muestra['serie_equipo'].'</strong>'.'</td>';
+   echo '<td>'.$muestra['modelo'].'</td>';
    echo '<td>'.$muestra['fecha_creacion'].'</td>';
    echo '<td>'.$muestra['fecha_modificacion'].'</td>';
    echo '<td>'.$muestra['sintoma_cliente'].'</td>';
    echo '<td>'.$muestra['marca'].'</td>';
    echo '<td>'.'<strong>'.$muestra['estado'].'</strong>'.'</td>';
-   echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary" title="Modificar el equipo"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'.' Modificar'.'</a>'.'</td>';
+   echo '<td>'.'<a href="equipo.modificar.php?id='.$muestra['id_equipo'].'" class="btn btn-primary" title="Modifica cliente, encargado y estado"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'.' Modificar'.'</a>'.'</td>';
    echo '<td>'.'<button  type="button" class="btn btn-danger bt-xs"
                          onclick="eliminarDato(\''.$muestra['id_equipo'].'\');"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>'.' Eliminar'.'</button> '.'</td>';
-   echo '<td>'.'<a href="Documentos/Codigos_Barra/pdf.codigo.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Modificar el equipo"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>'.' Generar Codigo'.'</a>'.'</td>';        
-
+   echo '<td>'.'<a href="Documentos/Codigos_Barra/pdf.codigo.php?id='.$muestra['id_equipo'].'" class="btn btn-default" title="Ver Codigo de Barra"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>'.' Generar Codigo'.'</a>'.'</td>';        
       
 }
 }

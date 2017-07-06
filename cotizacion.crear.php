@@ -34,6 +34,50 @@ if (isset($_SESSION['correo'])) {?>
     h=parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d)+parseInt(e)+parseInt(f)+parseInt(i)+parseInt(g);
     document.formcotizacion.valorCotizacion.value=h;
   }
+</script>
+<script >
+    function habilita(){
+        $(".inputText").removeAttr("disabled");
+    }
+    function deshabilita(){
+        $(".inputText").attr("disabled","disabled");
+    }
+        function habilitar(){
+        $(".inputText1").removeAttr("disabled");
+    }
+    function deshabilitar(){
+        $(".inputText1").attr("disabled","disabled");
+    }
+    function habilitar1(){
+        $(".inputText2").removeAttr("disabled");
+    }
+    function deshabilitar1(){
+        $(".inputText2").attr("disabled","disabled");
+    }
+    function habilitar2(){
+        $(".inputText3").removeAttr("disabled");
+    }
+    function deshabilitar2(){
+        $(".inputText3").attr("disabled","disabled");
+    }
+    function habilitar3(){
+        $(".inputText4").removeAttr("disabled");
+    }
+    function deshabilitar3(){
+        $(".inputText4").attr("disabled","disabled");
+    }
+    function habilitar4(){
+        $(".inputText5").removeAttr("disabled");
+    }
+    function deshabilitar4(){
+        $(".inputText5").attr("disabled","disabled");
+    }
+    function habilitar5(){
+        $(".inputText6").removeAttr("disabled");
+    }
+    function deshabilitar5(){
+        $(".inputText6").attr("disabled","disabled");
+    }
 </script>	
 <style>
  * {
@@ -210,6 +254,8 @@ $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
 <table class="table bg-info table-responsive" id="tabla">
     <tbody>
       <tr>
+        <td><h4>Habilita</h4></td>
+        <td><h4>Desabilita</h4></td>
         <td><h4>Cliente</h4></td>
         <td><h4>Orden Trabajo</h4></td>
         <td><h4>N° Partner</h4></td>
@@ -227,54 +273,68 @@ $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
    while($muestra=mysql_fetch_array($dbhandle)){
 
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilita()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilita()">'.'</td>';
    echo '<td>'.'<strong>'.$muestra['nombre'].'</strong>'.'</td>';
    echo '<td>'.'<strong>'.$muestra['correlativo_ot'].'</strong>'.'</td>';
    echo '<td>'.$muestra['n_partner'].'</td>';
    echo '<td>'.$muestra['marca'].'</td>';
    echo '<td>'.$muestra['comentarioo'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto" id="venta_repuesto" onkeyup="sumar()" onKeyPress="return SoloNumeros(event)" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText form-control" type="text" value="0" name="venta_repuesto" id="venta_repuesto" onkeyup="sumar()" onKeyPress="return SoloNumeros(event)" placeholder="$" disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner1'].'</td>';
    echo '<td>'.$muestra['marca1'].'</td>';
    echo '<td>'.$muestra['comentario1'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_uno" id="venta_repuesto_uno" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText1 form-control" type="text" value="0" name="venta_repuesto_uno" id="venta_repuesto_uno" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()"  disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar1()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar1()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner2'].'</td>';
    echo '<td>'.$muestra['marca2'].'</td>';
    echo '<td>'.$muestra['comentario2'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_dos" id="venta_repuesto_dos" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText2 form-control" type="text" value="0" name="venta_repuesto_dos" id="venta_repuesto_dos" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()"  disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar2()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar2()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner3'].'</td>';
    echo '<td>'.$muestra['marca3'].'</td>';
    echo '<td>'.$muestra['comentario3'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_tres" id="venta_repuesto_tres" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText3 form-control" type="text" value="0" name="venta_repuesto_tres" id="venta_repuesto_tres" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar3()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar3()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner4'].'</td>';
    echo '<td>'.$muestra['marca4'].'</td>';
    echo '<td>'.$muestra['comentario4'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_cuatro"  id="venta_repuesto_cuatro" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText4 form-control" type="text" value="0" name="venta_repuesto_cuatro"  id="venta_repuesto_cuatro" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()"  disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar4()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar4()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner5'].'</td>';
    echo '<td>'.$muestra['marca5'].'</td>';
    echo '<td>'.$muestra['comentario5'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_cinco" id="venta_repuesto_cinco" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText5 form-control" type="text" value="0" name="venta_repuesto_cinco" id="venta_repuesto_cinco" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()"  disabled >'.'</td>';
    echo '<tr>';
+   echo '<td>'.'<input type="radio" name="rad" value="O" onclick="habilitar5()">'.'</td>';
+   echo '<td>'.'<input type="radio" name="rad" value="F" onclick="deshabilitar5()">'.'</td>';
    echo '<td></td>';
    echo '<td></td>';
    echo '<td>'.$muestra['n_partner6'].'</td>';
    echo '<td>'.$muestra['marca6'].'</td>';
    echo '<td>'.$muestra['comentario6'].'</td>';
-   echo '<td>'.'<input class="form-control" type="text" value="0" name="venta_repuesto_seis" id="venta_repuesto_seis" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()" placeholder="$" >'.'</td>';
+   echo '<td>'.'<input class="inputText6 form-control" type="text" value="0" name="venta_repuesto_seis" id="venta_repuesto_seis" onKeyPress="return SoloNumeros(event)" onkeyup="sumar()"  disabled >'.'</td>';
    echo '<tr>';  
 }
 

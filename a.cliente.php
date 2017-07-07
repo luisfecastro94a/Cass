@@ -1,47 +1,10 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>cliente</title>
+<html>
+<head> 
+<title></title>
+ <script src="http://code.jquery.com/jquery-1.11.2.js"></script>
+ <script type="text/javascript"> $(document).ready(function () { $('#selectCountries').change(function () { var selectedOptions = $('#selectCountries option:selected'); if (selectedOptions.length > 0) { var resultString = ''; selectedOptions.each(function () { resultString += 'Value = ' + $(this).val() + ', Text = ' + $(this).text() + '<br/>'; }); $('#divResult').html(resultString); } }); }); </script>
 </head>
-<body>
-<ul><li>jojo</li></ul>
-	<?php 
-
-include("conexion.php");
- 
-#Guardamos la variable enviada por POST#
-$cat=$_POST['filtrar'];
- 
-$result = mysql_query ("SELECT * FROM cliente WHERE id_cliente = '$cat'" )
-or die("Error en la consulta SQL");
-?>
- 
-<table>
- 
-<?php
-#Mostramos los resultados obtenidos dentro de una tabla
-while( $row = mysql_fetch_array ( $result )) {
-   echo "<tr>";
-   echo "<td>".$row["id_cliente"]."</td>";
-   echo "<td>".$row["nombre"]."</td>";
-   echo "<tr>";
-   echo "<tr>";
-   echo "<td>".$row["correo"]."</td>";
-   echo "<td>".$row["fono"]."</td>";
-   echo "<tr>";
-   echo "<tr>";
-   echo "<td>".$row["nombre_contacto"]."</td>";
-   echo "<td>".$row["fono_contacto"]."</td>";
-   echo "<tr>";
-}
-?>
-</table>
-<?php
-#Cerramos la conexión con la base de datos
-mysql_close();
-
-?>
+<body style="font-family:Arial"> <select id="selectCountries" multiple="multiple"> <option selected="selected" value="USA">United States</option> <option value="IND">India</option> <option value="UK">United Kingdom</option> <option value="CA">Canada</option> <option value="AU">Australia</option> </select> <br /><br /> <div id="divResult"></div>
+</form>
 </body>
 </html>

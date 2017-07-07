@@ -219,7 +219,7 @@ label {
 
 <div class="col-xs-5" >
 <label for="">Serie de Equipo</label>
-<input type="text" class="form-control" title="Numero de Serie" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
+<input type="text" class="form-control"  title="Numero de Serie" name="serie_equipo" id="serie_equipo" placeholder="Serie del Equipo" required=""></div>
 
 <?php
 include("conexion.php");

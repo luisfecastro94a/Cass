@@ -183,12 +183,12 @@ label {
 <div class="container">
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Re-Ingreso</label>
+<label class="fe" for="">Fecha Reingreso</label>
 <input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
 
 <?php
 include("conexion.php");
-$equi=isset($_POST['Filtraequipo'])?$_POST['Filtraequipo']: NULL;
+$equi=isset($_GET['Filtraequipo'])?$_GET['Filtraequipo']: NULL;
 
  $consult=mysql_query("SELECT equipo.id_equipo,  equipo.serie_equipo, equipo.modelo, cliente.id_cliente, cliente.nombre, cliente_encargado.nombreE, marca.marca FROM equipo INNER JOIN cliente ON equipo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON equipo.id_cliente_encargado=cliente_encargado.id_cliente_encargado  INNER JOIN marca ON equipo.id_marca=marca.id_marca WHERE id_equipo='$equi' ");
  $reg=mysql_fetch_array($consult);
@@ -258,7 +258,7 @@ $equi=isset($_POST['Filtraequipo'])?$_POST['Filtraequipo']: NULL;
 </div>
   
   <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Guardar</button>
+  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block" data-toggle="tooltip" data-placement="top" title="Guardar el equipo"><span class="glyphicon glyphicon-floppy-disk " aria-hidden="true"></span> Reingresar</button>
   <button type="reset" class="btn btn-default btn-lg btn-block" title="Cancelar registro"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
   <div class="col-xs-5">
@@ -271,26 +271,23 @@ $equi=isset($_POST['Filtraequipo'])?$_POST['Filtraequipo']: NULL;
 
 <?php
       
-      $equi=isset($_POST['Filtraequipo'])?$_POST['Filtraequipo']: NULL;
-      $equi=$_REQUEST['Filtraequipo'];
-
+      $equi=isset($_GET['Filtraequipo'])?$_GET['Filtraequipo']: NULL;
+  
       $sintoma_cliente = isset($_POST['sintoma_cliente'])? $_POST['sintoma_cliente']:'';
       //$imagen = isset($_POST(addslashes(file_get_contents($_FILES['imagen']['tmp_name']))))? $_POST['imagen']:''; Modificar Imagen
       $tipo_ingreso = isset($_POST['tipo_ingreso'])? $_POST['tipo_ingreso']:''; 
+      $estado = isset($_POST['id_estado'])? $_POST['id_estado']:'';
        
-
     // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
-
 
 // seleccionar una base de datos para trabajar con
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
   
-
-  mysql_query("UPDATE equipo SET  sintoma_cliente='$sintoma_cliente',  tipo_ingreso='$tipo_ingreso' WHERE id_equipo='$equi'")or die(mysql_error());
-  //echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.entrada.php\">";
+  mysql_query("UPDATE equipo SET  sintoma_cliente='$sintoma_cliente',  tipo_ingreso='$tipo_ingreso', id_estado='$estado' WHERE id_equipo='$equi'")or die(mysql_error());
+  //echo "<meta http-equiv=\"refresh\" content=\"0;URL=equipo.reingreso.crea.php\">";
 
 ?>
 <?php

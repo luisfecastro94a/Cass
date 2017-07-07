@@ -45,6 +45,7 @@ if (isset($_SESSION['correo'])) {?>
 }
 	body{
   background: #F2F2F2;
+  
 }
    	 nav ul ul.dropdown-menu li a:hover {
 	background: #CCCCCC;
@@ -70,7 +71,7 @@ if (isset($_SESSION['correo'])) {?>
     margin: auto;
 }
 label {
-  color:#515151;
+  color:#013076;
 }
  .cerrar{
     height: 40px;
@@ -92,6 +93,9 @@ label {
   .custom-combobox-input {
     margin: 0;
     padding: 5px 10px;
+  }
+  button {
+    color: #013076;
   }
 
    </style>
@@ -178,13 +182,13 @@ label {
 <br><br>
 <h1>Reingreso de Equipo</h1>
 
-<form class="form-group" action="equipo.reingreso.crea.php?equipo=<?=$result?>"  method="POST" onSubmit="return validar()" enctype="multipart/form-data" >
+<form class="form-group" action="equipo.reingreso.crea.php"  method="GET" onSubmit="return validar()" enctype="multipart/form-data" >
 
 <div class="container">
 
 <div class="col-xs-5">
-<label class="fe" for="">Fecha Re-Ingreso</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
+<label class="fe" for="">Fecha Reingreso</label>
+<input class="fecha" type="text" name="fecha_reingreso" id="fecha_reingreso" value="<?php echo date("d/m/Y"); ?>"></div>
 
 <?php
 include("conexion.php");
@@ -205,14 +209,10 @@ $resultE=mysql_query($consulta2);
 </div>
 <br>
 
-<!--mostrar la id seleccionada para pasar la id como variable-->
+<!--PASO LA ID POR GET -->
 
 <div class="col-xs-5">
-<label for="">ID:</label>
-  <input type="text" value="">
-</div>
-<div class="col-xs-5">
- <input type="submit" value="Filtrar Equipo" class="btn btn-danger">
+ <input type="submit" src="" value="Filtrar Equipo" class="btn btn-danger">
 </div>
   
 </div>

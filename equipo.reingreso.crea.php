@@ -263,7 +263,7 @@ $equi=isset($_GET['Filtraequipo'])?$_GET['Filtraequipo']: NULL;
 
   <div class="col-xs-5">
   <div class="alert alert-danger" role="alert">Al ingresar Equipo,<strong> Crea tu Orden de Trabajo</strong></div>
-  <a href="ot.entrada.php?equipo=<?=$mensajeE?>&idcliente=<?=$idcliente?>"><button type="button" class="btn btn-warning btn-lg btn-block" title="Generar Orden de trabajo"><span class="glyphicon glyphicon-paperclip " aria-hidden="true"> GENERAR ORDEN DE TRABAJO</span></button></a></div>
+  <a href="ot.entrada.php?equipo=<?=$reg['id_equipo'];?>&idcliente=<?=$reg['id_cliente'];?>"><button type="button" class="btn btn-warning btn-lg btn-block" title="Generar Orden de trabajo"><span class="glyphicon glyphicon-paperclip " aria-hidden="true"> GENERAR ORDEN DE TRABAJO</span></button></a></div>
   
 </div>
 </form>

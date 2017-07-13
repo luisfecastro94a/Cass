@@ -42,7 +42,7 @@ $(document).ready(function(){
       alert("La Cotización debe tener como mínimo 2 caracteres");
       return false;
     }
-    return false;
+    return true;
   });
 });
 </script>
@@ -161,15 +161,15 @@ label.coti {
 <a href="cotizacion.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="cotizacion.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
 <button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
-
 <br><br>
-
 <h1>Cerrar Cotización</h1>
 <!--Comienzo de Formulario-->
 <form class="form-group" action="" name="formcotizacion" id="formcotizacion" method="POST">
 
 <div class="col-xs-5">
-<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
+<label class="coti" for="">Fecha Respuesta: 
+<input  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label>
+</div>
 
 <div class="col-xs-5" >
 <label class="coti" for="">Descripción de Cotización:</label>
@@ -180,12 +180,12 @@ label.coti {
 <label class="coti" for="">Estado:</label>
   <div class="checkbox has-success">
     <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="5" required=""> Aceptada
+  <input type="radio" name="id_estado" id="inlineRadio1" value="5" required=""> Aceptada
 </label>
   </div>
    <div class="checkbox has-error">
     <label class="radio-inline">
-  <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="6" required=""> No Aceptada
+  <input type="radio" name="id_estado" id="inlineRadio2" value="6" required=""> No Aceptada
 </label>
   </div>
 </div>
@@ -321,7 +321,7 @@ include("conexion.php");
     <td><input class="form-control" name="" id="n_partner5" type="text" value="<?php echo $row['n_partner5'];?>"></td>
     <td><input class="form-control" name="" id="marca5" type="text" value="<?php echo $row['marca5'];?>"></td>
     <td><input class="form-control" name="" id="comentario5" type="text" value="<?php echo $row['comentario5'];?>"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_cinco'];?>" name="venta_repuesto_cinco" id="repuesto4" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_cinco'];?>" name="venta_repuesto_cinco" id="" type="text"></td>
   </tr>
   <tr>
   <td><input type="checkbox" name="chb" id="chb" onclick="zuma(this);" value="<?php echo $row['venta_repuesto_seis'];?>"></td>
@@ -329,16 +329,12 @@ include("conexion.php");
     <td><input class="form-control" name="" id="n_partner6" type="text" value="<?php echo $row['n_partner6'];?>"></td>
     <td><input class="form-control" name="" id="marca6" type="text" value="<?php echo $row['marca6'];?>"></td>
     <td><input class="form-control" name="" id="comentario6" type="text" value="<?php echo $row['comentario6'];?>"></td>
-    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_seis'];?>" name="venta_repuesto_seis" id="repuesto4" type="text"></td>
+    <td><input class="form-control" onKeyPress="return SoloNumeros(event)"  value="<?php echo $row['venta_repuesto_seis'];?>" name="venta_repuesto_seis" id="" type="text"></td>
   </tr>
 </table>
 </div>
-<?php
-#Cerramos la conexión con la base de datos
-mysql_close();
-?>
- 
- <div class="col-xs-5" >
+
+<div class="col-xs-5" >
 <label for="">Valor Repuesto</label>
 <input type="text" class="form-control" name="totalRepuesto"  id="can" required="" value="0" ></div>
 
@@ -350,12 +346,12 @@ mysql_close();
 <label for="">Valor Cotización</label>
 <input type="button" class="btn btn-danger" value="SUMAR + " onclick="sumar()">
 <input type="text" class="form-control" name="valorCotizacion" id="valorCotizacion" placeholder=""
-  required="Debes SUMAR" value="" ></div>  
+  required="Debes SUMAR" value="0" ></div>  
 
-  <div class="col-xs-5">
-  <button type="submit" name="submit" id="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
+<div class="col-xs-5">
+<button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Cerrar Cotización</button></div>
+<div class="col-xs-5">
+<button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
 </div>
 </form>
@@ -365,7 +361,8 @@ mysql_close();
 include("conexion.php");
  
       $id=$_REQUEST['id'];  
-      $id_estado = isset($_POST['inlineRadioOptions']) ? $_POST['inlineRadioOptions']: ''; 
+
+      $id_estado = isset($_POST['id_estado']) ? $_POST['id_estado']: ''; 
       $fecha_respuesta = isset($_POST['fecha_respuesta']) ? $_POST['fecha_respuesta']: '';    
       $comentario = isset($_POST['comentario']) ? $_POST['comentario']: ''; 
       $valorCotizacion = isset($_POST['valorCotizacion']) ? $_POST['valorCotizacion']: '';
@@ -377,11 +374,13 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-  mysql_query("UPDATE cotizacion SET id_estado='$id_estado', fecha_respuesta='$fecha_respuesta', comentario='$comentario', totalRepuesto='$totalRepuesto', valorCotizacion='$valorCotizacion'  WHERE id_cotizacion='$id'");
+  $sql=mysql_query("UPDATE cotizacion SET id_estado='$id_estado', fecha_respuesta='$fecha_respuesta', comentario='$comentario',  valorCotizacion='$valorCotizacion', totalRepuesto='$totalRepuesto'  WHERE id_cotizacion='$id'")or die(mysql_error());
  
 ?>
-
-
+<?php
+//se cierra la conexion a la bd
+mysql_close();
+?>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

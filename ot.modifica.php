@@ -362,9 +362,6 @@ $asig3=mysql_query($consulta4);
     </div>
   </div>
 
-
-
-
     <div class="panel panel-default">
     <div class="panel-heading" role="tab" id="headingFour">
       <h4 class="panel-title">

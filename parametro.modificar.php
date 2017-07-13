@@ -2,7 +2,6 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +10,9 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 
 	<title>Parametros</title>
-   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-
-	
-      <style>
+<style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -41,6 +37,7 @@ if (isset($_SESSION['correo'])) {?>
     margin: 10px 500px 20px 500px;
     color: orange;
     border-top: 30px;
+    
   }
   .contenedor {
     width: 1300px;
@@ -48,7 +45,7 @@ if (isset($_SESSION['correo'])) {?>
     margin: auto;
 }
 label {
-  color:#515151;
+  color:#8E8E8E;
 }
  .cerrar{
     height: 40px;
@@ -56,11 +53,10 @@ label {
     width: 60px;
     border: auto;
   }
- 
 
    </style>
 </head>
-  <nav class="navbar navbar-default">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="navbar-header">
@@ -131,60 +127,57 @@ label {
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
+
 <body>
 	<div class="contenedor">
 
 
 <a href="parametro.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="parametro.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
-<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
+<a href="inicio.php"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button></a>
 
 <br><br>
-<h1>Crear Parametros</h1>
-
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+<?php
+    $id=$_REQUEST['id'];
+    include("conexion.php");
+    
+      $consulta=mysql_query("SELECT * FROM parametros WHERE id_parametros='$id'")or die(mysql_error());
+      $reg=mysql_fetch_array($consulta);
+  ?>
+<h1>Modificar Cliente</h1>
+<!--Comienzo de Formulario-->
+<form class="form-group" action=""  method="POST">
 
 <div class="container">
 
-<div class="col-xs-5">
-<label for="">Elegir Parametro:</label>
-  <select name="nombreP" id="" class="form-control">
-  <option value="">---Seleccionar---</option>
-    <option value="sin reparar">sin reparar</option>
-    <option value="reparado">reparado</option>
-    <option value="esperando respuesta">esperando respuesta</option>
-    <option value="no retirados">No Retirados</option>
-    <option value="cotizado">Cotizado</option>
-    <option value="por cotizar">Por Cotizar</option>
-  </select>
+<div class="col-xs-5" >
+<label for="">Nombre Parametro:</label>
+<select id="nombreP" class="form-control" name="nombreP">
+<option value="<?php echo $reg['nombreP'];?>"><?php echo $reg['nombreP'];?></option>
+</select>
 </div>
 
-<div class="col-xs-5">
-  <label for="">Valor:</label>
-  <input type="text" name="valorP" id="valorP" class="form-control" placeholder="Agregar Valor de Parametro">
-</div>
+<div class="col-xs-5 has-error" >
+<label for="">Valor Parametro:</label>
+<input type="text" class="form-control" name="valorP"  required="" value="<?php echo $reg['valorP'];?>"></div>
+
   
-  <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  </div>
+<div class="col-xs-5">
+<button type="submit" class="btn btn-primary btn-lg btn-block"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modificar</button></div>
+<div class="col-xs-5">
+<button type="reset" class="btn btn-default btn-lg btn-block"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar</button></div>
 
 </div>
 </form>
 </div>
 
 <?php
-if
-    (
-     isset($_POST['nombreP']) && !empty($_POST['nombreP']) &&
-     isset($_POST['valorP']) && !empty($_POST['valorP']))
-  { 
-      $Nombre = $_POST['nombreP'];
-      $valor = $_POST['valorP'];
+include("conexion.php");
+ 
+      $id=$_REQUEST['id'];      
+      $valor = isset($_POST['valorP']) ? $_POST['valorP']: '';
 
-
-    // conexión a la base de datos de
+   // conexión a la base de datos de
 $dbhandle = mysql_connect($hostname, $username, $password) 
  or die("No se pudo Contactar a Base de Datos MySQL");
 
@@ -193,44 +186,26 @@ $dbhandle = mysql_connect($hostname, $username, $password)
 $selected = mysql_select_db("bdcass",$dbhandle) 
   or die("No se pudo seleccionar la base de datos CASS");
 
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_P=mysql_query("SELECT nombreP FROM parametros WHERE nombreP='$Nombre'"); 
-if(mysql_num_rows($nuevo_P)>0) 
-{ 
-echo " 
-'<script> alert('Parametro ya se encuentra registrado'); </script>'; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
-}
-else{
-  
-  $consulta=mysql_query("INSERT INTO parametros ( nombreP, valorP) VALUES ('$Nombre', '$valor')") or die(mysql_errno());
- echo '<script> alert("Parametro Creado con Exito."); </script>';
-
-}
-
-}
+  mysql_query("UPDATE parametros SET  valorP='$valor' WHERE id_parametros='$id'");
+ 
+?>
+<?php 
+mysql_close();
 ?>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="validarrut.js"></script>
-    <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
 </body>
 <footer> </footer>
 </html>
 <?php
 }else{
-  echo '<script> window.location="index.php";</script>';
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
 }
 
 ?>

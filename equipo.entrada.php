@@ -182,7 +182,7 @@ label {
 <input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>">
 <div class="col-xs-5" >
 <label for="">ID equipo</label>
-<input type="text" class="form-control" title="ID de OT" value="<?=$mensajeE?>" name="id_equipo" id="id_equipo" placeholder="Orden de Trabajo" required=""></div>
+<input type="text" class="form-control" title="ID de Equipo" value="<?=$mensajeE?>" name="id_equipo" id="id_equipo" placeholder="" required=""></div>
 </div>
 
 <?php
@@ -195,7 +195,19 @@ label {
 ?>
 <div class="col-xs-5" >
 <label for="">ID Cliente</label>
-<input type="text" class="form-control" title="ID de OT" value="<?=$idcliente?>" name="id_cliente" id="id_cliente" placeholder="ID cliente"></div>
+<input type="text" class="form-control" title="ID de Cliente" value="<?=$idcliente?>" name="id_cliente" id="id_cliente" placeholder="ID cliente"></div>
+
+<?php 
+include("conexion.php");
+
+$parametro=mysql_query("SELECT * FROM parametros WHERE nombreP='sin reparar'")or die(mysql_error());
+$mostrar=mysql_fetch_array($parametro);
+
+?>
+<div class="col-xs-5">
+<label for="">Parametro</label>
+<input type="text" class="form-control" name="dias" value="<?php echo $mostrar['valorP'];?>">
+</div>
 
 <div class="col-xs-5" >
 <label for="">Cliente</label>

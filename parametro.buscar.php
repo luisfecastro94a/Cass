@@ -2,7 +2,6 @@
 session_start();
 include("conexion.php");
 if (isset($_SESSION['correo'])) {?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +10,10 @@ if (isset($_SESSION['correo'])) {?>
 	<meta charset="UTF-8">
 
 	<title>Parametros</title>
-   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+  <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-
-	
-      <style>
+<style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -25,7 +22,7 @@ if (isset($_SESSION['correo'])) {?>
 	body{
   background: #F2F2F2;
 }
-   	 nav ul ul.dropdown-menu li a:hover {
+  nav ul ul.dropdown-menu li a:hover {
 	background: #CCCCCC;
  	}
  	 nav ul li:hover {
@@ -37,18 +34,24 @@ if (isset($_SESSION['correo'])) {?>
     width: 50px;
     border: auto;
   }
-  h1{
-    margin: 10px 500px 20px 500px;
+    h1{
+    margin: 10px 300px 20px 400px;
     color: orange;
     border-top: 30px;
+   
   }
-  .contenedor {
+   h4{
+    margin: 10px auto;
+    color: #555555;
+    
+  }
+    .contenedor {
     width: 1300px;
     height: 100px;
-    margin: auto;
+    margin:  auto;   
 }
 label {
-  color:#515151;
+  color:#555555;
 }
  .cerrar{
     height: 40px;
@@ -56,9 +59,9 @@ label {
     width: 60px;
     border: auto;
   }
- 
 
    </style>
+
 </head>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -93,7 +96,7 @@ label {
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.salida.php">Salida Equipo</a></li>
+            <li><a href="equipo.reingreso.php">Re Ingreso Equipo</a></li>
           </ul>
         </li>
 
@@ -132,105 +135,84 @@ label {
     </div><!-- /.navbar-collapse -->
 </nav>
 <body>
-	<div class="contenedor">
-
+ <div class="contenedor">
 
 <a href="parametro.php"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
 <a href="parametro.buscar.php"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
-<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
+<a href="inicio.php"><button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button></a>
 
 <br><br>
-<h1>Crear Parametros</h1>
 
-<form class="form-group" action=""  method="POST" onSubmit="return validar()">
+<form class="form-group" action=""  method="POST">
 
-<div class="container">
+<div class="container" >
 
-<div class="col-xs-5">
-<label for="">Elegir Parametro:</label>
-  <select name="nombreP" id="" class="form-control">
-  <option value="">---Seleccionar---</option>
-    <option value="sin reparar">sin reparar</option>
-    <option value="reparado">reparado</option>
-    <option value="esperando respuesta">esperando respuesta</option>
-    <option value="no retirados">No Retirados</option>
-    <option value="cotizado">Cotizado</option>
-    <option value="por cotizar">Por Cotizar</option>
-  </select>
+<div class="form-group" id="datos">
+<h4><label for="caja_busqueda"><h1>Lista de  Parametros</h1></label></h4>
 </div>
 
-<div class="col-xs-5">
-  <label for="">Valor:</label>
-  <input type="text" name="valorP" id="valorP" class="form-control" placeholder="Agregar Valor de Parametro">
-</div>
+<table  class="table table-striped table-responsive" id="" name="" >
+<thead>
+      <th colspan="1"><a href="parametro.php" class="btn btn-primary">Nuevo Parametro</a></th>
+     
+    </thead>
+    <tbody>
+      <tr>
+       
+        <td><h4>Parametro</h4></td>
+        <td><h4>Valor</h4></td>
+        <td colspan="3"><h4>Operaciones</h4></td>
+        
   
-  <div class="col-xs-5">
-  <button type="submit" id="enviar" class="btn btn-primary btn-lg btn-block">Guardar</button></div>
-  <div class="col-xs-5">
-  <button type="reset" class="btn btn-default btn-lg btn-block">Cancelar</button>
-  </div>
-
-</div>
-</form>
-</div>
+      </tr>
 
 <?php
-if
-    (
-     isset($_POST['nombreP']) && !empty($_POST['nombreP']) &&
-     isset($_POST['valorP']) && !empty($_POST['valorP']))
-  { 
-      $Nombre = $_POST['nombreP'];
-      $valor = $_POST['valorP'];
+  include("conexion.php");
+
+  $dbhandle=mysql_query("SELECT * FROM parametros ");
 
 
-    // conexión a la base de datos de
-$dbhandle = mysql_connect($hostname, $username, $password) 
- or die("No se pudo Contactar a Base de Datos MySQL");
+   while($muestra=mysql_fetch_array($dbhandle)){
+   echo '<tr>';
+   echo '<td>'.'<strong>'.$muestra['nombreP'].'</strong>'.'</td>';
+   echo '<td>'.'<strong>'.$muestra['valorP'].'</strong>'.'</td>';
+   echo '<td>'.'<a href="parametro.modificar.php?id='.$muestra['id_parametros'].'" class="btn btn-primary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>'.' Modificar'.'</a>'.'</td>';
+   echo '</tr>';
 
-
-// seleccionar una base de datos para trabajar con
-$selected = mysql_select_db("bdcass",$dbhandle) 
-  or die("No se pudo seleccionar la base de datos CASS");
-
-// ============================================== 
-// Comprobamos si el rut esta registrado 
-include("conexion.php");
-
-$nuevo_P=mysql_query("SELECT nombreP FROM parametros WHERE nombreP='$Nombre'"); 
-if(mysql_num_rows($nuevo_P)>0) 
-{ 
-echo " 
-'<script> alert('Parametro ya se encuentra registrado'); </script>'; 
-<p class='avisos'><a href='javascript:history.go(-1)' class='clase1'>Volver atrás</a></p> 
-"; 
+      
 }
-else{
-  
-  $consulta=mysql_query("INSERT INTO parametros ( nombreP, valorP) VALUES ('$Nombre', '$valor')") or die(mysql_errno());
- echo '<script> alert("Parametro Creado con Exito."); </script>';
+?>  
+   
+  </ul>
+      </tbody>
+</table>
 
-}
-
-}
+<?php
+// close connection; 
+mysql_close();
 ?>
-
+<nav aria-label="">
+  <ul class="pagination">
+    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+</nav>
+</ul>
+</nav>
+</div>
+</form>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
     <script src="js/jquery-ui.js"></script>
-    <script src="validarrut.js"></script>
-    <script src="validaletras.js"></script>
-    <script src="validanumeros.js"></script>    
 </body>
 <footer> </footer>
 </html>
 <?php
 }else{
-  echo '<script> window.location="index.php";</script>';
+  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
 }
 
 ?>

@@ -205,7 +205,7 @@ $asig=mysql_query($consulta);
     $mensaje =$row["max"]+1;
 ?>
 <div class="col-xs-5 ui-widget">
-<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
+<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("Y/m/d");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
 </div>
 <div class="col-xs-5 ui-widget">
 <label for="">Numero de Cotización: 

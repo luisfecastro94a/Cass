@@ -156,7 +156,7 @@ label.coti {
 <form class="form-group" action=""  method="POST">
 
 <div class="col-xs-5">
-<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
+<label class="coti" for="">Fecha Respuesta: <input class="" readonly value="<?php echo date("Y/m/d");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label></div>
 
 
 <div class="col-xs-5" >

@@ -10,6 +10,7 @@ $salida= "";
 
 para que me muestre los equipos de un tecnico en especifico debe ser: AND correo='lcastro@cass.cl', usuario.correo
   ";*/
+  
 $query= "SELECT orden_trabajo.id_orden_trabajo, equipo.id_equipo, equipo.serie_equipo, equipo.modelo, equipo.fecha_creacion, equipo.sintoma_cliente, equipo.dias, estado.estado, estado.relacion, usuario.nombreUsuario FROM orden_trabajo  INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN estado ON equipo.id_estado=estado.id_estado INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario WHERE estado='Sin reparar' AND relacion='equipo'  ORDER BY fecha_creacion ASC  ";
 $resultado=$selected->query($query);
 if($resultado->num_rows > 0) 
@@ -33,71 +34,22 @@ if($resultado->num_rows > 0)
 			<tbody>';	
 
 	while ($fila = $resultado->fetch_assoc()) {
-		$dias=$fila["dias"];
+		
+//llamo a la tabla parametros con la condicion de sin reparar
+$parametro="SELECT nombreP, valorP FROM parametros WHERE nombreP='sin reparar'"or die(mysql_error());
+$mostra=$selected->query($parametro);
+$mostrar= $mostra->fetch_assoc();
 
-$fechaInicio = $fila["fecha_creacion"];
-$fechaActual = date("d/m/Y");
-$diaActual = substr($fechaActual, 0, 2); 
-$mesActual = substr($fechaActual, 3, 5); 
-$anioActual = substr($fechaActual, 6, 10); 
-$diaInicio = substr($fechaInicio, 0, 2); 
-$mesInicio = substr($fechaInicio, 3, 5); 
-$anioInicio = substr($fechaInicio, 6, 10); 
-$b = 0; 
-$mes = $mesInicio-1; 
-if($mes==2){ 
-if(($anioActual%4==0 && $anioActual%100!=0) || $anioActual%400==0){ 
-$b = 29; 
-}else{ 
-$b = 28; 
-} 
-} 
-else if($mes<=7){ 
-if($mes==0){ 
-$b = 31; 
-} 
-else if($mes%2==0){ 
-$b = 30; 
-} 
-else{ 
-$b = 31; 
-} 
-} 
-else if($mes>7){ 
-if($mes%2==0){ 
-$b = 31; 
-} 
-else{ 
-$b = 30; 
-} 
-} 
-if(($anioInicio>$anioActual) || ($anioInicio==$anioActual && $mesInicio>$mesActual) || 
-($anioInicio==$anioActual && $mesInicio == $mesActual && $diaInicio>$diaActual)){ 
-echo "La fecha de inicio ha de ser anterior a la fecha Actual"; 
-}else{ 
-if($mesInicio <= $mesActual){ 
-$anios = $anioActual - $anioInicio; 
-if($diaInicio <= $diaActual){ 
-$meses = $mesActual - $mesInicio; 
-$dies = $diaActual - $diaInicio; 
-}else{ 
-if($mesActual == $mesInicio){ 
-$anios = $anios - 1; 
-} 
-$meses = ($mesActual - $mesInicio - 1 + 12) % 12; 
-$dies = $b-($diaInicio-$diaActual); 
-} 
-}else{ 
-$anios = $anioActual - $anioInicio - 1; 
-if($diaInicio > $diaActual){ 
-$meses = $mesActual - $mesInicio -1 +12; 
-$dies = $b - ($diaInicio-$diaActual); 
-}else{ 
-$meses = $mesActual - $mesInicio + 12; 
-$dies = $diaActual - $diaInicio; 
-} 
-} 
-} 
+$dias=$mostrar["valorP"];
+
+// fecha_a es la primera fecha
+$fecha_introducida= $fila['fecha_creacion'];
+// fecha_b en este caso es la fecha actual
+$fecha_actual= date("Y/m/d");
+
+$dies = (strtotime($fecha_actual)-strtotime($fecha_introducida))/86400;
+$dies = abs($dies);
+$dies = floor($dies);
 
 $salida.='<tr class="alerta">
 	 <td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
@@ -112,14 +64,12 @@ $salida.='<tr class="alerta">
    	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-warning" title="Cambiar estado"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Cerrar Equipo'.'</a>'.'</td> 
 <td>'; 
 if($dies<=$dias): 
-echo '<img src="img/btverde.png"  title="En Proceso" />'; 
+$salida.='<img src="img/btverde.png"  title="En Proceso" />'; 
 else: 
-echo '<img src="img/btrojo.png"  title="Atrasado" />'; 
-endif; 
-echo 
-'</td>
+$salida.= '<img src="img/btrojo.png"  title="Atrasado" />'; 
+endif;"</td>
 
-	</tr>';
+</tr>";
 
 }
 //<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>

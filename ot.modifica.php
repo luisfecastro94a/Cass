@@ -150,7 +150,6 @@ label {
 <?php
     $id=$_REQUEST['id'];
     include("conexion.php");
-
   
       $consulta=mysql_query("SELECT orden_trabajo.id_orden_trabajo, orden_trabajo.correlativo_ot, orden_trabajo.fecha_OT, orden_trabajo.motivo, orden_trabajo.comentario, orden_trabajo.valorReparacion, orden_trabajo.fechaPresupuesto, orden_trabajo.hora_llegada, orden_trabajo.hora_salida, usuario.id_usuario, usuario.nombreUsuario, cliente.id_cliente, cliente.nombre, cliente.rut, cliente.fono, cliente.correo, cliente.direccion, ot_tipo.nombreTipo, area.id_area, area.area, estado.id_estado, estado.estado, equipo.serie_equipo, equipo.sintoma_cliente, ciudad.nombrec, cliente_encargado.nombreE, marca.marca FROM orden_trabajo INNER JOIN cliente ON orden_trabajo.id_cliente=cliente.id_cliente INNER JOIN cliente_encargado ON cliente.id_cliente=cliente_encargado.id_cliente INNER JOIN equipo ON orden_trabajo.id_equipo=equipo.id_equipo INNER JOIN marca ON equipo.id_marca=marca.id_marca INNER JOIN estado ON orden_trabajo.id_estado=estado.id_estado INNER JOIN ciudad ON cliente.id_ciudad=ciudad.id_ciudad  INNER JOIN ot_tipo ON orden_trabajo.id_ot_tipo=ot_tipo.id_ot_tipo INNER JOIN usuario ON orden_trabajo.id_usuario=usuario.id_usuario INNER JOIN area ON orden_trabajo.id_area=area.id_area  WHERE id_orden_trabajo='$id'")or die(mysql_error());
         $reg=mysql_fetch_array($consulta);

@@ -24,12 +24,31 @@ if($resultado->num_rows > 0)
 	     <th><h5><strong>Sintoma del Técnico</strong></h5></th>
 	     <th><h5><strong>Técnico a Cargo</strong></h5></th>
         <th><h5><strong>Estado</strong></h5></th>
+        <th><h5><strong>Dias Transcurridos</strong></h5></th>
         <th colspan="2"><center><h5><strong>Operaciones</strong></h5></center></th>
+        <th><h5><strong>Estado del Equipo</strong></h5></th>
 			</tr>
 			</thead>
 			<tbody>';
 
 	while ($fila = $resultado->fetch_assoc()) {
+
+//llamo a la tabla parametros con la condicion de sin reparar
+$parametro="SELECT nombreP, valorP FROM parametros WHERE nombreP='En Proceso'"or die(mysql_error());
+$mostra=$selected->query($parametro);
+$mostrar= $mostra->fetch_assoc();
+
+$dias=$mostrar["valorP"];
+
+// fecha_a es la primera fecha
+$fecha_introducida= $fila['fecha_creacion'];
+// fecha_b en este caso es la fecha actual
+$fecha_actual= date("Y/m/d");
+
+$dies = (strtotime($fecha_actual)-strtotime($fecha_introducida))/86400;
+$dies = abs($dies);
+$dies = floor($dies);
+
 		$salida.='<tr>
 	
 	<td>'.'<strong>'.$fila["modelo"].'</strong>'.'</td>	
@@ -40,8 +59,16 @@ if($resultado->num_rows > 0)
 	 <td>'.$fila["sintoma_tecnico"].'</td>
 	 <td>'.$fila["nombreUsuario"].'</td>
    	 <td>'.$fila["estado"].'</td>
+   	 <td>'.$dies.'</td>
    	 <td>'.'<a href="ot.modifica.php?id='.$fila["id_orden_trabajo"].'" class="btn btn-danger" title="Cambiar Técnico"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>'.' Cambiar Técnico'.'</a>'.'</td>
-   	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-warning" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Reparar Equipo'.'</a>'.'</td>    
+   	 <td>'.'<a href="equipo.cambioE.php?id='.$fila["id_equipo"].'" class="btn btn-warning" title="Modificar Orden de Trabajo"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>'.' Reparar Equipo'.'</a>'.'</td> 
+  <td>'; 
+if($dies<=$dias): 
+$salida.= '<img src="img/btverde.png"  title="En Proceso" />'; 
+else: 
+$salida.= '<img src="img/btrojo.png"  title="Atrasado" />'; 
+endif; 
+'</td>   
 			</tr>';
 	}
 

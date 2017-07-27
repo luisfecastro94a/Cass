@@ -158,7 +158,7 @@ label {
 </div>
 
 <div class="col-xs-5 has-error" >
-<label for="">Valor Parametro:</label>
+<label for="">Cantidad de Días:</label>
 <input type="text" class="form-control" name="valorP"  required="" value="<?php echo $reg['valorP'];?>"></div>
 
   

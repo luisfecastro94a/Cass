@@ -160,7 +160,7 @@ label {
       <tr>
        
         <td><h4>Parametro</h4></td>
-        <td><h4>Valor</h4></td>
+        <td><h4>Días</h4></td>
         <td colspan="3"><h4>Operaciones</h4></td>
         
   

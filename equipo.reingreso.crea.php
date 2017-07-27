@@ -184,7 +184,7 @@ label {
 
 <div class="col-xs-5">
 <label class="fe" for="">Fecha Reingreso</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>"></div>
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("Y/m/d"); ?>"></div>
 
 <?php
 include("conexion.php");

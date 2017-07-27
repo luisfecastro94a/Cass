@@ -150,6 +150,7 @@ label {
 <label for="">Elegir Parametro:</label>
   <select name="nombreP" id="" class="form-control">
   <option value="">---Seleccionar---</option>
+    <option value="En Proceso">En Proceso</option>
     <option value="sin reparar">sin reparar</option>
     <option value="reparado">reparado</option>
     <option value="esperando respuesta">esperando respuesta</option>
@@ -160,7 +161,7 @@ label {
 </div>
 
 <div class="col-xs-5">
-  <label for="">Valor:</label>
+  <label for="">Cantidad de Días:</label>
   <input type="text" name="valorP" id="valorP" class="form-control" placeholder="Agregar Valor de Parametro">
 </div>
   

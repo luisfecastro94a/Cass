@@ -234,7 +234,7 @@ $cat=isset($_POST['filtrarOT'])?$_POST['filtrarOT']: NULL;
 ?>
 
 <div class="col-xs-5 ui-widget">
-<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("d/m/Y");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
+<label class="fe" for="">Fecha Cotización<input class="form-control" value="<?php echo date("Y/m/d");?>" type="text" name="fecha_cotizacion" id="fecha_cotizacion"></label>
 <input type="text" class="form-control" readonly="" name="id_orden_trabajo" id="id_orden_trabajo" value="<?php echo$reg1['id_orden_trabajo'];?>">
 </div>
 <?php

@@ -179,7 +179,7 @@ label {
 
 <div class="col-xs-5" >
 <label class="fe" for="">Fecha Creación</label>
-<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("d/m/Y"); ?>">
+<input class="fecha" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo date("Y/m/d"); ?>">
 <div class="col-xs-5" >
 <label for="">ID equipo</label>
 <input type="text" class="form-control" title="ID de Equipo" value="<?=$mensajeE?>" name="id_equipo" id="id_equipo" placeholder="" required=""></div>

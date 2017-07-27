@@ -1,15 +1,50 @@
-<?php
-session_start();
-include("conexion.php");
-if (isset($_SESSION['correo'])) {?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8" HTTP-EQUIV="REFRESH" CONTENT="60;URL=inicio.php">
-	<title>Inicio</title>
+	<title>cliente</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+
+   <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="js/bootstrap.min.js">
-<style>	    
+	  <script language="JavaScript" type="text/javascript" src="js/calendario.js"></script>
+	    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#star_date" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
+    <script>
+  $( function() {
+    $( "#end_date" ).datepicker({
+      changeMonth:true,
+      changeYear:true,
+      showOn: "button",
+      buttonImage: "css/images/cale.png",
+      buttonImageOnly: true,
+      buttonText: "Select date",
+      showButtonPanel:true, 
+
+    });
+  } );
+  </script>
+	
+      <style>
  * {
  
   font-family: Geneva, Arial, Helvetica, sans-serif;
@@ -19,69 +54,39 @@ if (isset($_SESSION['correo'])) {?>
   background: #F2F2F2;
 }
    	 nav ul ul.dropdown-menu li a:hover {
-	background: #E1E1E1;/*# E1E1E1 FEAB63*/
+	background: #CCCCCC;
  	}
  	 nav ul li:hover {
-	background: #B6B6B6;
-  font-size: 15px;
+	background: #CCCCCC;
  	}
-	img.logo {
-		height: 50px;
-		margin: auto;
-		width: 50px;
-		border: auto;
-		
-	}
- 
+  img.logo {
+    height: 50px;
+    margin: auto;
+    width: 50px;
+    border: auto;
+  }
+  h1{
+    margin: 10px 500px 20px 500px;
+    color: orange;
+    border-top: 30px;
+  }
+  .contenedor {
+    width: 1300px;
+    height: 100px;
+    margin: auto;
+}
+label {
+  color:#515151;
+}
  .cerrar{
     height: 40px;
     margin: 5px auto;
     width: 60px;
     border: auto;
   }
-
-table {     font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-    font-size: 14px;   margin: 15px;    width: 480px; text-align: left;    }
-
-th {     font-size: 13px;     font-weight: normal;     padding: 8px;     background: #4169E1;
-    border-top: 4px    border-bottom: 1px solid #fff; color: white; }
-
-td {    padding: 8px;     background: #e8edff;   border-bottom: 1px solid #fff;
-    color: #669;    border-top: 1px solid transparent; }
-
-tr:hover td { background: #d0dafd; color: #339; }
-
-
-.uno{
-  display: inline-block;
-}
-.dos{
-  display: inline-block;
-
-}
-.tres{
-  display: inline-block;
-
-}
-.cuatro{
-  display: inline-block;
  
-}
-.cinco{
-  display: inline-block;
-}
-.seis{
-  display: inline-block;
-}
-h2{
-  color: orange;
-  width: 100%;
 
-}
-.fe{
- margin: 10px 20px 10px 800px;
-}
-</style>
+   </style>
 </head>
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -100,7 +105,6 @@ h2{
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
        <li><a  href="inicio.php">Inicio</a></li>
-        <li><a  href="iniciotecnico.php">Inicio Laboratorio</a></li>
         
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Laboratorio <span class="caret"></span></a>
@@ -111,15 +115,13 @@ h2{
             <li><a href="presupuesto.php">Presupuesto</a></li>
             <li><a href="cotizacion.php">Cotización</a></li>
             <li><a href="repuesto.php">Repuesto</a></li>
-            <li><a href="reportes/reporte1.php">Resumen Venta</a></li>
           </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Equipo<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="equipo.entrada.php">Entrada Equipo</a></li>
-            <li><a href="equipo.reingreso.php">Re Ingreso Equipo</a></li>
-            <li><a href="equipo.aviso.php">Avisos reparación</a></li>
+            <li><a href="equipo.salida.php">Salida Equipo</a></li>
           </ul>
         </li>
 
@@ -134,7 +136,6 @@ h2{
                      <li><a  href="ot.php" title="Generar OT a un Técnico">Orden de Trabajo</a></li>
                      <li><a  href="proforma.php" title="Generar proforma para cerrar la OT">Proforma (cerrar ot)</a></li>
                      <li><a  href="factura.php" title="Generar factura para cerrar Proforma">Factura</a></li>
-                     <li><a  href="Excel/primero.php" title="Generar factura para cerrar Proforma">Resumen</a></li>
                </ul>
         </li>
 
@@ -158,53 +159,96 @@ h2{
        <a  href="cerrarsesion.php"><img class="cerrar" src="img/cerrar_sesion.png" alt="" ></a>
     </div><!-- /.navbar-collapse -->
 </nav>
-
 <body>
-<label class="fe" left for="">Fecha de HOY: <?php echo date("d/m/Y");?></label>
-<br>
+	<div class="contenedor">
 
-<h2 class="hsinreparar">Sin Reparar</h2>
-<div id="datos" class="uno table-responsive" > 
-</div>
- 
-<h2 class="hproc">Equipos En Proceso</h2>
-<div  id="datos5" class="siete table-responsive">     
-</div>
 
-<h2 class="hesperando">Cotización Esperando Respuesta</h2>
-<div  id="datos2" class="tres table-responsive">  
-</div>
+<a href="#"><button  class="btn btn-default" type="submit"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"> NUEVO</span></button></a>
+<a href="#"><button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"> BUSCAR</span></button></a>
+<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> VOLVER</span></button>
 
-<h2 class="havisados">Equipos Avisados</h2>
-<div  id="datos4" class="seis table-responsive">     
-</div>
+<br><br>
+<h1>Busqueda de Orden de Trabajo</h1>
 
-<h2 class="havisados">Orden de Trabajo Pendiente</h2>
-<div  id="muestraOTC" class="seis table-responsive">     
-</div>
+<form >
+	<div class="col-xs-5">
+<label class="fe" for="">Desde:<input id="star_date" name="star_date" class="fecha" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_OT" id="fecha_OT"></label></div>
 
-<h2 class="havisados">Orden de Trabajo Cerrada</h2>
-<div  id="muestraOTCe" class="seis table-responsive">     
-</div>
+	<div class="col-xs-5">
+<label class="fe" for="">Hasta:<input id="end_date" name="end_date" class="fecha" value="<?php echo date("d/m/Y"); ?>" type="text" name="fecha_OT" id="fecha_OT"></label></div>
+
+<input type="hidden" id="form_sent" name="form_sent" value="true"  >
+<input type="submit" id="btn-submit" value="Enviar">
+
+</form>
+<hr>
+<?php if (isset($_GET['form_sent']) && $_GET['form_sent'] == "true") { ?>
+
+<?php include_once('conexion.php'); ?>
+<?php 
+
+$sdate = $_GET['star_date'];
+$ssdate = explode('/', $sdate);
+$star_date = $ssdate[2]."/".$ssdate[0]."/".$ssdate[1];
+echo ('<h3>'.$star_date.'</h3>');
+
+$edate = $_GET['end_date'];
+$eedate = explode('/', $edate);
+$end_date = $eedate[2]."/".$eedate[0]."/".$eedate[1];
+echo ('<h3>'.$end_date.'</h3>');
+
+
+//seleciona los datos de la base de datos
+$strsql= "SELECT id_orden_trabajo, fecha_OT, valorCotizacionOT FROM orden_trabajo WHERE fecha_OT BETWEEN '$star_date' AND '$end_date' ";
+
+echo('<h3>'.$strsql.'</h3>');
+
+$rs = mysql_query($strsql) or die(mysql_error());
+$row = mysql_fetch_assoc($rs);
+$total_rows = mysql_num_rows($rs);
+
+?>
+
+<table width="800" border="10" cellspacing="0" cellpadding="2"> 
+	<tr>
+		<td>ID</td>
+		<td>Fecha</td>
+		<td>Monto</td>
+	</tr>
+	<?php if ($total_rows>0){
+		do{
+	 ?>
+	 <tr>
+	 	<td><?php echo ($row['id_orden_trabajo']);?></td>
+	 	<td><?php echo ($row['fecha_OT']);?></td>
+	 	<td><?php echo ($row['valorCotizacionOT']);?></td>
+	 </tr>
+<?php 
+	}while ($row = mysql_fetch_assoc($rs));
+	mysql_free_result($rs);
+}else{
+?>	
+	<tr>
+		<td colspan="11">No dta found.</td>
+	</tr>
+	<?php } ?>
+	
+</table>
+
+
+<?php } ?>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/mostrar.sinreparar.js"></script>
-    <script src="js/mostrar.reparado.js"></script>
-    <script src="js/mostrar.esperandorespuesta.js"></script>
-    <script src="js/mostrar.equipoavisado.js"></script>
-    <script src="js/mostrar.equipoProceso.js"></script>
-    <script src="js/mostrar.otTecnicoC.js"></script>
-    <script src="js/mostrar.otTecnicoCerrada.js"></script>
+    <script src="js/jquery-3.2.1.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/jquery-ui.js"></script>
+        <script src="js/jquery-ui.min.js"></script>
+    <script src="js/datepicker-es.js"></script> 
+   
 </body>
-
+<footer> </footer>
 </html>
-<?php
-}else{
-  echo '<script> window.location="index.php";</script>';//esto se podria llamar login.php, me dirije al login
-}
-
-?>

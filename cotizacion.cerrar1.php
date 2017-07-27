@@ -168,7 +168,7 @@ label.coti {
 
 <div class="col-xs-5">
 <label class="coti" for="">Fecha Respuesta: 
-<input  value="<?php echo date("d/m/Y");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label>
+<input  value="<?php echo date("Y/m/d");?>" type="text" name="fecha_respuesta" id="fecha_respuesta"></label>
 </div>
 
 <div class="col-xs-5" >
